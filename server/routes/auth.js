@@ -77,32 +77,31 @@ router.post(
     check('username').exists(),
     check('password').exists(),
   ],
-  async (req, res) => {
+  (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-      const { username, password } = req.body;
-      let user;
-      db.queryAsync(`SELECT * FROM users WHERE username = "${username}";`)
-        .then((item) => {
-          const userInfo = item[0];
-          return userInfo
-        })
-        .then((userInfo) => {
-          let codesMatch = (password === userInfo.password);
-          if (codesMatch) {
-            // return jwt with user id
-            const token = jwt.sign({ userId: userInfo.userId }, 'secret', { expiresIn: '1h' });
-            return res.json({ token });
-          } else {
-            return res.status(401).json({ message: 'invalid credentials' })
-          }
-        })
-        .catch((err) => {
-          console.error(err.message)
+    const { username, password } = req.body;
+    let user;
+    db.queryAsync(`SELECT * FROM users WHERE username = "${username}";`)
+      .then((item) => {
+        const userInfo = item[0];
+        return userInfo
+      })
+      .then((userInfo) => {
+        let codesMatch = (password === userInfo.password);
+        if (codesMatch) {
+          const token = jwt.sign({ userId: userInfo.userId }, 'secret', { expiresIn: '1h' });
+          return res.json({ token });
+        } else {
           return res.status(401).json({ message: 'invalid credentials' })
-        })
+        }
+      })
+      .catch((err) => {
+        console.error(err.message)
+        return res.status(401).json({ message: 'invalid credentials' })
+      })
   },
 );
 

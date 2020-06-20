@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev-bundle": "webpack -w",
+    "bundle": "webpack -w",
     "start-dev": "nodemon ./server/index.js",
     "seed": "node ./db/seed.js"
   },
@@ -33,6 +33,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
