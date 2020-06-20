@@ -68,46 +68,43 @@ router.post(
         console.error(err, 'ERRRRRRRRR');
         return res.status(500).json({ message: 'server error' });
       });
-    // const userExists = await User.findOne({ name });
-    // if (userExists) return res.status(401).json({ message: 'user already exists' });
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPass = await bcrypt.hash(password, salt);
-
-    // const { id } = newUser;
-    // const secret = config.get('secret_key');
-    // const token = jwt.sign({ id }, secret, { expiresIn: '1h' });
-    // return res.json({ token });
-    // console.error(err.message);
-    // return res.status(500).json({ message: 'server error' });
   },
 );
 
-// router.post(
-//   '/SignIn',
-//   [
-//     check('name').exists(),
-//     check('password').exists(),
-//   ],
-//   async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(422).json({ errors: errors.array() });
-//     }
-//     try {
-//       const { name, password } = req.body;
-//       const user = await User.findOne({ name });
-//       const match = await bcrypt.compare(password, user.password);
-//       if (!match || !user) return res.status(404).json({ message: 'invalid credentials' });
-//       const { id } = user;
-//       const secret = config.get('secret_key');
-//       const token = jwt.sign({ id }, secret, { expiresIn: '1h' });
-//       return res.json({ token });
-//     } catch (err) {
-//       console.error(err.message);
-//       return res.status(500).json({ message: 'server error' });
-//     }
-//   },
-// );
+router.post(
+  '/SignIn',
+  [
+    check('username').exists(),
+    check('password').exists(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+      const { username, password } = req.body;
+      let user;
+      db.queryAsync(`SELECT * FROM users WHERE username = "${username}";`)
+        .then((item) => {
+          const userInfo = item[0];
+          return userInfo
+        })
+        .then((userInfo) => {
+          let codesMatch = (password === userInfo.password);
+          if (codesMatch) {
+            // return jwt with user id
+            const token = jwt.sign({ userId: userInfo.userId }, 'secret', { expiresIn: '1h' });
+            return res.json({ token });
+          } else {
+            return res.status(401).json({ message: 'invalid credentials' })
+          }
+        })
+        .catch((err) => {
+          console.error(err.message)
+          return res.status(401).json({ message: 'invalid credentials' })
+        })
+  },
+);
 
 
 module.exports = router;
