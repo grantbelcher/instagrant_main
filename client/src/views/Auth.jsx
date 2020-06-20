@@ -1,19 +1,19 @@
 import React from 'react';
+import LogIn from '../components/LogIn';
+
 
 const styles = {
   container: {
     width: '100%',
     height: '100vh',
     backgroundColor: 'lightsteelblue',
-    display: 'flex',
-    flexDirection: 'column',
   },
 };
 
 const Auth = () => {
   return (
     <div style={styles.container}>
-      yoo
+      <LogIn />
     </div>
   );
 };
