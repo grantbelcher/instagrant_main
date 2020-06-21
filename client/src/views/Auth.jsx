@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogIn from '../components/LogIn';
 
 
@@ -10,11 +10,13 @@ const styles = {
 };
 
 const Auth = () => {
-  return (
-    <div style={styles.container}>
-      <LogIn />
-    </div>
-  );
+  const [view, setView] = useState('Log In');
+  if (view === 'Log In') {
+    return <LogIn changeView={setView} />;
+  }
+  if (view === 'Sign Up') {
+    return <div>sign up</div>;
+  }
 };
 
 export default Auth;

@@ -63,7 +63,7 @@ const styles = {
   },
 };
 
-const Login = ({ logIn, error }) => {
+const Login = ({ logIn, error, changeView }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [disabled, setDisabled] = useState(true);
@@ -115,7 +115,7 @@ const Login = ({ logIn, error }) => {
         color: 'rgb(130, 130, 130)',
         marginTop: '4vh',
       }}>
-        Don&#39;t have an account yet? <a style={{color: '#0000EE'}} onClick={() => console.log('eeeyyy')}>Sign up</a>
+        Don&#39;t have an account yet? <a style={{color: '#0000EE'}} onClick={() => changeView('Sign Up')}>Sign up</a>
       </div>
       <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled}/>
       <div style={styles.footer}
