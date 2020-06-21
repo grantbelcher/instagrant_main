@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import CustomButton from '../components/CustomButton';
 import { signIn } from '../redux/actions/auth';
@@ -48,16 +51,18 @@ const styles = {
     marginTop: '1vh',
   },
   input: {
-    marginTop: '1vh',
-    // paddingTop: '1vh',
-    // paddingBottom: '1vh',
-    // paddingLeft: 5,
-    fontSize: 'x-small',
+    marginTop: '-1vh',
+    fontSize: 'small',
     width: '75vw',
-    height: '10vh',
-    // borderRadius: '4px',
-    // borderRight: 'thin',
-    // borderWidth: 'thin',
+    height: '7vh',
+    borderColor: '#fafafa',
+    backgroundColor: '#fafafa',
+  },
+  input2: {
+    marginTop: '8vh',
+    fontSize: 'small',
+    width: '75vw',
+    height: '7vh',
     borderColor: '#fafafa',
     backgroundColor: '#fafafa',
   },
@@ -67,6 +72,7 @@ const Login = ({ logIn, error, changeView }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [disabled, setDisabled] = useState(true);
+  const [visibility, setVisibility] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.id === 'username') {
@@ -109,8 +115,24 @@ const Login = ({ logIn, error, changeView }) => {
         {error || 'no error'}
       </div>
       <div style={styles.inputs}>
-        <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} />
-        <TextField id="password" variant="outlined" style={styles.input} placeholder="Password" onChange={handleChange} />
+        <Input id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} />
+        <Input
+          id="password"
+          variant="outlined"
+          style={styles.input2}
+          placeholder="Password"
+          onChange={handleChange}
+          type={visibility ? 'text' : 'password'}
+          endAdornment={(
+            <InputAdornment position="end">
+              <IconButton
+                onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
+              >
+                {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
+              </IconButton>
+            </InputAdornment>
+          )}
+        />
       </div>
       <div style={{
         color: 'rgb(130, 130, 130)',

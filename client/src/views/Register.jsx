@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { IconButton } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
@@ -130,7 +129,6 @@ const Register = ({ changeView, registerUser }) => {
                 onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
               >
                 {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
-                
               </IconButton>
             </InputAdornment>
           )}
