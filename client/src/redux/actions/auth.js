@@ -39,6 +39,15 @@ export const signIn = (username, password) => async (dispatch) => {
   }
 };
 
+export const register = (username, fullName, password) => async (dispatch) => {
+  console.log(username, fullName, password, 'frooom action');
+  // try {
+    
+  // } catch (error) {
+    
+  // }
+}
+
 
 export const signOut = () => async (dispatch) => {
   try {

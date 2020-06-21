@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { IconButton } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
 import CustomButton from '../components/CustomButton';
+import { register } from '../redux/actions/auth';
 
 const styles = {
   container: {
@@ -49,31 +54,38 @@ const styles = {
     marginTop: '1vh',
   },
   input: {
-    marginTop: '1vh',
-    fontSize: 'x-small',
+    marginTop: '5vh',
+    fontSize: 'smaller',
     width: '75vw',
-    height: '10vh',
+    height: '6vh',
     borderColor: '#fafafa',
     backgroundColor: '#fafafa',
   },
 };
 
-const Register = ({ changeView }) => {
-  const [fullName, setFullName] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [social, setSocial] = useState('')
+const Register = ({ changeView, registerUser }) => {
+  const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [social, setSocial] = useState('');
+  const [visibility, setVisibility] = useState(false);
 
+  const disabled = (fullName.length < 2 || username.length < 6 || password.length < 6);
 
   const handleSocial = (e) => {
     if (social.length === 2 || social.length === 7) {
-      setSocial(e.target.value + ' - ');
+      setSocial(`${e.target.value} - `);
     } else if (social.length === 15) {
-      return;
+
     } else {
       setSocial(e.target.value);
     }
-  }
+  };
+
+  const handleSubmit = () => {
+    console.log(disabled);
+    registerUser(username, fullName, password);
+  };
 
   return (
     <div style={styles.container}>
@@ -101,12 +113,30 @@ const Register = ({ changeView }) => {
         Add your name so friends can find you.
       </div>
       <div style={styles.inputs}>
-        <TextField id="fullName" variant="outlined" style={styles.input} placeholder="Full Name" onChange={(e) => setFullName(e.target.value)} value={fullName} />
-        <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={(e) => setUsername(e.target.value)} value={username} />
-        <TextField id="ssn" variant="outlined" style={styles.input} placeholder="Social Security #" onChange={(e) => handleSocial(e)} value={social} />
-        <TextField id="password" variant="outlined" style={styles.input} placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
+        <Input id="fullName" variant="outlined" style={styles.input} placeholder="Full Name" onChange={(e) => setFullName(e.target.value)} value={fullName} />
+        <Input id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={(e) => setUsername(e.target.value)} value={username} />
+        <Input id="ssn" variant="outlined" style={styles.input} placeholder="Social Security #" onChange={(e) => handleSocial(e)} value={social} />
+        <Input
+          id="password"
+          variant="outlined"
+          style={styles.input}
+          placeholder="Password"
+          type={visibility ? 'text' : 'password'}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          endAdornment={(
+            <InputAdornment position="end">
+              <IconButton
+                onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
+              >
+                {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
+                
+              </IconButton>
+            </InputAdornment>
+          )}
+        />
       </div>
-      <CustomButton title="Next" />
+      <CustomButton title="Next" onClick={handleSubmit} disabled={disabled} />
       <div style={styles.footer}>
         <div style={{
           color: '#8e8e8e',
@@ -126,6 +156,10 @@ const Register = ({ changeView }) => {
       </div>
     </div>
   );
-}
+};
 
-export default Register;
+const mapDispatchToProps = {
+  registerUser: register,
+};
+
+export default connect(null, mapDispatchToProps)(Register);
