@@ -75,7 +75,7 @@ const Login = ({ logIn, error, changeView }) => {
     if (e.target.id === 'password') {
       setPassword(e.target.value);
     }
-    console.log(username.length, password.length)
+    console.log(username.length, password.length);
     if (username.length > 3 && password.length > 3) {
       setDisabled(false);
     } else {
@@ -106,7 +106,7 @@ const Login = ({ logIn, error, changeView }) => {
         }}
       />
       <div style={error ? styles.error : styles.noError}>
-        {error ? error : 'no error'}
+        {error || 'no error'}
       </div>
       <div style={styles.inputs}>
         <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} />
@@ -115,12 +115,14 @@ const Login = ({ logIn, error, changeView }) => {
       <div style={{
         color: 'rgb(130, 130, 130)',
         marginTop: '4vh',
-      }}>
-        Don&#39;t have an account yet? <a style={{color: '#0000EE'}} onClick={() => changeView('Sign Up')}>Sign up</a>
+      }}
+      >
+        Don&#39;t have an account yet?
+        {' '}
+        <a style={{ color: '#0000EE' }} onClick={() => changeView('Sign Up')}>Sign up</a>
       </div>
       <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled} />
-      <div style={styles.footer}
-      >
+      <div style={styles.footer}>
         <div style={{
           color: '#8e8e8e',
           marginTop: '1vh',

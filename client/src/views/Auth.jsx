@@ -10,7 +10,7 @@ const styles = {
 };
 
 const Auth = () => {
-  const [view, setView] = useState('Log In');
+  const [view, setView] = useState('Sign Up');
   if (view === 'Log In') {
     return <LogIn changeView={setView} />;
   }
