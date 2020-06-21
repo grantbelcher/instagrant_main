@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import CustomButton from '../components/CustomButton';
+import store from '../redux/index';
 
 const styles = {
   container: {
@@ -56,6 +58,16 @@ const AddProfilePic = () => (
     >
       Add a profile photo so your friends know its you
     </div>
+    <CustomButton title="Next" />
+    <a
+      style={{
+        color: '#4fa9f6',
+        marginTop: '3vh',
+      }}
+      onClick={() => store.dispatch({ type: 'LOG_IN' })}
+    >
+      Skip
+    </a>
   </div>
 );
 

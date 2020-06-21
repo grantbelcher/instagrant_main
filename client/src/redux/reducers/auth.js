@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
-      }
+      };
     case 'USER_LOADED':
       return {
         ...state,

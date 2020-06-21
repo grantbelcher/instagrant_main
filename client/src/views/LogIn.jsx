@@ -141,7 +141,7 @@ const Login = ({ logIn, error, changeView }) => {
       >
         Don&#39;t have an account yet?
         {' '}
-        <a style={{ color: '#0000EE' }} onClick={() => changeView('Sign Up')}>Sign up</a>
+        <a style={{ color: '#4fa9f6' }} onClick={() => changeView('Sign Up')}>Sign up</a>
       </div>
       <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled} />
       <div style={styles.footer}>
