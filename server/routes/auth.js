@@ -46,17 +46,18 @@ router.post(
     db.queryAsync(`SELECT username FROM users WHERE username = "${username}"`)
       .then((matches) => {
         if (matches.length) {
-          return res.status(401).json({ message: 'username already exists' });
+          res.statusMessage = 'user already exists';
+          return res.status(401).end();
         }
         const queryString = createUserQuery({ username, fullName, password });
         db.queryAsync(queryString)
           .then((data) => {
-            db.queryAsync(`SELECT (userId) from users WHERE userId = "${data.insertId}"`)
+            db.queryAsync(`SELECT * from users WHERE userId = "${data.insertId}"`)
               .then((result) => {
-                console.log(result[0], 'dssd');
-                const { userId } = result[0];
+                console.log(result[0], 'response from sql query');
+                const { userId, username: user } = result[0];
                 const token = jwt.sign({ userId }, 'secret', { expiresIn: '1h' });
-                return res.json({ token });
+                return res.json({ token, username: user });
               });
           })
           .catch((err) => {

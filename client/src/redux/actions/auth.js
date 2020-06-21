@@ -41,12 +41,19 @@ export const signIn = (username, password) => async (dispatch) => {
 
 export const register = (username, fullName, password) => async (dispatch) => {
   console.log(username, fullName, password, 'frooom action');
-  // try {
-    
-  // } catch (error) {
-    
-  // }
-}
+  try {
+    const response = await axios.post('/auth/SignUp', {username, fullName, password});
+    dispatch({
+      type: 'AUTH_SUCCESS',
+      payload: response.data,
+    });
+  } catch (error) {
+    addError('username already exists*');
+    dispatch({
+      type: 'AUTH_ERROR',
+    });
+  }
+};
 
 
 export const signOut = () => async (dispatch) => {

@@ -60,9 +60,21 @@ const styles = {
     borderColor: '#fafafa',
     backgroundColor: '#fafafa',
   },
+  error: {
+    color: 'red',
+    marginTop: '5vh',
+    marginBottom: '-3vh',
+    width: '75%',
+  },
+  noError: {
+    color: 'transparent',
+    marginTop: '5vh',
+    marginBottom: '-3vh',
+    width: '75%',
+  },
 };
 
-const Register = ({ changeView, registerUser }) => {
+const Register = ({ changeView, registerUser, error }) => {
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -75,7 +87,7 @@ const Register = ({ changeView, registerUser }) => {
     if (social.length === 2 || social.length === 7) {
       setSocial(`${e.target.value} - `);
     } else if (social.length === 15) {
-
+      return;
     } else {
       setSocial(e.target.value);
     }
@@ -110,6 +122,9 @@ const Register = ({ changeView, registerUser }) => {
       }}
       >
         Add your name so friends can find you.
+      </div>
+      <div style={error ? styles.error : styles.noError}>
+        {error || 'no error'}
       </div>
       <div style={styles.inputs}>
         <Input id="fullName" variant="outlined" style={styles.input} placeholder="Full Name" onChange={(e) => setFullName(e.target.value)} value={fullName} />
@@ -160,4 +175,8 @@ const mapDispatchToProps = {
   registerUser: register,
 };
 
-export default connect(null, mapDispatchToProps)(Register);
+const mapStateToProps = ({ error }) => ({
+  error,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
