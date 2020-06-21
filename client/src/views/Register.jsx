@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { IconButton } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import CustomButton from '../components/CustomButton';
-import { register } from '../redux/actions/auth';
+import { register, registerError } from '../redux/actions/auth';
 
 const styles = {
   container: {
@@ -24,7 +25,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     paddingBottom: 5,
     borderBottom: 'solid',
@@ -74,7 +75,7 @@ const styles = {
   },
 };
 
-const Register = ({ changeView, registerUser, error }) => {
+const Register = ({ changeView, registerUser, addError, error }) => {
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -93,9 +94,14 @@ const Register = ({ changeView, registerUser, error }) => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log(disabled);
-    registerUser(username, fullName, password);
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('/auth/SignUp', {username, fullName, password});
+      registerUser(response.data);
+      changeView('Profile Pic');
+    } catch (err) {
+      addError();
+    }
   };
 
   return (
@@ -173,6 +179,7 @@ const Register = ({ changeView, registerUser, error }) => {
 
 const mapDispatchToProps = {
   registerUser: register,
+  addError: registerError,
 };
 
 const mapStateToProps = ({ error }) => ({

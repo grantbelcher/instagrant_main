@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LogIn from './LogIn';
 import Register from './Register';
+import AddProfilePic from './AddProfilePic';
 
 const styles = {
   container: {
@@ -16,6 +17,9 @@ const Auth = () => {
   }
   if (view === 'Sign Up') {
     return <Register changeView={setView} />;
+  }
+  if (view === 'Profile Pic') {
+    return <AddProfilePic />;
   }
 };
 

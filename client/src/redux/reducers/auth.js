@@ -15,10 +15,22 @@ export default function (state = initialState, action) {
       };
     case 'AUTH_SUCCESS':
       return {
+        ...state,
         isLoggedIn: true,
         token: payload.token,
         user: payload.username,
       };
+    case 'REGISTER_SUCCESS':
+      return {
+        ...state,
+        token: payload.token,
+        user: payload.username,
+      };
+    case 'LOG_IN':
+      return {
+        ...state,
+        isLoggedIn: true,
+      }
     case 'USER_LOADED':
       return {
         ...state,

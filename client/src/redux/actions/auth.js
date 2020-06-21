@@ -24,7 +24,7 @@ export const signIn = (username, password) => async (dispatch) => {
     dispatch({
       type: 'LOADING',
     });
-    const response = await axios.post(`http://localhost:1000/auth/signin`, { username, password });
+    const response = await axios.post('http://localhost:1000/auth/signin', { username, password });
     // localStorage.setItem('token', response.data.token);
     dispatch({
       type: 'AUTH_SUCCESS',
@@ -39,20 +39,19 @@ export const signIn = (username, password) => async (dispatch) => {
   }
 };
 
-export const register = (username, fullName, password) => async (dispatch) => {
-  console.log(username, fullName, password, 'frooom action');
-  try {
-    const response = await axios.post('/auth/SignUp', {username, fullName, password});
-    dispatch({
-      type: 'AUTH_SUCCESS',
-      payload: response.data,
-    });
-  } catch (error) {
-    addError('username already exists*');
-    dispatch({
-      type: 'AUTH_ERROR',
-    });
-  }
+export const register = (userInfo) => (dispatch) => {
+  console.log(userInfo)
+  dispatch({
+    type: 'REGISTER_SUCCESS',
+    payload: userInfo,
+  });
+};
+
+export const registerError = () => (dispatch) => {
+  addError('username already exists*');
+  dispatch({
+    type: 'AUTH_ERROR',
+  });
 };
 
 
