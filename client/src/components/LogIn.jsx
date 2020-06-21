@@ -14,7 +14,17 @@ const styles = {
   header: {
     height: '30%',
     width: '60%',
-    paddingTop: '30%',
+    paddingTop: '20%',
+  },
+  error: {
+    color: 'red',
+    marginTop: '5vh',
+    width: '75%',
+  },
+  noError: {
+    color: 'transparent',
+    marginTop: '5vh',
+    width: '75%',
   },
   footer: {
     backgroundColor: '#eff0f1',
@@ -35,7 +45,7 @@ const styles = {
     flexDirection: 'column',
     height: '20%',
     alignItems: 'center',
-    marginTop: '5vh',
+    marginTop: '1vh',
   },
   input: {
     marginTop: '1vh',
@@ -53,7 +63,7 @@ const styles = {
   },
 };
 
-const Login = ({ logIn }) => {
+const Login = ({ logIn, error }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [disabled, setDisabled] = useState(true);
@@ -75,7 +85,7 @@ const Login = ({ logIn }) => {
 
   const handleLogIn = () => {
     console.log('yooooo')
-    logIn(username, password)
+    logIn(username, password);
   };
 
   return (
@@ -91,8 +101,12 @@ const Login = ({ logIn }) => {
           height: 1,
           backgroundColor: 'rgb(225, 225, 225)',
           marginTop: '5vh',
+          fontSize: 'smaller',
         }}
       />
+      <div style={error ? styles.error : styles.noError}>
+        {error ? error : 'no error'}
+      </div>
       <div style={styles.inputs}>
         <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} />
         <TextField id="password" variant="outlined" style={styles.input} placeholder="Password" onChange={handleChange} />
@@ -126,8 +140,12 @@ const Login = ({ logIn }) => {
   );
 };
 
+const mapStateToProps = ({ error }) => ({
+  error,
+});
+
 const mapDispatchToProps = {
   logIn: signIn,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

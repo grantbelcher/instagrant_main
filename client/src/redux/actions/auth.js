@@ -32,7 +32,7 @@ export const signIn = (username, password) => async (dispatch) => {
     });
   } catch (err) {
     console.error(err, 'loooook here');
-    addError('invalid credentials');
+    addError('invalid credentials*');
     dispatch({
       type: 'AUTH_ERROR',
     });

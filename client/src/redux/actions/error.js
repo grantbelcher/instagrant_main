@@ -10,5 +10,5 @@ export const addError = (message) => {
     store.dispatch({
       type: 'REMOVE_ERROR',
     });
-  }, 5000);
+  }, 4000);
 };
