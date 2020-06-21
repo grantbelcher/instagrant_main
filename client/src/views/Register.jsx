@@ -58,55 +58,74 @@ const styles = {
   },
 };
 
-const Register = ({ changeView }) => (
-  <div style={styles.container}>
-    <div style={styles.header}>
-      <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => changeView('Log In')} />
-      <div style={{
-        marginRight: '44vw',
-      }}
-      >
-        Register
-      </div>
-    </div>
-    <div style={{
-      marginTop: '15vh',
-      fontWeight: 600,
-    }}
-    >
-      Enter name and password
-    </div>
-    <div style={{
-      marginTop: '3vh',
-      color: '#939393',
-    }}
-    >
-      Add your name so friends can find you.
-    </div>
-    <div style={styles.inputs}>
-      <TextField id="username" variant="outlined" style={styles.input} placeholder="Full Name" />
-      <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" />
-      <TextField id="password" variant="outlined" style={styles.input} placeholder="Password" />
-    </div>
-    <CustomButton title="Next" />
-    <div style={styles.footer}>
-      <div style={{
-        color: '#8e8e8e',
-        marginTop: '1vh',
-        fontSize: 'smaller',
-      }}
-      >
-        from
+const Register = ({ changeView }) => {
+  const [fullName, setFullName] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [social, setSocial] = useState('')
+
+
+  const handleSocial = (e) => {
+    if (social.length === 2 || social.length === 7) {
+      setSocial(e.target.value + ' - ');
+    } else if (social.length === 15) {
+      return;
+    } else {
+      setSocial(e.target.value);
+    }
+  }
+
+  return (
+    <div style={styles.container}>
+      <div style={styles.header}>
+        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => changeView('Log In')} />
+        <div style={{
+          marginRight: '44vw',
+        }}
+        >
+          Register
+        </div>
       </div>
       <div style={{
-        marginTop: '1vh',
-        fontSize: 'small',
+        marginTop: '15vh',
+        fontWeight: 600,
       }}
       >
-        GRANTBOOK
+        Enter name and password
+      </div>
+      <div style={{
+        marginTop: '3vh',
+        color: '#939393',
+      }}
+      >
+        Add your name so friends can find you.
+      </div>
+      <div style={styles.inputs}>
+        <TextField id="fullName" variant="outlined" style={styles.input} placeholder="Full Name" onChange={(e) => setFullName(e.target.value)} value={fullName} />
+        <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={(e) => setUsername(e.target.value)} value={username} />
+        <TextField id="ssn" variant="outlined" style={styles.input} placeholder="Social Security #" onChange={(e) => handleSocial(e)} value={social} />
+        <TextField id="password" variant="outlined" style={styles.input} placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
+      </div>
+      <CustomButton title="Next" />
+      <div style={styles.footer}>
+        <div style={{
+          color: '#8e8e8e',
+          marginTop: '1vh',
+          fontSize: 'smaller',
+        }}
+        >
+          from
+        </div>
+        <div style={{
+          marginTop: '1vh',
+          fontSize: 'small',
+        }}
+        >
+          GRANTBOOK
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
 export default Register;
