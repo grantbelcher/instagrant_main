@@ -72,7 +72,7 @@ router.post(
 );
 
 router.post(
-  '/SignIn',
+  '/signin',
   [
     check('username').exists(),
     check('password').exists(),
@@ -93,7 +93,7 @@ router.post(
         let codesMatch = (password === userInfo.password);
         if (codesMatch) {
           const token = jwt.sign({ userId: userInfo.userId }, 'secret', { expiresIn: '1h' });
-          return res.json({ token });
+          return res.json({ token, username: userInfo.username });
         } else {
           return res.status(401).json({ message: 'invalid credentials' })
         }

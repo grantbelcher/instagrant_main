@@ -19,6 +19,6 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const CustomButton = ({ title, onClick }) => <StyledButton onClick={onClick} style={{ marginTop: '7vh' }}>{title}</StyledButton>;
+const CustomButton = ({ title, onClick, disabled }) => <StyledButton disabled={disabled} onClick={onClick} style={{ marginTop: '7vh' }}>{title}</StyledButton>;
 
 export default CustomButton;

@@ -1,38 +1,38 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import setAuthToken from '../../../../utils/setAuthToken';
+import { addError } from './error';
 
+// export const loadUser = () => async (dispatch) => {
+//   if (localStorage.token) {
+//     setAuthToken(localStorage.token);
+//   }
+//   try {
+//     const res = await axios.get('/auth/profile');
+//     dispatch({
+//       type: 'USER_LOADED',
+//       payload: res.data.user,
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
 
-export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    console.log('token present');
-    setAuthToken(localStorage.token);
-  }
-  try {
-    const res = await axios.get('/auth/profile');
-    dispatch({
-      type: 'USER_LOADED',
-      payload: res.data.user,
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-export const signIn = (name, password, path) => async (dispatch) => {
-  console.log(name, password, path, 'action');
+export const signIn = (username, password) => async (dispatch) => {
+  console.log(username, password, 'action');
   try {
     dispatch({
       type: 'LOADING',
     });
-    const response = await axios.post(`http://localhost:1000/auth/${path}`, { name, password });
-    localStorage.setItem('token', response.data.token);
+    const response = await axios.post(`http://localhost:1000/auth/signin`, { username, password });
+    // localStorage.setItem('token', response.data.token);
     dispatch({
       type: 'AUTH_SUCCESS',
-      payload: response.data.token,
+      payload: response.data,
     });
-    dispatch(loadUser());
   } catch (err) {
+    console.error(err, 'loooook here');
+    addError('invalid credentials');
     dispatch({
       type: 'AUTH_ERROR',
     });

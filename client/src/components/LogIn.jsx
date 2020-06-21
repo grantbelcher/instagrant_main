@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import CustomButton from './CustomButton';
+import { signIn } from '../redux/actions/auth';
 
 const styles = {
   container: {
@@ -51,9 +53,10 @@ const styles = {
   },
 };
 
-const Login = () => {
+const Login = ({ logIn }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [disabled, setDisabled] = useState(true);
 
   const handleChange = (e) => {
     if (e.target.id === 'username') {
@@ -62,13 +65,17 @@ const Login = () => {
     if (e.target.id === 'password') {
       setPassword(e.target.value);
     }
+    console.log(username.length, password.length)
+    if (username.length > 3 && password.length > 3) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   const handleLogIn = () => {
-    console.log({
-      username,
-      password,
-    });
+    console.log('yooooo')
+    logIn(username, password)
   };
 
   return (
@@ -96,7 +103,7 @@ const Login = () => {
       }}>
         Don&#39;t have an account yet? <a style={{color: '#0000EE'}} onClick={() => console.log('eeeyyy')}>Sign up</a>
       </div>
-      <CustomButton title="Log In" onClick={handleLogIn} />
+      <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled}/>
       <div style={styles.footer}
       >
         <div style={{
@@ -119,4 +126,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = {
+  logIn: signIn,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

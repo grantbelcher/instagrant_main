@@ -16,7 +16,8 @@ export default function (state = initialState, action) {
     case 'AUTH_SUCCESS':
       return {
         isLoggedIn: true,
-        token: payload,
+        token: payload.token,
+        user: payload.username,
       };
     case 'USER_LOADED':
       return {
