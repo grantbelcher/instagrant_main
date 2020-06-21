@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = {
   container: {
@@ -31,10 +32,29 @@ const AddProfilePic = () => (
   <div style={styles.container}>
     <div style={styles.header}>
       <img
-          style={styles.logo}
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
-          alt="logo"
-        />
+        style={styles.logo}
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+        alt="logo"
+      />
+    </div>
+    <Avatar style={{ marginTop: '25vh', height: '20vw', width: '20vw' }} />
+    <div
+      style={{
+        marginTop: '4vh',
+        fontWeight: 600,
+      }}
+    >
+      Add a profile photo
+    </div>
+    <div
+      style={{
+        maxWidth: '75%',
+        textAlign: 'center',
+        marginTop: '4vh',
+        color: '#939393',
+      }}
+    >
+      Add a profile photo so your friends know its you
     </div>
   </div>
 );
