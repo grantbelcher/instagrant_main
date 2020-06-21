@@ -55,6 +55,22 @@ const Login = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
+  const handleChange = (e) => {
+    if (e.target.id === 'username') {
+      setUsername(e.target.value);
+    }
+    if (e.target.id === 'password') {
+      setPassword(e.target.value);
+    }
+  };
+
+  const handleLogIn = () => {
+    console.log({
+      username,
+      password,
+    });
+  };
+
   return (
     <div style={styles.container}>
       <img
@@ -71,8 +87,8 @@ const Login = () => {
         }}
       />
       <div style={styles.inputs}>
-        <TextField variant="outlined" style={styles.input} placeholder="Username" />
-        <TextField variant="outlined" style={styles.input} placeholder="Password" />
+        <TextField id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} />
+        <TextField id="password" variant="outlined" style={styles.input} placeholder="Password" onChange={handleChange} />
       </div>
       <div style={{
         color: 'rgb(130, 130, 130)',
@@ -80,7 +96,7 @@ const Login = () => {
       }}>
         Don&#39;t have an account yet? <a style={{color: '#0000EE'}} onClick={() => console.log('eeeyyy')}>Sign up</a>
       </div>
-      <CustomButton title="Log In" />
+      <CustomButton title="Log In" onClick={handleLogIn} />
       <div style={styles.footer}
       >
         <div style={{
