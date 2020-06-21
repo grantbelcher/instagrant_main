@@ -11,7 +11,7 @@ const styles = {
 };
 
 const Auth = () => {
-  const [view, setView] = useState('Sign Up');
+  const [view, setView] = useState('Profile Pic');
   if (view === 'Log In') {
     return <LogIn changeView={setView} />;
   }
