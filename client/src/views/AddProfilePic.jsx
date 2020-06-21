@@ -33,7 +33,7 @@ const styles = {
   },
 };
 
-const AddProfilePic = () => (
+const AddProfilePic = ({ changeView, addFile }) => (
   <div style={styles.container}>
     <div style={styles.header}>
       <img
@@ -63,7 +63,7 @@ const AddProfilePic = () => (
     </div>
     {/* <CustomButton title="Next" /> */}
     {/* <PhotoUpload /> */}
-    <NewPostButton />
+    <NewPostButton changeView={changeView} addFile={addFile} />
     {/* <EmptyButton /> */}
     <a
       style={{

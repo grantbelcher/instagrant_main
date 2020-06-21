@@ -18,7 +18,7 @@ const styles = {
 }
 
 const NewPostButton = ({
-  showModal, hideModal, plusIcon, children, style,
+  changeView, addFile, style,
 }) => {
   const [file, setFile] = useState(undefined);
   const fileInputRef = useRef();
@@ -26,7 +26,8 @@ const NewPostButton = ({
 
   useEffect(() => {
     if (file) {
-      console.log(file);
+      addFile(file);
+      changeView('Edit Pic');
       // Resetting the input value so you are able to
       // use the same file twice
       fileInputRef.current.value = '';

@@ -28,6 +28,10 @@ module.exports = {
         test: /\.(png|jpg)$/,
         loader: 'url-loader',
       },
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
+      },
     ],
   },
   resolve: {
