@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LogIn from '../components/LogIn';
-
+import LogIn from './LogIn';
+import Register from './Register';
 
 const styles = {
   container: {
@@ -15,7 +15,7 @@ const Auth = () => {
     return <LogIn changeView={setView} />;
   }
   if (view === 'Sign Up') {
-    return <div>sign up</div>;
+    return <Register changeView={setView} />;
   }
 };
 

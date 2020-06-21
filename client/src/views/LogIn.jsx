@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import CustomButton from './CustomButton';
+import CustomButton from '../components/CustomButton';
 import { signIn } from '../redux/actions/auth';
 
 const styles = {
@@ -84,8 +84,9 @@ const Login = ({ logIn, error, changeView }) => {
   };
 
   const handleLogIn = () => {
-    console.log('yooooo')
     logIn(username, password);
+    setUsername(null);
+    setPassword(null);
   };
 
   return (
@@ -117,7 +118,7 @@ const Login = ({ logIn, error, changeView }) => {
       }}>
         Don&#39;t have an account yet? <a style={{color: '#0000EE'}} onClick={() => changeView('Sign Up')}>Sign up</a>
       </div>
-      <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled}/>
+      <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled} />
       <div style={styles.footer}
       >
         <div style={{
