@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CustomButton from '../components/CustomButton';
+import PhotoUpload from '../components/PhotoUpload';
+import EmptyButton from '../components/EmptyButton';
 import store from '../redux/index';
+import NewPostButton from '../components/NewPostButton';
 
 const styles = {
   container: {
@@ -58,7 +61,10 @@ const AddProfilePic = () => (
     >
       Add a profile photo so your friends know its you
     </div>
-    <CustomButton title="Next" />
+    {/* <CustomButton title="Next" /> */}
+    {/* <PhotoUpload /> */}
+    <NewPostButton />
+    {/* <EmptyButton /> */}
     <a
       style={{
         color: '#4fa9f6',
@@ -68,6 +74,7 @@ const AddProfilePic = () => (
     >
       Skip
     </a>
+    
   </div>
 );
 
