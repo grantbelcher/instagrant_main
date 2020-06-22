@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
+import LocationSearch from '../components/LocationSearch';
 
 const styles = {
   container: {
@@ -36,10 +37,16 @@ const styles = {
     fontWeight: 700,
     fontSize: 'large',
   },
+  image: {
+    height: '10vh',
+    width: '10vh',
+    borderRadius: '5px',
+  },
 };
 
 const AddCaption = ({ file, changeView }) => {
-  console.log(file, 'look here!!!!!');
+  const [caption, setCaption] = useState('');
+  console.log(caption)
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -57,10 +64,12 @@ const AddCaption = ({ file, changeView }) => {
         </a>
       </div>
       <div style={{
-        backgroundColor: 'red',
-        width: '100%',
+        width: '90%',
         height: '12vh',
         display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: '2vh',
       }}
       >
         <TextField
@@ -68,17 +77,35 @@ const AddCaption = ({ file, changeView }) => {
           multiline
           color="grey"
           rows={3}
-          defaultValue="Write a caption..."
+          rowsMax={5}
+          onChange={(e) => setCaption(e.target.value)}
+          value={caption}
+          placeholder="Write a caption..."
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Avatar alt="test" />
+                <Avatar
+                  alt="test"
+                  style={{
+                    height: '10vw',
+                    width: '10vw',
+                    marginBottom: '4vw',
+                    marginRight: '4vw',
+                  }}
+                />
               </InputAdornment>
             ),
           }}
         />
+        <img src={file} style={styles.image} />
       </div>
-      {/* <img src={file} /> */}
+      <div style={{
+        backgroundColor: 'rgb(230, 230, 230)',
+        width: '100%',
+        height: 3,
+        marginTop: '-2.5vw',
+      }}/>
+      <LocationSearch />
     </div>
   );
 };
