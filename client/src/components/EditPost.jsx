@@ -28,6 +28,10 @@ const styles = {
     borderWidth: 'thin',
     borderColor: '#b3b4b5',
   },
+  backIcon: {
+    color: 'rgb(100, 100, 100)',
+    marginLeft: '4vw',
+  },
   buttonStyle: {
     height: '5vh',
     width: '85vw',
@@ -67,6 +71,18 @@ const styles = {
     marginTop: '25vh',
     backgroundColor: '#f0f0f0',
   },
+  nextButton: {
+    marginRight: '5vw',
+    color: 'rgb(79, 169, 246)',
+    fontWeight: 700,
+    fontSize: 'large',
+  },
+  // nextButton: {
+  //   marginRight: '5vw',
+  //   color: 'rgb(79, 169, 246)',
+  //   fontWeight: 700,
+  //   fontSize: 'large',
+  // },
 };
 
 class EditPost extends React.Component {
@@ -162,17 +178,17 @@ class EditPost extends React.Component {
   // comment
   render() {
     const { crop, croppedImageUrl, src } = this.state;
-    console.log(src);
     return (
       <div style={styles.container}>
         <div style={styles.header}>
           <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} />
           <div style={{
-            marginRight: '44vw',
+            fontSize: 'large',
           }}
           >
             Add a photo
           </div>
+          <a style={src ? styles.nextButton : {opacity: 0}}>Next</a>
         </div>
         <div style={styles.hiddenInput}>
           <input type="file" accept="image/*" onChange={this.onSelectFile} />
