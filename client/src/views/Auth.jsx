@@ -13,7 +13,7 @@ const styles = {
 };
 
 const Auth = () => {
-  const [view, setView] = useState('Edit Pic');
+  const [view, setView] = useState('Add Caption');
   const [file, setFile] = useState(undefined);
 
   useEffect(() => {
@@ -39,7 +39,6 @@ const Auth = () => {
     return <EditPost addFile={setFile} changeView={setView} />;
   }
   if (view === 'Add Caption') {
-    console.log(view, 'view is add Captions');
     return <AddCaption file={file} changeView={setView} />;
   }
 };

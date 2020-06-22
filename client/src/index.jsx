@@ -6,12 +6,16 @@ import { Provider } from 'react-redux';
 import '@babel/polyfill';
 import App from './components/App';
 import store from './redux/index';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from './theme/muiTheme';
 
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </Router>
   </Provider>,
   document.getElementById('app'),

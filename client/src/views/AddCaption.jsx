@@ -1,4 +1,7 @@
 import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = {
   container: {
@@ -11,7 +14,7 @@ const styles = {
   header: {
     backgroundColor: '#eff0f1',
     top: 0,
-    position: 'fixed',
+    // position: 'fixed',
     height: '8vh',
     width: '100%',
     display: 'flex',
@@ -40,7 +43,7 @@ const AddCaption = ({ file, changeView }) => {
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => changeView('Edit Pic')}/>
+        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => changeView('Edit Pic')} />
         <div style={{
           fontSize: 'large',
         }}
@@ -49,12 +52,31 @@ const AddCaption = ({ file, changeView }) => {
         </div>
         <a
           style={styles.nextButton}
-          // onClick={() => {
-          //   this.props.addFile(this.state.src);
-          // }}
         >
           Share
         </a>
+      </div>
+      <div style={{
+        backgroundColor: 'red',
+        width: '100%',
+        height: '12vh',
+        display: 'flex',
+      }}
+      >
+        <TextField
+          id="standard-multiline-static"
+          multiline
+          color="grey"
+          rows={3}
+          defaultValue="Write a caption..."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Avatar alt="test" />
+              </InputAdornment>
+            ),
+          }}
+        />
       </div>
       {/* <img src={file} /> */}
     </div>
