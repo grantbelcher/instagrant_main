@@ -136,7 +136,7 @@ class EditPost extends React.Component {
       }, 'image/jpeg');
     });
   }
-
+  // comment
   render() {
     const { crop, croppedImageUrl, src } = this.state;
     console.log(src, croppedImageUrl);
@@ -163,7 +163,7 @@ class EditPost extends React.Component {
             style={{ maxWidth: '95vw', maxHeight: '40vh' }}
             imageStyle={{
               width: '90vw',
-              height: '40vh%',
+              height: '40vh',
               objectFit: 'contain',
             }}
             // ref={imageRef}
