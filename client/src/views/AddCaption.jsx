@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
 import LocationSearch from '../components/LocationSearch';
+import { newProfilePic } from '../redux/actions/posts';
 
 const styles = {
   container: {
@@ -44,10 +46,14 @@ const styles = {
   },
 };
 
-const AddCaption = ({ file, changeView }) => {
+const AddCaption = ({ file, changeView, newProfile }) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
-  console.log(location, 'LCATION FROM PARENT');
+
+  const handleShare = () => {
+    newProfile(file, caption, location)
+  }
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -60,6 +66,7 @@ const AddCaption = ({ file, changeView }) => {
         </div>
         <a
           style={styles.nextButton}
+          onClick={() => handleShare()}
         >
           Share
         </a>
@@ -111,4 +118,8 @@ const AddCaption = ({ file, changeView }) => {
   );
 };
 
-export default AddCaption;
+const mapDispatchToProps = {
+  newProfile: newProfilePic,
+}
+
+export default connect(null, mapDispatchToProps)(AddCaption);
