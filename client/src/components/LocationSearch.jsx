@@ -37,14 +37,14 @@ const LocationSearch = () => {
     setText(event.target.value);
   };
 
-
-  const listItems = results.map((location) => {
-    return (
+  let listItems;
+  if (results) {
+    listItems = results.map((location) => (
       <ListItem button>
         <ListItemText primary={`${location}`} />
       </ListItem>
-    );
-  });
+    ));
+  }
 
   return (
     <>
@@ -60,7 +60,8 @@ const LocationSearch = () => {
         <Paper style={{
           width: '70vw',
           marginRight: '20vw',
-        }}>
+        }}
+        >
           <List>
             {listItems}
           </List>

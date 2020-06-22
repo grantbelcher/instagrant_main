@@ -75,7 +75,7 @@ const AddCaption = ({ file, changeView }) => {
         <TextField
           id="standard-multiline-static"
           multiline
-          color="grey"
+          color="secondary"
           rows={3}
           rowsMax={5}
           onChange={(e) => setCaption(e.target.value)}
