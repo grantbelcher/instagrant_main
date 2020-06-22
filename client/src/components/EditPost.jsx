@@ -45,7 +45,25 @@ const styles = {
     opacity: 0,
   },
   input: {
-    width: '87vw',
+    width: '100vw',
+  },
+  imgContainer: {
+    border: 'solid',
+    borderColor: '#939393',
+    borderWidth: 1,
+    marginTop: '10vh',
+    position: 'relative',
+    height: 'auto',
+    width: 'auto',
+  },
+  imgTemp: {
+    border: 'solid',
+    borderColor: '#939393',
+    borderWidth: 1,
+    width: '72vw',
+    height: '100vw',
+    marginTop: '10vh',
+    backgroundColor: '#f0f0f0',
   },
 };
 
@@ -57,7 +75,7 @@ class EditPost extends React.Component {
       crop: {
         unit: '%',
         width: 30,
-        aspect: 10 / 10,
+        aspect: 4 / 3,
       },
     };
     this.onSelectFile = this.onSelectFile.bind(this);
@@ -106,6 +124,8 @@ class EditPost extends React.Component {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
+    canvas.maxWidth = '85vw';
+    canvas.maxHeight = '63vh';
     canvas.width = crop.width;
     canvas.height = crop.height;
     const ctx = canvas.getContext('2d');
@@ -136,10 +156,11 @@ class EditPost extends React.Component {
       }, 'image/jpeg');
     });
   }
+
   // comment
   render() {
     const { crop, croppedImageUrl, src } = this.state;
-    console.log(src, croppedImageUrl);
+    console.log(src);
     return (
       <div style={styles.container}>
         <div style={styles.header}>
@@ -155,26 +176,29 @@ class EditPost extends React.Component {
           <input type="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
         <EmptyButton styles={styles.buttonStyle} />
-        {src && (
-          <ReactCrop
+        <div style={src ? styles.imgContainer : styles.imgTemp}
+        >
+          {src ? (
+          <img
             src={src}
-            crop={crop}
-            ruleOfThirds
-            style={{ maxWidth: '95vw', maxHeight: '40vh' }}
-            imageStyle={{
-              width: '90vw',
-              height: '40vh',
-              objectFit: 'contain',
+            style={{
+              maxWidth: '75vw',
+              maxHeight: '56vh',
             }}
-            // ref={imageRef}
-            onImageLoaded={this.onImageLoaded}
-            onComplete={this.onCropComplete}
-            onChange={this.onCropChange}
           />
-        )}
-        {croppedImageUrl && (
-          <img alt="Crop" height="100px" width="100px" src={croppedImageUrl} />
-        )}
+          ) : (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              height: '100%',
+              justifyContent: 'center',
+            }}>
+              <i class="fas fa-image fa-3x" style={{ color: '#939393' }} />
+              <div style={{ marginTop: '4vh' }}>Preview will appear here.</div>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
