@@ -54,16 +54,16 @@ const styles = {
     borderWidth: 1,
     marginTop: '25vh',
     // position: 'relative',
-    height: '85vw',
-    width: '80vw',
+    height: '100vw',
+    width: '85vw',
   },
   imgTemp: {
     position: 'fixed',
     border: 'solid',
     borderColor: '#939393',
     borderWidth: 1,
-    height: '85vw',
-    width: '80vw',
+    height: '100vw',
+    width: '85vw',
     marginTop: '25vh',
     backgroundColor: '#f0f0f0',
   },
@@ -184,10 +184,10 @@ class EditPost extends React.Component {
           <img
             src={src}
             style={{
-              maxWidth: '80vw',
-              maxHeight: '85vw',
-              height: '85vw',
-              width: '80vw',
+              maxWidth: '85vw',
+              maxHeight: '100vw',
+              height: '100vw',
+              width: '85vw',
             }}
           />
           ) : (
