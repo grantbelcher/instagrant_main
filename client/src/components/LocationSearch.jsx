@@ -15,10 +15,9 @@ const styles = {
 };
 
 
-const LocationSearch = () => {
+const LocationSearch = ({ location, setLocation }) => {
   const [results, setResults] = useState([]);
   const [text, setText] = useState('');
-  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     axios.get(`https://www.mapquestapi.com/search/v4/place?sort=relevance&feedback=false&key=WJNdcYkfrIa3bppQNxjGstg6ZJl86IaZ&limit=4&q=${text}`)
@@ -60,15 +59,13 @@ const LocationSearch = () => {
       </ListItem>
     ));
   }
-
-  console.log((listItems.length > 0 && location !== null), listItems.length > 0, location)
   return (
     <>
       <TextField
         id="Search Location"
         getOptionLabel={(option) => option.title}
         style={styles.input}
-        label="Add Location"
+        label={location !== null ? "Location" : "Add Location"}
         value={text}
         onKeyDown={handleDelete}
         onChange={(e) => searchLocation(e)}

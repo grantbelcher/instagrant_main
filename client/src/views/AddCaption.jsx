@@ -46,7 +46,8 @@ const styles = {
 
 const AddCaption = ({ file, changeView }) => {
   const [caption, setCaption] = useState('');
-  console.log(caption)
+  const [location, setLocation] = useState(null);
+  console.log(location, 'LCATION FROM PARENT');
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -105,7 +106,7 @@ const AddCaption = ({ file, changeView }) => {
         height: 3,
         marginTop: '-2.5vw',
       }}/>
-      <LocationSearch />
+      <LocationSearch location={location} setLocation={setLocation} />
     </div>
   );
 };
