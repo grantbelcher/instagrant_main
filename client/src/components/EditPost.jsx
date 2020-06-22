@@ -188,7 +188,7 @@ class EditPost extends React.Component {
             fontSize: 'large',
           }}
           >
-            Add a photo
+            New Post
           </div>
           <a style={src ? styles.nextButton : {opacity: 0}} onClick={() => {
         this.props.addFile(this.state.src);
