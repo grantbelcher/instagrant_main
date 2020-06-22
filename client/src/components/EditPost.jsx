@@ -2,7 +2,52 @@
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import EmptyButton from './EmptyButton';
 
+
+const styles = {
+  container: {
+    height: '100vh',
+    width: '100vw',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  header: {
+    backgroundColor: '#eff0f1',
+    top: 0,
+    position: 'fixed',
+    height: '8vh',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 5,
+    borderBottom: 'solid',
+    borderWidth: 'thin',
+    borderColor: '#b3b4b5',
+  },
+  buttonStyle: {
+    height: '5vh',
+    width: '85vw',
+    backgroundColor: '#4fa9f6',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'fixed',
+    marginTop: '15vh',
+  },
+  hiddenInput: {
+    zIndex: 100,
+    marginTop: '15vh',
+    opacity: 0,
+  },
+  input: {
+    width: '87vw',
+  },
+};
 
 class EditPost extends React.Component {
   constructor() {
@@ -94,18 +139,33 @@ class EditPost extends React.Component {
 
   render() {
     const { crop, croppedImageUrl, src } = this.state;
-
+    console.log(src, croppedImageUrl);
     return (
-      <div className="App">
-        <div>
+      <div style={styles.container}>
+        <div style={styles.header}>
+          <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} />
+          <div style={{
+            marginRight: '44vw',
+          }}
+          >
+            Add a photo
+          </div>
+        </div>
+        <div style={styles.hiddenInput}>
           <input type="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
+        <EmptyButton styles={styles.buttonStyle} />
         {src && (
           <ReactCrop
             src={src}
             crop={crop}
-            ruleOfThirds={true}
-            style={{ width: '100%', height: '100%' }}
+            ruleOfThirds
+            style={{ maxWidth: '95vw', maxHeight: '40vh' }}
+            imageStyle={{
+              width: '90vw',
+              height: '40vh%',
+              objectFit: 'contain',
+            }}
             // ref={imageRef}
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}
@@ -113,7 +173,7 @@ class EditPost extends React.Component {
           />
         )}
         {croppedImageUrl && (
-          <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
+          <img alt="Crop" height="100px" width="100px" src={croppedImageUrl} />
         )}
       </div>
     );
