@@ -86,8 +86,8 @@ const styles = {
 };
 
 class EditPost extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       src: null,
       crop: {
@@ -178,6 +178,8 @@ class EditPost extends React.Component {
   // comment
   render() {
     const { crop, croppedImageUrl, src } = this.state;
+    const { changeView } = this.props
+    console.log(this.props.changeView)
     return (
       <div style={styles.container}>
         <div style={styles.header}>
@@ -188,12 +190,14 @@ class EditPost extends React.Component {
           >
             Add a photo
           </div>
-          <a style={src ? styles.nextButton : {opacity: 0}}>Next</a>
+          <a style={src ? styles.nextButton : {opacity: 0}} onClick={() => {
+        this.props.addFile(this.state.src);
+      }}>Next</a>
         </div>
         <div style={styles.hiddenInput}>
           <input type="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
-        <EmptyButton styles={styles.buttonStyle} />
+        <EmptyButton styles={styles.buttonStyle} onClick={changeView} />
         <div style={src ? styles.imgContainer : styles.imgTemp}
         >
           {src ? (
