@@ -40,7 +40,7 @@ const Auth = () => {
   }
   if (view === 'Add Caption') {
     console.log(view, 'view is add Captions');
-    return <AddCaption file={file} changeView={() => setView('Add Caption')} />;
+    return <AddCaption file={file} changeView={setView} />;
   }
 };
 

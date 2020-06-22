@@ -35,12 +35,12 @@ const styles = {
   },
 };
 
-const AddCaption = ({ file }) => {
+const AddCaption = ({ file, changeView }) => {
   console.log(file, 'look here!!!!!');
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} />
+        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => changeView('Edit Pic')}/>
         <div style={{
           fontSize: 'large',
         }}
@@ -56,6 +56,7 @@ const AddCaption = ({ file }) => {
           Share
         </a>
       </div>
+      {/* <img src={file} /> */}
     </div>
   );
 };

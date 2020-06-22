@@ -1,5 +1,6 @@
 
 import React, { PureComponent } from 'react';
+import store from '../redux/index'
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import EmptyButton from './EmptyButton';
@@ -178,38 +179,42 @@ class EditPost extends React.Component {
   // comment
   render() {
     const { crop, croppedImageUrl, src } = this.state;
-    const { changeView } = this.props
-    console.log(this.props.changeView)
+    const { changeView } = this.props;
+    console.log(this.props.changeView);
     return (
       <div style={styles.container}>
         <div style={styles.header}>
-          <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} />
+          <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => store.dispatch({ type: 'LOG_IN' })} />
           <div style={{
             fontSize: 'large',
           }}
           >
             New Post
           </div>
-          <a style={src ? styles.nextButton : {opacity: 0}} onClick={() => {
-        this.props.addFile(this.state.src);
-      }}>Next</a>
+          <a
+            style={src ? styles.nextButton : { opacity: 0 }}
+            onClick={() => {
+              this.props.addFile(this.state.src);
+            }}
+          >
+            Next
+          </a>
         </div>
         <div style={styles.hiddenInput}>
           <input type="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
         <EmptyButton styles={styles.buttonStyle} onClick={changeView} />
-        <div style={src ? styles.imgContainer : styles.imgTemp}
-        >
+        <div style={src ? styles.imgContainer : styles.imgTemp}>
           {src ? (
-          <img
-            src={src}
-            style={{
-              maxWidth: '85vw',
-              maxHeight: '100vw',
-              height: '100vw',
-              width: '85vw',
-            }}
-          />
+            <img
+              src={src}
+              style={{
+                maxWidth: '85vw',
+                maxHeight: '100vw',
+                height: '100vw',
+                width: '85vw',
+              }}
+            />
           ) : (
             <div style={{
               display: 'flex',
@@ -217,8 +222,9 @@ class EditPost extends React.Component {
               alignItems: 'center',
               height: '100%',
               justifyContent: 'center',
-            }}>
-              <i class="fas fa-image fa-3x" style={{ color: '#939393' }} />
+            }}
+            >
+              <i className="fas fa-image fa-3x" style={{ color: '#939393' }} />
               <div style={{ marginTop: '4vh' }}>Preview will appear here.</div>
             </div>
           )}
