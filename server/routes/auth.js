@@ -57,7 +57,7 @@ router.post(
                 console.log(result[0], 'response from sql query');
                 const { userId, username: user } = result[0];
                 const token = jwt.sign({ userId }, 'secret', { expiresIn: '1h' });
-                return res.json({ token, username: user });
+                return res.json({ token, username: user, userId });
               });
           })
           .catch((err) => {
@@ -94,7 +94,7 @@ router.post(
         let codesMatch = (password === userInfo.password);
         if (codesMatch) {
           const token = jwt.sign({ userId: userInfo.userId }, 'secret', { expiresIn: '1h' });
-          return res.json({ token, username: userInfo.username });
+          return res.json({ token, username: userInfo.username, userId: userInfo.userId });
         } else {
           return res.status(401).json({ message: 'invalid credentials' })
         }

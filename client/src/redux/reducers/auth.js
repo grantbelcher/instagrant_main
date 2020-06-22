@@ -19,12 +19,14 @@ export default function (state = initialState, action) {
         isLoggedIn: true,
         token: payload.token,
         user: payload.username,
+        userId: payload.userId,
       };
     case 'REGISTER_SUCCESS':
       return {
         ...state,
         token: payload.token,
         user: payload.username,
+        userId: payload.userId,
       };
     case 'LOG_IN':
       return {

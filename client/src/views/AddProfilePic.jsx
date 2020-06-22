@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CustomButton from '../components/CustomButton';
-import PhotoUpload from '../components/PhotoUpload';
-import EmptyButton from '../components/EmptyButton';
+// import EmptyButton from '../components/EmptyButton';
 import store from '../redux/index';
 import NewPostButton from '../components/NewPostButton';
 
@@ -33,7 +32,7 @@ const styles = {
   },
 };
 
-const AddProfilePic = ({ changeView, addFile }) => (
+const AddProfilePic = ({ changeView }) => (
   <div style={styles.container}>
     <div style={styles.header}>
       <img
@@ -63,7 +62,7 @@ const AddProfilePic = ({ changeView, addFile }) => (
     </div>
     {/* <CustomButton title="Next" /> */}
     {/* <PhotoUpload /> */}
-    <NewPostButton changeView={changeView} addFile={addFile} />
+    <CustomButton title="Select a Photo" onClick={() => changeView('Edit Pic')} />
     {/* <EmptyButton /> */}
     <a
       style={{

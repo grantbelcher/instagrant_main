@@ -24,23 +24,23 @@ const NewPostButton = ({
   const fileInputRef = useRef();
   const history = useHistory();
 
-  useEffect(() => {
-    if (file) {
-      addFile(file);
-      changeView('Edit Pic');
-      // Resetting the input value so you are able to
-      // use the same file twice
-      fileInputRef.current.value = '';
-    }
-  }, [file]);
+  // useEffect(() => {
+  //   if (file) {
+  //     // addFile(file);
+  //     changeView('Edit Pic');
+  //     // Resetting the input value so you are able to
+  //     // use the same file twice
+  //     // fileInputRef.current.value = '';
+  //   }
+  // }, [file]);
   return (
     <div style={{width: '75%'}}>
-      <label
+      {/* <label
         style={{ cursor: 'pointer', ...style }}
         htmlFor="file-upload"
-      >
-      <EmptyButton />
-      </label>
+      > */}
+      <EmptyButton onClick={() => (changeView('Edit Pic'))} style/>
+      {/* </label>
       <input
         id="file-upload"
         className="button"
@@ -50,7 +50,7 @@ const NewPostButton = ({
         // Get the first selected file
         onChange={(event) => setFile(event.target.files[0])}
         ref={fileInputRef}
-      />
+      /> */}
     </div>
   );
 };
