@@ -2,8 +2,15 @@ const initialState = {
   isLoggedIn: false,
   token: null,
   loading: false,
-  user: null,
+  user: 'instagrant420',
+  userId: 7,
 };
+// const initialState = {
+//   isLoggedIn: false,
+//   token: null,
+//   loading: false,
+//   user: null,
+// };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;

@@ -51,7 +51,8 @@ const AddCaption = ({ file, changeView, newProfile }) => {
   const [location, setLocation] = useState(null);
 
   const handleShare = () => {
-    newProfile(file, caption, location);
+    // newProfile(file, caption, location);
+    newProfile('https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg', caption, location);
   };
 
   return (
@@ -105,7 +106,8 @@ const AddCaption = ({ file, changeView, newProfile }) => {
             ),
           }}
         />
-        <img src={file} style={styles.image} />
+        <img src='https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg' style={styles.image} />
+        {/* <img src={file} style={styles.image} /> */}
       </div>
       <div style={{
         backgroundColor: 'rgb(230, 230, 230)',
