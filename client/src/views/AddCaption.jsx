@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
 import LocationSearch from '../components/LocationSearch';
-import { newProfilePic } from '../redux/actions/posts';
+import { newProfilePic, newPost } from '../redux/actions/posts';
 
 const styles = {
   container: {
@@ -46,13 +46,16 @@ const styles = {
   },
 };
 
-const AddCaption = ({ file, changeView, newProfile }) => {
+const AddCaption = ({ file, changeView, newProfile, addNewPost, inRegistration }) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
 
   const handleShare = () => {
-    // newProfile(file, caption, location);
-    newProfile('https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg', caption, location);
+    if (inRegistration) {
+      newProfile('https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg', caption, location);
+    } else {
+      addNewPost('https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg',caption, location);
+    }
   };
 
   return (
@@ -122,6 +125,7 @@ const AddCaption = ({ file, changeView, newProfile }) => {
 
 const mapDispatchToProps = {
   newProfile: newProfilePic,
-}
+  addNewPost: newPost,
+};
 
 export default connect(null, mapDispatchToProps)(AddCaption);

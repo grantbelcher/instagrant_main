@@ -4,12 +4,14 @@ const initialState = {
   loading: false,
   user: 'instagrant420',
   userId: 7,
+  avatar: null,
 };
 // const initialState = {
 //   isLoggedIn: false,
 //   token: null,
 //   loading: false,
 //   user: null,
+//   avatar: null,
 // };
 
 export default function (state = initialState, action) {
@@ -54,6 +56,12 @@ export default function (state = initialState, action) {
         token: null,
         loading: false,
         user: null,
+      };
+    case 'CHANGE_AVATAR':
+      console.log('made it to the reducer')
+      return {
+        ...state,
+        avatar: payload,
       };
     default:
       return state;

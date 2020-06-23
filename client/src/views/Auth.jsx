@@ -39,7 +39,7 @@ const Auth = () => {
     return <EditPost addFile={setFile} changeView={setView} />;
   }
   if (view === 'Add Caption') {
-    return <AddCaption file={file} changeView={setView} />;
+    return <AddCaption file={file} changeView={setView} inRegistration={true} />;
   }
 };
 
