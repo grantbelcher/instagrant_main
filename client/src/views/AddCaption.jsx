@@ -51,8 +51,8 @@ const AddCaption = ({ file, changeView, newProfile }) => {
   const [location, setLocation] = useState(null);
 
   const handleShare = () => {
-    newProfile(file, caption, location)
-  }
+    newProfile(file, caption, location);
+  };
 
   return (
     <div style={styles.container}>

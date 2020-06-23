@@ -81,7 +81,7 @@ const configureDb = () => {
         authorId INT,
         username VARCHAR(20) NOT NULL,
         location VARCHAR(50),
-        caption VARCHAR(255,
+        caption VARCHAR(255),
         picture VARCHAR(255),
         PRIMARY KEY (postId),
         FOREIGN KEY (authorId) REFERENCES users(userId)
