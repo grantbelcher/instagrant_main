@@ -1,10 +1,10 @@
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
   token: null,
   loading: false,
   user: 'instagrant420',
   userId: 7,
-  avatar: null,
+  avatar: "https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg",
 };
 // const initialState = {
 //   isLoggedIn: false,
@@ -58,7 +58,7 @@ export default function (state = initialState, action) {
         user: null,
       };
     case 'CHANGE_AVATAR':
-      console.log('made it to the reducer')
+      console.log('made it to the reducer');
       return {
         ...state,
         avatar: payload,
