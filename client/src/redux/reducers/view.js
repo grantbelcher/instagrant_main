@@ -8,14 +8,30 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case 'VIEW_PROFILE':
-      console.log('viewing profile');
       return {
         ...state,
         screen: 'profile',
       };
+    case 'ADD_POST':
+      return {
+        ...state,
+        screen: 'new post',
+      };
+    case 'ADD_PROFILE_PIC':
+      return {
+        ...state,
+        screen: 'add profile pic',
+      };
+    case 'ADD_CAPTION':
+      return {
+        ...state,
+        screen: 'add caption',
+      }
     case 'VIEW_FEED':
-      console.log('viewing feed');
-      return state
+      return {
+        ...state,
+        screen: 'feed',
+      }
     case 'SEARCH USERS':
       console.log('searching users')
       return state

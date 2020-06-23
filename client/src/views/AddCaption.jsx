@@ -5,6 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
 import LocationSearch from '../components/LocationSearch';
 import { newProfilePic, newPost } from '../redux/actions/posts';
+import store from '../redux/index';
 
 const styles = {
   container: {
@@ -46,15 +47,23 @@ const styles = {
   },
 };
 
-const AddCaption = ({ file, changeView, newProfile, addNewPost, inRegistration }) => {
+const AddCaption = ({ file, upload, changeView, newProfile, addNewPost, inRegistration }) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
 
   const handleShare = () => {
     if (inRegistration) {
-      newProfile('https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg', caption, location);
+      newProfile(file, caption, location);
+      setTimeout(() => {
+        store.dispatch({
+          type: 'VIEW_FEED',
+        });
+      }, 2000);
     } else {
-      addNewPost('https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg',caption, location);
+      addNewPost(upload, caption, location);
+      store.dispatch({
+        type: 'VIEW_FEED',
+      }, 2000);
     }
   };
 
@@ -109,7 +118,7 @@ const AddCaption = ({ file, changeView, newProfile, addNewPost, inRegistration }
             ),
           }}
         />
-        <img src='https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg' style={styles.image} />
+        <img src={upload} style={styles.image} />
         {/* <img src={file} style={styles.image} /> */}
       </div>
       <div style={{
@@ -117,10 +126,16 @@ const AddCaption = ({ file, changeView, newProfile, addNewPost, inRegistration }
         width: '100%',
         height: 3,
         marginTop: '-2.5vw',
-      }}/>
+      }} />
       <LocationSearch location={location} setLocation={setLocation} />
     </div>
   );
+};
+
+const mapStateToProps = ({ upload }) => {
+  return {
+    upload,
+  };
 };
 
 const mapDispatchToProps = {
@@ -128,4 +143,4 @@ const mapDispatchToProps = {
   addNewPost: newPost,
 };
 
-export default connect(null, mapDispatchToProps)(AddCaption);
+export default connect(mapStateToProps, mapDispatchToProps)(AddCaption);

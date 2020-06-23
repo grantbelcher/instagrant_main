@@ -1,8 +1,10 @@
 
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import EmptyButton from './EmptyButton';
+import { selectPhoto } from '../redux/actions/upload';
 
 
 const styles = {
@@ -99,6 +101,8 @@ class EditPost extends React.Component {
       loading: false,
     };
     this.onSelectFile = this.onSelectFile.bind(this);
+    this.navigateBack = this.navigateBack.bind(this);
+    this.navigateForward = this.navigateForward.bind(this);
     // this.onImageLoaded = this.onImageLoaded.bind(this);
     // this.onCropComplete = this.onCropComplete.bind(this);
     // this.onCropChange = this.onCropChange.bind(this);
@@ -135,16 +139,32 @@ class EditPost extends React.Component {
     }
   }
 
+  navigateForward() {
+    if (this.props.inRegistration) {
+      console.log(this.props.inRegistration, 'yoooo')
+      this.props.addFile(this.state.image);
+    } else {
+      this.props.selectPhoto(this.state.image);
+    }
+  }
+
+  navigateBack() {
+    if (this.props.inRegistration) {
+      store.dispatch({ type: 'LOG_IN' });
+    } else {
+      store.dispatch({ type: 'VIEW_FEED' });
+    }
+  }
+
   render() {
     const {
       crop, croppedImageUrl, image, loading,
     } = this.state;
     const { changeView } = this.props;
-    console.log(this.props.changeView);
     return (
       <div style={styles.container}>
         <div style={styles.header}>
-          <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => store.dispatch({ type: 'LOG_IN' })} />
+          <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => this.navigateBack()} />
           <div style={{
             fontSize: 'large',
           }}
@@ -154,7 +174,7 @@ class EditPost extends React.Component {
           <a
             style={image ? styles.nextButton : { opacity: 0 }}
             onClick={() => {
-              this.props.addFile(image);
+              this.navigateForward();
             }}
           >
             Next
@@ -198,4 +218,8 @@ class EditPost extends React.Component {
   }
 }
 
-export default EditPost;
+const mapDispatchToProps = {
+  selectPhoto,
+};
+
+export default connect(null, mapDispatchToProps)(EditPost);

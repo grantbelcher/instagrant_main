@@ -42,7 +42,7 @@ const styles = {
 const Dashboard = ({ screen }) => (
   <div style={styles.container}>
     <div style={styles.header}>
-      <i class="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'VIEW_PROFILE' })} />
+      <i class="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
       <img
         style={styles.logo}
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"

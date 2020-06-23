@@ -36,7 +36,7 @@ const Auth = () => {
     return <AddProfilePic changeView={setView} />;
   }
   if (view === 'Edit Pic') {
-    return <EditPost addFile={setFile} changeView={setView} />;
+    return <EditPost addFile={setFile} changeView={setView} inRegistration={true} />;
   }
   if (view === 'Add Caption') {
     return <AddCaption file={file} changeView={setView} inRegistration={true} />;

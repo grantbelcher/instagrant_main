@@ -6,6 +6,8 @@ import { loadUser } from '../redux/actions/auth';
 import store from '../redux/index';
 import Auth from '../views/Auth';
 import Profile from '../views/Profile';
+import EditPost from './EditPost';
+import AddCaption from '../views/AddCaption';
 // import setAuthToken from '../../../utils/setAuthToken';
 
 // if (localStorage.token) {
@@ -14,11 +16,16 @@ import Profile from '../views/Profile';
 
 const App = ({ isLoggedIn, screen }) => {
   let currentView;
-  console.log
   if (screen === 'feed') {
     currentView = <Dashboard />;
   } else if (screen === 'profile') {
     currentView = <Profile />;
+  } else if (screen === 'new post') {
+    currentView = <EditPost />;
+  } else if (screen === 'add profile pic') {
+    currentView = <EditPost />;
+  } else if (screen === 'add caption') {
+    currentView = <AddCaption inRegistration={false} />;
   }
   return (
     <div>

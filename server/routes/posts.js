@@ -8,7 +8,7 @@ router.post('/upload-image', (req, res) => {
   const queryString = createPostQuery(req.body);
   db.queryAsync(queryString)
     .then((result) => {
-      console.log(result, 'result from post');
+      res.status(200);
     })
     .catch((err) => {
       console.log(err, 'error');
