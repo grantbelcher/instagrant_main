@@ -13,7 +13,7 @@ const styles = {
 };
 
 const Auth = () => {
-  const [view, setView] = useState('Sign Up');
+  const [view, setView] = useState('Edit Pic');
   const [file, setFile] = useState(undefined);
 
   useEffect(() => {

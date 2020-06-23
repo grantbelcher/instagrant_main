@@ -1,8 +1,7 @@
 
 import React, { PureComponent } from 'react';
-import store from '../redux/index'
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import store from '../redux/index';
 import EmptyButton from './EmptyButton';
 
 
@@ -90,95 +89,56 @@ class EditPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      src: null,
+      // src: null,
+      image: null,
       crop: {
         unit: '%',
         width: 30,
         aspect: 4 / 3,
       },
+      loading: false,
     };
     this.onSelectFile = this.onSelectFile.bind(this);
-    this.onImageLoaded = this.onImageLoaded.bind(this);
-    this.onCropComplete = this.onCropComplete.bind(this);
-    this.onCropChange = this.onCropChange.bind(this);
-    this.makeClientCrop = this.makeClientCrop.bind(this);
-    this.getCroppedImg = this.getCroppedImg.bind(this);
+    // this.onImageLoaded = this.onImageLoaded.bind(this);
+    // this.onCropComplete = this.onCropComplete.bind(this);
+    // this.onCropChange = this.onCropChange.bind(this);
+    // this.makeClientCrop = this.makeClientCrop.bind(this);
+    // this.getCroppedImg = this.getCroppedImg.bind(this);
   }
 
   onSelectFile(e) {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => this.setState({ src: reader.result }));
-      reader.readAsDataURL(e.target.files[0]);
+      const { files } = e.target;
+      const data = new FormData();
+      data.append('file', files[0]);
+      data.append('upload_preset', 'instagrant');
+      this.setState({
+        loading: true,
+      });
+      fetch(
+        'https://api.cloudinary.com/v1_1/instagrant/image/upload',
+        {
+          method: 'POST',
+          body: data,
+        },
+      )
+        .then((res) => {
+          console.log(res);
+          res.json()
+            .then((file) => {
+              this.setState({
+                image: file.secure_url,
+                loading: false,
+              });
+            });
+        });
     }
   }
 
-  // If you setState the crop in here you should return false.
-  onImageLoaded(image) {
-    this.imageRef = image;
-  }
-
-  onCropComplete(crop) {
-    this.makeClientCrop(crop);
-  }
-
-  onCropChange(crop, percentCrop) {
-    // You could also use percentCrop:
-    // this.setState({ crop: percentCrop });
-    this.setState({ crop });
-  }
-
-  async makeClientCrop(crop) {
-    if (this.imageRef && crop.width && crop.height) {
-      const croppedImageUrl = await this.getCroppedImg(
-        this.imageRef,
-        crop,
-        'newFile.jpeg',
-      );
-      this.setState({ croppedImageUrl });
-    }
-  }
-
-  getCroppedImg(image, crop, fileName) {
-    const canvas = document.createElement('canvas');
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.maxWidth = '85vw';
-    canvas.maxHeight = '63vh';
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height,
-    );
-
-    return new Promise((resolve, reject) => {
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          // reject(new Error('Canvas is empty'));
-          console.error('Canvas is empty');
-          return;
-        }
-        blob.name = fileName;
-        window.URL.revokeObjectURL(this.fileUrl);
-        this.fileUrl = window.URL.createObjectURL(blob);
-        resolve(this.fileUrl);
-      }, 'image/jpeg');
-    });
-  }
-
-  // comment
   render() {
-    const { crop, croppedImageUrl, src } = this.state;
+    const {
+      crop, croppedImageUrl, image, loading,
+    } = this.state;
     const { changeView } = this.props;
     console.log(this.props.changeView);
     return (
@@ -192,22 +152,22 @@ class EditPost extends React.Component {
             New Post
           </div>
           <a
-            style={src ? styles.nextButton : { opacity: 0 }}
+            style={image ? styles.nextButton : { opacity: 0 }}
             onClick={() => {
-              this.props.addFile(this.state.src);
+              this.props.addFile(image);
             }}
           >
             Next
           </a>
         </div>
         <div style={styles.hiddenInput}>
-          <input type="file" accept="image/*" onChange={this.onSelectFile} />
+          <input type="file" name="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
         <EmptyButton styles={styles.buttonStyle} onClick={changeView} />
-        <div style={src ? styles.imgContainer : styles.imgTemp}>
-          {src ? (
+        <div style={image ? styles.imgContainer : styles.imgTemp}>
+          {image ? (
             <img
-              src={src}
+              src={image}
               style={{
                 maxWidth: '85vw',
                 maxHeight: '100vw',
@@ -224,8 +184,12 @@ class EditPost extends React.Component {
               justifyContent: 'center',
             }}
             >
-              <i className="fas fa-image fa-3x" style={{ color: '#939393' }} />
-              <div style={{ marginTop: '4vh' }}>Preview will appear here.</div>
+              { loading ? <CircularProgress /> : (
+                <>
+                  <i className="fas fa-image fa-3x" style={{ color: '#939393' }} />
+                  <div style={{ marginTop: '4vh' }}>Preview will appear here.</div>
+                </>
+              )}
             </div>
           )}
         </div>
