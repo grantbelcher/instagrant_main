@@ -1,15 +1,18 @@
 const initialState = {
-  view: null,
+  screen: 'feed',
   viewInfo: null,
-}
+};
 
 
-export default function (state = null, action) {
+export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case 'VIEW_PROFILE':
       console.log('viewing profile');
-      return state;
+      return {
+        ...state,
+        screen: 'profile',
+      };
     case 'VIEW_FEED':
       console.log('viewing feed');
       return state

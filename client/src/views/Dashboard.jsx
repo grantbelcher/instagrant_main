@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import store from '../redux/index'
 import Footer from '../components/Footer'
 
 
@@ -19,7 +21,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: 5,
     borderBottom: 'solid',
@@ -37,14 +39,17 @@ const styles = {
   },
 };
 
-const Dashboard = () => (
+const Dashboard = ({ screen }) => (
   <div style={styles.container}>
     <div style={styles.header}>
+      <i class="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'VIEW_PROFILE' })} />
       <img
         style={styles.logo}
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
         alt="logo"
       />
+      <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
+      
     </div>
     <div style={{marginTop: '10vh'}}>yo</div>
     <div style={{marginTop: '10vh'}}>yo</div>
@@ -63,4 +68,11 @@ const Dashboard = () => (
   </div>
 );
 
-export default Dashboard;
+const mapStateToProps = ({ view }) => {
+  const { screen } = view;
+  return {
+    screen,
+  };
+};
+
+export default connect(mapStateToProps, null)(Dashboard);

@@ -5,13 +5,21 @@ import Dashboard from '../views/Dashboard';
 import { loadUser } from '../redux/actions/auth';
 import store from '../redux/index';
 import Auth from '../views/Auth';
+import Profile from '../views/Profile';
 // import setAuthToken from '../../../utils/setAuthToken';
 
 // if (localStorage.token) {
 //   setAuthToken(localStorage.token);
 // }
 
-const App = ({ isLoggedIn }) => {
+const App = ({ isLoggedIn, screen }) => {
+  let currentView;
+  console.log
+  if (screen === 'feed') {
+    currentView = <Dashboard />;
+  } else if (screen === 'profile') {
+    currentView = <Profile />;
+  }
   return (
     <div>
       <Switch>
@@ -19,7 +27,7 @@ const App = ({ isLoggedIn }) => {
           {isLoggedIn ? <Redirect to="/dashboard" /> : <Auth />}
         </Route>
         <Route path="/dashboard">
-          <Dashboard />
+          {currentView}
         </Route>
       </Switch>
     </div>
@@ -27,8 +35,10 @@ const App = ({ isLoggedIn }) => {
 };
 const mapStateToProps = (state) => {
   const { isLoggedIn } = state.auth;
+  const { screen } = state.view;
   return {
     isLoggedIn,
+    screen,
   };
 };
 
