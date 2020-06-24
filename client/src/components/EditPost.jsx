@@ -141,7 +141,7 @@ class EditPost extends React.Component {
 
   navigateForward() {
     if (this.props.inRegistration) {
-      console.log(this.props.inRegistration, 'yoooo')
+      console.log(this.props.inRegistration, 'yoooo');
       this.props.addFile(this.state.image);
     } else {
       this.props.selectPhoto(this.state.image);

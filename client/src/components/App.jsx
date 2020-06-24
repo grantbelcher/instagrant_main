@@ -26,6 +26,8 @@ const App = ({ isLoggedIn, screen }) => {
     currentView = <EditPost />;
   } else if (screen === 'add caption') {
     currentView = <AddCaption inRegistration={false} />;
+  } else if (screen === 'my profile'){
+    currentView = <div>My profile!</div>
   }
   return (
     <div>

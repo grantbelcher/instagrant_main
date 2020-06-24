@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import store from '../redux/index';
+
 
 const styles = {
   footer: {
@@ -39,7 +42,9 @@ const Footer = ({ avatar, user }) => {
         <i class="fa fa-search fa-lg" aria-hidden="true"/>
         <i class="fa fa-plus-square fa-lg" aria-hidden="true" />
         <i class="fa fa-heart-o fa-lg" aria-hidden="true" />
-        <Avatar src={avatar} alt={user} style={styles.avatarIcon} />
+        <IconButton onClick={() => store.dispatch({ type: 'VIEW_MY_PROFILE' })}>
+          <Avatar src={avatar} alt={user} style={styles.avatarIcon} />
+        </IconButton>
       </div>
     </div>
   )

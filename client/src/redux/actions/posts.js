@@ -12,12 +12,8 @@ export const newPost = (picture, caption, location) => async (dispatch) => {
   };
   try {
     console.log('try catch')
-    axios.post('/posts/upload-image', data)
-      .then(() => {
-        console.log('THENNNNNN')
-        dispatch(viewFeed());
-      });
-    console.log('after dispatch')
+    axios.post('/posts/upload-image', data);
+
     // ADD NEW POST WITH RESPONSE
   } catch (error) {
     addError('Failed to post image');

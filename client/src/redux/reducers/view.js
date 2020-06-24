@@ -26,14 +26,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         screen: 'add caption',
-      }
+      };
     case 'VIEW_FEED':
       return {
         ...state,
         screen: 'feed',
+      };
+    case 'VIEW_MY_PROFILE':
+      return {
+        ...state,
+        screen: 'my profile',
       }
     case 'SEARCH USERS':
-      console.log('searching users')
       return state
     case 'REMOVE_ERROR':
       return null;
