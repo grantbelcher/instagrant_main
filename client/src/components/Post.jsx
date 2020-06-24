@@ -2,30 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostHeader from './PostHeader';
 import PostIcons from './PostIcons';
+import PostText from './PostText';
 
 
 const styles = {
   container: {
-    backgroundColor: 'red',
     height: '82vh',
-    marginTop: '8vh',
   },
 };
 
-const Post = (currentPost, currentUser, currentUserId) => {
-
+const Post = ({ post, currentUser, currentUserId }) => {
   return (
     <div style={styles.container}>
       <PostHeader />
       <img
-        src={currentPost.picture}
+        src={post.picture}
         style={{
-          backgroundColor: 'violet',
           width: '100vw',
           height: '62vh',
         }}
         />
         <PostIcons />
+        <PostText post={post} />
     </div>
   );
 };
@@ -33,7 +31,7 @@ const Post = (currentPost, currentUser, currentUserId) => {
 const mapStateToProps = ({ auth, currentPost }) => {
   const { user, userId } = auth;
   return {
-    currentPost,
+    post: currentPost,
     currentUser: user,
     currentUserId: userId,
   };
