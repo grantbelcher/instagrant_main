@@ -6,7 +6,6 @@ import Avatar from '@material-ui/core/Avatar';
 
 const styles = {
   container: {
-    backgroundColor: 'aliceblue',
     height: '9vh',
     display: 'flex',
     flexDirection: 'row',
@@ -16,7 +15,7 @@ const styles = {
   avatar: {
     height: '8vw',
     width: '8vw',
-    marginRight: '1vw'
+    marginRight: '1vw',
   },
   avatarGroup: {
     display: 'flex',
@@ -50,21 +49,30 @@ const PostHeader = ({ currentPost, currentUser, currentUserId }) => {
         <div style={{ paddingLeft: '2vw' }}>
           <a
             style={{
-              fontWeight: 600
-              }}
+              fontWeight: 600,
+            }}
           >
             {currentPost.username}
           </a>
           <div style={{
-              fontWeight: 300,
-              marginTop: '1vw',
-              }}>
+            fontWeight: 300,
+            marginTop: '1vw',
+          }}
+          >
             {currentPost.location}
           </div>
         </div>
         {/* {postIsMine ? null : followButton} */}
       </div>
-      <i class="fa fa-heart-o fa-lg" style={{ margin: '3vw' }} aria-hidden="true">...</i>
+      {/* <i class="fa fa-ellipsis-h fa-lg" style={{ margin: '3vw' }} aria-hidden="true" /> */}
+      <a style={{
+        fontSize: 'larger',
+        fontWeight: 600,
+        marginRight: '3vw',
+      }}
+      >
+        ‧‧‧
+      </a>
     </div>
   );
 };

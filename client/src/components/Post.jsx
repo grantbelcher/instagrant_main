@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PostHeader from './PostHeader';
+import PostIcons from './PostIcons';
 
 
 const styles = {
@@ -24,6 +25,7 @@ const Post = (currentPost, currentUser, currentUserId) => {
           height: '62vh',
         }}
         />
+        <PostIcons />
     </div>
   );
 };
