@@ -4,6 +4,20 @@ const db = require('../../db/index');
 
 const router = express.Router();
 
+router.get('/:postId', (req, res) => {
+  const { postId } = req.params;
+  console.log(postId)
+  const queryString = `SELECT * FROM posts WHERE postId = ${postId}`;
+  db.queryAsync(queryString)
+    .then((result) => {
+      res.send(result[0]);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.status(500).send('error');
+    });
+});
+
 router.post('/upload-image', (req, res) => {
   const queryString = createPostQuery(req.body);
   db.queryAsync(queryString)

@@ -6,6 +6,7 @@ import { loadUser } from '../redux/actions/auth';
 import store from '../redux/index';
 import Auth from '../views/Auth';
 import Profile from '../views/Profile';
+import Post from './Post';
 import EditPost from './EditPost';
 import AddCaption from '../views/AddCaption';
 // import setAuthToken from '../../../utils/setAuthToken';
@@ -26,8 +27,10 @@ const App = ({ isLoggedIn, screen }) => {
     currentView = <EditPost />;
   } else if (screen === 'add caption') {
     currentView = <AddCaption inRegistration={false} />;
-  } else if (screen === 'my profile'){
-    currentView = <div>My profile!</div>
+  } else if (screen === 'my profile') {
+    currentView = <div>My profile!</div>;
+  } else if (screen === 'post') {
+    currentView = <Post />;
   }
   return (
     <div>
