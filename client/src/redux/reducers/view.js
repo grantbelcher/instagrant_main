@@ -1,5 +1,5 @@
 const initialState = {
-  screen: 'post',
+  screen: 'feed',
   viewInfo: null,
 };
 

@@ -4,6 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const userRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
+const followersRoute = require('./routes/followers');
 // const fileUpload = require('express-fileupload');
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '../client/public')));
 app.use('/auth', userRoute);
 app.use('/posts', postsRoute);
+app.use('/followers', followersRoute);
 
 const PORT = 1000;
 

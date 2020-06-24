@@ -4,9 +4,9 @@ import setAuthToken from '../../../../utils/setAuthToken';
 import { addError } from './error';
 
 // export const loadUser = () => async (dispatch) => {
-//   if (localStorage.token) {
-//     setAuthToken(localStorage.token);
-//   }
+//   // if (localStorage.token) {
+//   //   setAuthToken(localStorage.token);
+//   // }
 //   try {
 //     const res = await axios.get('/auth/profile');
 //     dispatch({
@@ -24,12 +24,21 @@ export const signIn = (username, password) => async (dispatch) => {
     dispatch({
       type: 'LOADING',
     });
+    // convert to promise
     const response = await axios.post('http://localhost:1000/auth/signin', { username, password });
     // localStorage.setItem('token', response.data.token);
-    dispatch({
-      type: 'AUTH_SUCCESS',
-      payload: response.data,
-    });
+    const { userId } = response.data
+
+    axios.get(`/users/followers/myFollowers/${userId}`)
+      .then((followers) => {
+        console.log(followers.data, response.data, 'response in action')
+        // add followers array to state
+      })
+      // then: dispatch AUTH SUCCESS
+    // dispatch({
+    //   type: 'AUTH_SUCCESS',
+    //   payload: response.data,
+    // });
   } catch (err) {
     console.error(err, 'loooook here');
     addError('invalid credentials*');
@@ -40,7 +49,7 @@ export const signIn = (username, password) => async (dispatch) => {
 };
 
 export const register = (userInfo) => (dispatch) => {
-  console.log(userInfo)
+  console.log(userInfo);
   dispatch({
     type: 'REGISTER_SUCCESS',
     payload: userInfo,
@@ -65,3 +74,16 @@ export const signOut = () => async (dispatch) => {
     console.error(err.message);
   }
 };
+
+// export const loadFollowing = (userId) => async (dispatch) => {
+//   try {
+//     const response = await axios.get(`/users/followers/myFollowers/${userId}`)
+//     const { followers } = response.data
+//     dispatch({
+//       type: 'FOLLOWING_USERS_LOADED',
+//       payload: followers,
+//     })
+//   } catch((err) => {
+//     console.log(err, 'ERROR IN LOAD FOLLOWING ACTIOn')
+//   })
+// }

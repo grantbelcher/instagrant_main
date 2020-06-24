@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import store from '../redux/index'
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
+import { loadFeed } from '../redux/actions/feed';
 
 
 const styles = {
@@ -39,7 +40,13 @@ const styles = {
   },
 };
 
-const Dashboard = ({ screen }) => (
+const Dashboard = ({ getFeed }) => {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    getFeed();
+    // console.log(, 'loook here');
+  }, []);
+  return (
   <div style={styles.container}>
     <div style={styles.header}>
       <i class="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
@@ -66,13 +73,19 @@ const Dashboard = ({ screen }) => (
     <div style={{marginTop: '10vh', marginBottom: '20vh'}}>yo</div>
     <Footer />
   </div>
-);
+  );
+};
 
-const mapStateToProps = ({ view }) => {
+const mapStateToProps = ({ view, feed }) => {
   const { screen } = view;
   return {
     screen,
+    feed,
   };
 };
 
-export default connect(mapStateToProps, null)(Dashboard);
+const mapDispatchToProps = {
+  getFeed: loadFeed,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

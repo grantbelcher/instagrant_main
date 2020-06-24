@@ -46,4 +46,10 @@ router.post('/new_avatar', (req, res) => {
     });
 });
 
+router.get('/myFeed/:userId', (req, res) => {
+  const { userId } = req.params;
+  console.log(req.body, userId);
+  res.send('reviedcd');
+});
+
 module.exports = router;
