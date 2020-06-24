@@ -29,33 +29,40 @@ const styles = {
 const PostHeader = ({ currentPost, currentUser, currentUserId }) => {
   const postIsMine = currentPost.authorId === currentUserId;
 
-  const followButton = (
-    <div style={{ marginLeft: '1vw', fontWeight: 700 }}>
-      *
-      <a
-        style={{
-          color: '#4fa9f6',
-          marginLeft: '1vw',
-          }}
-      >
-        follow
-      </a>
-    </div>
-  );
+  // const followButton = (
+  //   <div style={{ marginLeft: '1vw', fontWeight: 700 }}>
+  //     *
+  //     <a
+  //       style={{
+  //         color: '#4fa9f6',
+  //         marginLeft: '1vw',
+  //         }}
+  //     >
+  //       follow
+  //     </a>
+  //   </div>
+  // );
 
   return (
     <div style={styles.container}>
       <div style={styles.avatarGroup}>
         <Avatar style={styles.avatar} />
-        <a
-          style={{
-            paddingLeft: '2vw',
-            fontWeight: 600
-            }}
-        >
-          {currentPost.username}
-        </a>
-        {postIsMine ? null : followButton}
+        <div style={{ paddingLeft: '2vw' }}>
+          <a
+            style={{
+              fontWeight: 600
+              }}
+          >
+            {currentPost.username}
+          </a>
+          <div style={{
+              fontWeight: 300,
+              marginTop: '1vw',
+              }}>
+            {currentPost.location}
+          </div>
+        </div>
+        {/* {postIsMine ? null : followButton} */}
       </div>
       <i class="fa fa-heart-o fa-lg" style={{ margin: '3vw' }} aria-hidden="true">...</i>
     </div>
