@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Footer from '../components/Footer';
+import FollowButton from '../components/FollowButton';
 
 const Profile = ({ profileInfo }) => {
   console.log(profileInfo);
   return (
     <div>
       <Avatar src={profileInfo.photo}/>
+      <FollowButton />
       <Footer />
     </div>
   );

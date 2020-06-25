@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ListItem from '@material-ui/core/ListItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import { viewProfile } from '../redux/actions/view';
+
 
 const styles = {
   container: {
@@ -23,7 +26,7 @@ const styles = {
   },
 };
 
-const UserList = ({ userData, suggestedUsers }) => {
+const UserList = ({ userData, suggestedUsers, goToProfile }) => {
   if (!userData.length && !suggestedUsers.length) {
     return (
       <div style={styles.loadingContainer}>
@@ -36,7 +39,8 @@ const UserList = ({ userData, suggestedUsers }) => {
   if (userData.length === 0 && suggestedUsers.length > 0) {
     userList = suggestedUsers.map((user) => (
       <ListItem
-        button={true}
+        button
+        onClick={() => goToProfile(user.userId)}
       >
         <ListItemAvatar>
           <Avatar alt={user.fullname} src={user.photo} />
@@ -49,7 +53,10 @@ const UserList = ({ userData, suggestedUsers }) => {
     ));
   }
   userList = userData.map((user) => (
-    <ListItem>
+    <ListItem
+      button
+      onClick={() => goToProfile(user.userId)}
+    >
       <ListItemAvatar>
         <Avatar alt={user.fullname} src={user.photo} />
       </ListItemAvatar>
@@ -67,4 +74,9 @@ const UserList = ({ userData, suggestedUsers }) => {
   );
 };
 
-export default UserList;
+
+const mapDispatchToProps = {
+  goToProfile: viewProfile,
+};
+
+export default connect(null, mapDispatchToProps)(UserList);

@@ -26,6 +26,8 @@ const styles = {
     borderRadius: '5px',
     backgroundColor: 'rgb(240, 240, 240)',
     width: '96vw',
+    position: 'fixed',
+    zIndex: '100',
   },
 };
 
