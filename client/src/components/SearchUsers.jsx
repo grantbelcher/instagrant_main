@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { IconButton } from '@material-ui/core';
@@ -29,7 +30,40 @@ const styles = {
 };
 
 const SearchUsers = () => {
-  console.log('yooo');
+  const [text, setText] = useState('');
+  const [users, setUsers] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      if (text.length < 2) {
+        return;
+      }
+      const response = await axios.get(`/users/search/${text}`);
+      console.log(response.data, 'yooooo');
+      setUsers(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [text]);
+
+
+  useEffect(async () => {
+    try {
+      const response = await axios.get(`/users/suggestions`);
+      console.log(response.data, 'after call');
+      setTimeout(() => {
+        setUsers(response.data);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+
   return (
     <div>
       <div style={styles.searchContainer}>
@@ -38,16 +72,18 @@ const SearchUsers = () => {
           variant="outlined"
           style={styles.input}
           placeholder="Search Users"
+          onChange={(e) => setText(e.target.value)}
+          value={text}
           endAdornment={(
             <InputAdornment position="end">
               <IconButton>
-                <i class="fa fa-search" aria-hidden="true" />
+                <i className="fa fa-search" aria-hidden="true" />
               </IconButton>
             </InputAdornment>
           )}
         />
       </div>
-      <UserList />
+      <UserList userData={users} searchUsers={true} />
     </div>
   );
 };
