@@ -36,9 +36,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         screen: 'my profile',
-      }
-    case 'SEARCH USERS':
-      return state
+      };
+    case 'SEARCH_PROFILES':
+      return {
+        ...state,
+        screen: 'search',
+      };
     case 'REMOVE_ERROR':
       return null;
     default:

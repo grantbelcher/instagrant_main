@@ -9,6 +9,7 @@ import Profile from '../views/Profile';
 import Post from './Post';
 import EditPost from './EditPost';
 import AddCaption from '../views/AddCaption';
+import Search from '../views/Search';
 // import setAuthToken from '../../../utils/setAuthToken';
 
 // if (localStorage.token) {
@@ -28,9 +29,11 @@ const App = ({ isLoggedIn, screen }) => {
   } else if (screen === 'add caption') {
     currentView = <AddCaption inRegistration={false} />;
   } else if (screen === 'my profile') {
-    currentView = <div>My profile!</div>;
+    currentView = <Profile />;
   } else if (screen === 'post') {
     currentView = <Post />;
+  } else if (screen === 'search') {
+    currentView = <Search />;
   }
   return (
     <div>

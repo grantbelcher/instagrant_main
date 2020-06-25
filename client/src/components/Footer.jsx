@@ -38,17 +38,17 @@ const Footer = ({ avatar, user }) => {
   return (
     <div style={styles.footer}>
       <div style={styles.icons}>
-        <i class="fa fa-home fa-lg" aria-hidden="true"/>
-        <i class="fa fa-search fa-lg" aria-hidden="true"/>
-        <i class="fa fa-plus-square fa-lg" aria-hidden="true" />
+        <i class="fa fa-home fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'VIEW_FEED' })} />
+        <i class="fa fa-search fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'SEARCH_PROFILES' })} />
+        <i class="fa fa-plus-square fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'ADD_POST' })} />
         <i class="fa fa-heart-o fa-lg" aria-hidden="true" />
         <IconButton onClick={() => store.dispatch({ type: 'VIEW_MY_PROFILE' })}>
           <Avatar src={avatar} alt={user} style={styles.avatarIcon} />
         </IconButton>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = ({ auth }) => {
   const { user, userId, avatar } = auth;

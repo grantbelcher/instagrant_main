@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import EmptyButton from './EmptyButton';
 import { selectPhoto } from '../redux/actions/upload';
+import Footer from './Footer';
 
 
 const styles = {
@@ -213,6 +214,7 @@ class EditPost extends React.Component {
             </div>
           )}
         </div>
+        {this.props.inRegistration ? null : <Footer />}
       </div>
     );
   }
