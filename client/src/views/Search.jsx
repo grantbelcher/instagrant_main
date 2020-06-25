@@ -24,6 +24,7 @@ const styles = {
     borderBottom: 'solid',
     borderWidth: 'thin',
     borderColor: '#b3b4b5',
+    zIndex: 100,
   },
   logo: {
     height: '6vh',

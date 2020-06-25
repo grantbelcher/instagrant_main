@@ -9,7 +9,6 @@ const styles = {
   container: {
     marginLeft: '2vw',
     marginRight: '2vw',
-    backgroundColor: 'aliceblue',
   },
   loadingContainer: {
     height: '30vh',
@@ -25,7 +24,8 @@ const styles = {
 };
 
 const UserList = ({ userData, suggestedUsers }) => {
-  if (!userData) {
+  console.log(userData, suggestedUsers, 'initial render')
+  if (!userData.length && !suggestedUsers.length) {
     return (
       <div style={styles.loadingContainer}>
         <CircularProgress color="secondary" />
@@ -45,7 +45,6 @@ const UserList = ({ userData, suggestedUsers }) => {
           secondary={user.fullname}
         />
       </ListItem>
-  
     ));
   }
   userList = userData.map((user) => (

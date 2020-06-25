@@ -35,10 +35,6 @@ const SearchUsers = () => {
   const [suggestions, setSuggestions] = useState([]);
   const handleSearch = async () => {
     try {
-      if (text.length < 2) {
-        setUsers([]);
-        return;
-      }
       const response = await axios.get(`/users/search/${text}`);
       console.log(response.data, 'yooooo');
       setUsers(response.data);
@@ -48,6 +44,10 @@ const SearchUsers = () => {
   };
 
   useEffect(() => {
+    if (text.length < 1) {
+      setUsers(suggestions);
+      return;
+    }
     handleSearch();
   }, [text]);
 

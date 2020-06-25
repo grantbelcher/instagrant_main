@@ -60,6 +60,7 @@ router.post(
                 return res.json({ token, username: user, userId });
               });
           })
+          // add user as a follower of yourself // start following grant
           .catch((err) => {
             console.error(err.message);
             res.status(500).json({ message: 'server error' });

@@ -4,7 +4,7 @@ const db = require('../../db/index');
 const router = express.Router();
 
 router.get('/suggestions', (req, res) => {
-  const queryString = 'SELECT username, fullname, userId, photo FROM users LIMIT 10';
+  const queryString = 'SELECT username, fullname, userId, photo FROM users order by rand() LIMIT 15';
   db.query(queryString, (err, results) => {
     if (err) {
       console.log(err);
@@ -20,7 +20,7 @@ router.get('/search/:query', (req, res) => {
   const { query } = req.params;
   console.log(query);
   // AND body LIKE '%${search}%'
-  const queryString = `SELECT username, fullname, userId, photo FROM users WHERE username OR fullname LIKE '%${query}%'`;
+  const queryString = `SELECT username, fullname, userId, photo FROM users WHERE username LIKE '%${query}%' OR fullname LIKE '%${query}%'`;
   db.query(queryString, (err, results) => {
     if (err) {
       console.log(err);
