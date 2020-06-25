@@ -32,10 +32,11 @@ const styles = {
 const SearchUsers = () => {
   const [text, setText] = useState('');
   const [users, setUsers] = useState([]);
-
+  const [suggestions, setSuggestions] = useState([]);
   const handleSearch = async () => {
     try {
       if (text.length < 2) {
+        setUsers([]);
         return;
       }
       const response = await axios.get(`/users/search/${text}`);
@@ -51,16 +52,20 @@ const SearchUsers = () => {
   }, [text]);
 
 
-  useEffect(async () => {
-    try {
-      const response = await axios.get(`/users/suggestions`);
-      console.log(response.data, 'after call');
-      setTimeout(() => {
-        setUsers(response.data);
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-    }
+  useEffect(() => {
+    const getSuggestions = async () => {
+      try {
+        const response = await axios.get(`/users/suggestions`);
+        console.log(response.data, 'after call');
+        setTimeout(() => {
+          setUsers(response.data);
+          setSuggestions(response.data);
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getSuggestions();
   }, []);
 
 
@@ -83,7 +88,7 @@ const SearchUsers = () => {
           )}
         />
       </div>
-      <UserList userData={users} searchUsers={true} />
+      <UserList userData={users} searchUsers={true} suggestedUsers={suggestions} />
     </div>
   );
 };
