@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import store from '../redux/index';
-
+import { viewProfile } from '../redux/actions/view';
 
 const styles = {
   footer: {
@@ -34,7 +34,7 @@ const styles = {
   }
 };
 
-const Footer = ({ avatar, user }) => {
+const Footer = ({ avatar, user, userId, goToProfile }) => {
   return (
     <div style={styles.footer}>
       <div style={styles.icons}>
@@ -42,7 +42,7 @@ const Footer = ({ avatar, user }) => {
         <i class="fa fa-search fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'SEARCH_PROFILES' })} />
         <i class="fa fa-plus-square fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'ADD_POST' })} />
         <i class="fa fa-heart-o fa-lg" aria-hidden="true" />
-        <IconButton onClick={() => store.dispatch({ type: 'VIEW_MY_PROFILE' })}>
+        <IconButton onClick={() => goToProfile(userId)}>
           <Avatar src={avatar} alt={user} style={styles.avatarIcon} />
         </IconButton>
       </div>
@@ -55,7 +55,12 @@ const mapStateToProps = ({ auth }) => {
   return {
     avatar,
     user,
+    userId,
   };
 };
 
-export default connect(mapStateToProps, null)(Footer);
+const mapDispatchToProps = {
+  goToProfile: viewProfile,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

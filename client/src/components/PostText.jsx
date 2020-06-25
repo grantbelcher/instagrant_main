@@ -21,7 +21,7 @@ const PostText = ({ post }) => {
     <div>
       <strong>{post.username}</strong> {` ${post.caption}`}
     </div>
-  )
+  );
   const commentLink = (
     <a style={styles.link}>
       {`View all ${post.comments} comments`}

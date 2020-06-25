@@ -24,7 +24,6 @@ const styles = {
 };
 
 const UserList = ({ userData, suggestedUsers }) => {
-  console.log(userData, suggestedUsers, 'initial render')
   if (!userData.length && !suggestedUsers.length) {
     return (
       <div style={styles.loadingContainer}>
@@ -36,7 +35,9 @@ const UserList = ({ userData, suggestedUsers }) => {
 
   if (userData.length === 0 && suggestedUsers.length > 0) {
     userList = suggestedUsers.map((user) => (
-      <ListItem>
+      <ListItem
+        button={true}
+      >
         <ListItemAvatar>
           <Avatar alt={user.fullname} src={user.photo} />
         </ListItemAvatar>

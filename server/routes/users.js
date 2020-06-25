@@ -3,6 +3,18 @@ const db = require('../../db/index');
 
 const router = express.Router();
 
+router.get('/profile/:userId', (req, res) => {
+  const { userId } = req.params;
+  const queryString = `SELECT userId, username, fullname, photo, bio FROM users where userId = ${userId}`;
+  db.queryAsync(queryString)
+    .then((data) => {
+      return res.send(data);
+    })
+    .catch((err) => {
+      return res.status(500);
+    });
+});
+
 router.get('/suggestions', (req, res) => {
   const queryString = 'SELECT username, fullname, userId, photo FROM users order by rand() LIMIT 15';
   db.query(queryString, (err, results) => {

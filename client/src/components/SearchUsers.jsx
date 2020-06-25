@@ -36,7 +36,6 @@ const SearchUsers = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(`/users/search/${text}`);
-      console.log(response.data, 'yooooo');
       setUsers(response.data);
     } catch (err) {
       console.log(err);
