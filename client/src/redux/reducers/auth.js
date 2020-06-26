@@ -29,6 +29,7 @@ export default function (state = initialState, action) {
         token: payload.token,
         user: payload.username,
         userId: payload.userId,
+        avatar: payload.avatar,
       };
     case 'REGISTER_SUCCESS':
       return {
