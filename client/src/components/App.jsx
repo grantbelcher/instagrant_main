@@ -10,14 +10,18 @@ import Post from './Post';
 import EditPost from './EditPost';
 import AddCaption from '../views/AddCaption';
 import Search from '../views/Search';
+import { loadFollowStats } from '../redux/actions/follow';
 // import setAuthToken from '../../../utils/setAuthToken';
 
 // if (localStorage.token) {
 //   setAuthToken(localStorage.token);
 // }
 
-const App = ({ isLoggedIn, screen }) => {
+const App = ({ isLoggedIn, screen, loadFollowData }) => {
   let currentView;
+  if (isLoggedIn) {
+
+  }
   if (screen === 'feed') {
     currentView = <Dashboard />;
   } else if (screen === 'profile') {
@@ -57,4 +61,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = {
+  loadFollowData: loadFollowStats,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

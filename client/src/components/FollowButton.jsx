@@ -21,7 +21,7 @@ const StyledButton = withStyles({
 })(Button);
 
 
-const FollowButton = ({ userId }) => {
+const FollowButton = ({ userId, thisUsersId }) => {
   const buttonText = 'Follow';
   // define call that makes axios
   // const followUser
@@ -35,8 +35,11 @@ const FollowButton = ({ userId }) => {
 
 const mapStateToProps = ({ auth, view }) => {
   const { userId } = auth;
+  const { profileInfo } = view;
+  const { thisUsersId } = profileInfo;
   return {
     userId,
+    thisUsersId,
   };
 };
 
