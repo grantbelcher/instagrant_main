@@ -13,7 +13,7 @@ const styles = {
 };
 
 const Auth = () => {
-  const [view, setView] = useState('Add Caption');
+  const [view, setView] = useState('Log In');
   const [file, setFile] = useState(undefined);
 
   useEffect(() => {

@@ -17,10 +17,18 @@ import { loadFollowStats } from '../redux/actions/follow';
 //   setAuthToken(localStorage.token);
 // }
 
-const App = ({ isLoggedIn, screen, loadFollowData }) => {
+const App = ({ isLoggedIn, userId, screen, loadFollowData }) => {
   let currentView;
-  if (isLoggedIn) {
 
+  useEffect(() => {
+    console.log(isLoggedIn, userId, 'useEffect outside of if block');
+    if (userId) {
+      console.log(isLoggedIn, userId, 'useEffect inside of if block');
+      loadFollowData(userId);
+    }
+  }, [isLoggedIn]);
+  if (!screen) {
+    return <Auth />;
   }
   if (screen === 'feed') {
     currentView = <Dashboard />;
@@ -53,7 +61,7 @@ const App = ({ isLoggedIn, screen, loadFollowData }) => {
   );
 };
 const mapStateToProps = (state) => {
-  const { isLoggedIn } = state.auth;
+  const { isLoggedIn, userId } = state.auth;
   const { screen } = state.view;
   return {
     isLoggedIn,

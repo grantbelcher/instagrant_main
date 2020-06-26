@@ -1,18 +1,18 @@
-const initialState = {
-  isLoggedIn: true,
-  token: null,
-  loading: false,
-  user: 'instagrant420',
-  userId: 7,
-  avatar: "https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg",
-};
 // const initialState = {
-//   isLoggedIn: false,
+//   isLoggedIn: true,
 //   token: null,
 //   loading: false,
-//   user: null,
-//   avatar: null,
+//   user: 'instagrant420',
+//   userId: 7,
+//   avatar: "https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg",
 // };
+const initialState = {
+  isLoggedIn: false,
+  token: null,
+  loading: false,
+  user: null,
+  avatar: null,
+};
 
 export default function (state = initialState, action) {
   const { type, payload } = action;

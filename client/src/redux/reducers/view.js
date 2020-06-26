@@ -1,5 +1,5 @@
 const initialState = {
-  screen: 'search',
+  screen: null,
   viewInfo: null,
   profileInfo: null,
 };
@@ -50,8 +50,6 @@ export default function (state = initialState, action) {
         profileInfo: null,
         screen: 'search',
       };
-    case 'REMOVE_ERROR':
-      return null;
     default:
       return state;
   }

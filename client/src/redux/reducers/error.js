@@ -5,7 +5,7 @@ export default function (state = null, action) {
     case 'ADD_ERROR':
       return payload;
     case 'REMOVE_ERROR':
-      return null;
+      return '';
     default:
       return state;
   }
