@@ -25,20 +25,24 @@ export const signIn = (username, password) => async (dispatch) => {
       type: 'LOADING',
     });
     // convert to promise
+    console.log(username, password);
     const response = await axios.post('http://localhost:1000/auth/signin', { username, password });
     // localStorage.setItem('token', response.data.token);
-    const { userId } = response.data
-
-    axios.get(`/users/followers/myFollowers/${userId}`)
-      .then((followers) => {
-        console.log(followers.data, response.data, 'response in action')
-        // add followers array to state
-      })
+    // const { userId } = response.data;
+    console.log(response.data, 'response');
+    // axios.get(`/users/followers/myFollowers/${userId}`)
+    //   .then((followers) => {
+    //     console.log(followers.data, response.data, 'response in action')
+    //     // add followers array to state
+    //   })
       // then: dispatch AUTH SUCCESS
-    // dispatch({
-    //   type: 'AUTH_SUCCESS',
-    //   payload: response.data,
-    // });
+    dispatch({
+      type: 'AUTH_SUCCESS',
+      payload: response.data,
+    });
+    dispatch({
+      type: 'VIEW_FEED',
+    });
   } catch (err) {
     console.error(err, 'loooook here');
     addError('invalid credentials*');

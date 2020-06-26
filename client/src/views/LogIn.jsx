@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
@@ -69,8 +69,8 @@ const styles = {
 };
 
 const Login = ({ logIn, error, changeView }) => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
   const [visibility, setVisibility] = useState(false);
 
@@ -91,8 +91,6 @@ const Login = ({ logIn, error, changeView }) => {
 
   const handleLogIn = () => {
     logIn(username, password);
-    setUsername(null);
-    setPassword(null);
   };
 
   return (

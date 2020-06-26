@@ -80,6 +80,7 @@ router.post(
     check('password').exists(),
   ],
   (req, res) => {
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
@@ -89,13 +90,13 @@ router.post(
     db.queryAsync(`SELECT * FROM users WHERE username = "${username}";`)
       .then((item) => {
         const userInfo = item[0];
-        return userInfo
+        return userInfo;
       })
       .then((userInfo) => {
         let codesMatch = (password === userInfo.password);
         if (codesMatch) {
           const token = jwt.sign({ userId: userInfo.userId }, 'secret', { expiresIn: '1h' });
-          return res.json({ token, username: userInfo.username, userId: userInfo.userId });
+          return res.json({ token, username: userInfo.username, userId: userInfo.userId, avatar: userInfo.photo });
         } else {
           return res.status(401).json({ message: 'invalid credentials' })
         }
