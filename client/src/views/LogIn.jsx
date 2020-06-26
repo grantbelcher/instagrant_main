@@ -81,7 +81,6 @@ const Login = ({ logIn, error, changeView }) => {
     if (e.target.id === 'password') {
       setPassword(e.target.value);
     }
-    console.log(username.length, password.length);
     if (username.length > 3 && password.length > 3) {
       setDisabled(false);
     } else {

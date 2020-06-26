@@ -39,7 +39,7 @@ const styles = {
 };
 
 const Search = ({ user, avatar }) => {
-  console.log('yo');
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>

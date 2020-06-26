@@ -128,7 +128,6 @@ class EditPost extends React.Component {
         },
       )
         .then((res) => {
-          console.log(res);
           res.json()
             .then((file) => {
               this.setState({
@@ -142,7 +141,6 @@ class EditPost extends React.Component {
 
   navigateForward() {
     if (this.props.inRegistration) {
-      console.log(this.props.inRegistration, 'yoooo');
       this.props.addFile(this.state.image);
     } else {
       this.props.selectPhoto(this.state.image);

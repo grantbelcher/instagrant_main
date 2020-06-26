@@ -2,6 +2,7 @@
 import axios from 'axios';
 import setAuthToken from '../../../../utils/setAuthToken';
 import { addError } from './error';
+import { loadFollowStats } from './follow';
 
 // export const loadUser = () => async (dispatch) => {
 //   // if (localStorage.token) {
@@ -28,14 +29,9 @@ export const signIn = (username, password) => async (dispatch) => {
     console.log(username, password);
     const response = await axios.post('http://localhost:1000/auth/signin', { username, password });
     // localStorage.setItem('token', response.data.token);
-    // const { userId } = response.data;
-    console.log(response.data, 'response');
-    // axios.get(`/users/followers/myFollowers/${userId}`)
-    //   .then((followers) => {
-    //     console.log(followers.data, response.data, 'response in action')
-    //     // add followers array to state
-    //   })
-      // then: dispatch AUTH SUCCESS
+    const { userId } = response.data;
+    // dispatch followers action
+    dispatch(loadFollowStats(userId));
     dispatch({
       type: 'AUTH_SUCCESS',
       payload: response.data,

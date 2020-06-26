@@ -25,6 +25,9 @@ const FollowButton = ({ userId, thisUsersId }) => {
   const buttonText = 'Follow';
   // define call that makes axios
   // const followUser
+  const toggleFollow = () => {
+
+  }
 
   return (
     <StyledButton>
@@ -41,6 +44,10 @@ const mapStateToProps = ({ auth, view }) => {
     userId,
     thisUsersId,
   };
+};
+
+const mapDispatchToProps = {
+
 };
 
 

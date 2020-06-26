@@ -44,7 +44,6 @@ const Dashboard = ({ getFeed }) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     getFeed();
-    // console.log(, 'loook here');
   }, []);
   return (
   <div style={styles.container}>

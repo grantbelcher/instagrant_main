@@ -9,7 +9,6 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case 'VIEW_PROFILE':
-      console.log(payload, 'reducer');
       return {
         ...state,
         profileInfo: payload,

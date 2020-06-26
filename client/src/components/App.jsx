@@ -19,14 +19,6 @@ import { loadFollowStats } from '../redux/actions/follow';
 
 const App = ({ isLoggedIn, userId, screen, loadFollowData }) => {
   let currentView;
-
-  useEffect(() => {
-    console.log(isLoggedIn, userId, 'useEffect outside of if block');
-    if (userId) {
-      console.log(isLoggedIn, userId, 'useEffect inside of if block');
-      loadFollowData(userId);
-    }
-  }, [isLoggedIn]);
   if (!screen) {
     return <Auth />;
   }

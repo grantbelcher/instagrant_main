@@ -5,7 +5,6 @@ import Footer from '../components/Footer';
 import FollowButton from '../components/FollowButton';
 
 const Profile = ({ profileInfo }) => {
-  console.log(profileInfo);
   return (
     <div>
       <Avatar src={profileInfo.photo}/>

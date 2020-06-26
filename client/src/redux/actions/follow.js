@@ -4,6 +4,11 @@ import store from '../index';
 import auth from '../reducers/auth';
 
 export const loadFollowStats = (userId) => async (dispatch) => {
-  const x = store.getState(auth);
-  console.log(x, userId, 'action');
+  axios.get(`/followers/myFollowers/${userId}`)
+    .then((followers) => {
+      console.log(followers.data, 'response in action');
+    })
+    .catch((err) => {
+      console.log(err, 'ERROR');
+    });
 };
