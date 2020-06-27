@@ -9,14 +9,14 @@ router.get('/myFollowers/:userId', (req, res) => {
 
   const data = {};
 
-  db.queryAsync(`SELECT * FROM relationships WHERE followerId = ${userId}`)
+  db.queryAsync(`SELECT followingId FROM relationships WHERE followerId = ${userId}`)
     .then((results) => {
-      data.myFollowers = results;
+      data.following = results;
     })
     .then(() => {
-      db.queryAsync(`SELECT * FROM relationships WHERE followingId = ${userId}`)
+      db.queryAsync(`SELECT followerId FROM relationships WHERE followingId = ${userId}`)
         .then((info) => {
-          data.following = info
+          data.myFollowers = info;
           res.send(data);
         })
         .catch((err) => {
@@ -32,7 +32,6 @@ router.post('/addFollower/:followerId/:followingId', (req, res) => {
   let { followerId, followingId } = req.params;
   followerId = parseInt(followerId);
   followingId = parseInt(followingId);
-  console.log(followerId + followingId);
   db.queryAsync(`INSERT INTO relationships (followerId, followingId) VALUES (${followerId}, ${followingId})`)
     .then((data) => {
       db.queryAsync(`SELECT followingId FROM relationships WHERE followerId = ${followerId} AND followingId = ${followingId}`)

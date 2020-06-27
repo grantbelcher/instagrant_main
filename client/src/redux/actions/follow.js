@@ -6,9 +6,13 @@ import auth from '../reducers/auth';
 export const loadFollowStats = (userId) => async (dispatch) => {
   axios.get(`/followers/myFollowers/${userId}`)
     .then((followers) => {
+      console.log(followers.data);
+      const dataCopy = {};
+      dataCopy.following = followers.data.following.map((item) => item.followingId);
+      dataCopy.myFollowers = followers.data.myFollowers.map((item) => item.followerId);
       dispatch({
         type: 'LOAD_FOLLOW_STATS',
-        payload: followers.data,
+        payload: dataCopy,
       });
     })
     .catch((err) => {
