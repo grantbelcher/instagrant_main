@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { startFollowing } from '../redux/actions/follow';
 
 // The `withStyles()` higher-order component is injecting a `classes`
 // prop that is used by the `Button` component.
@@ -21,16 +22,16 @@ const StyledButton = withStyles({
 })(Button);
 
 
-const FollowButton = ({ userId, thisUsersId }) => {
+const FollowButton = ({ userId, profileId, followUser }) => {
   const buttonText = 'Follow';
-  // define call that makes axios
-  // const followUser
   const toggleFollow = () => {
-
-  }
+    followUser(userId, profileId);
+  };
 
   return (
-    <StyledButton>
+    <StyledButton
+      onClick={toggleFollow}
+    >
       {buttonText}
     </StyledButton>
   );
@@ -39,17 +40,16 @@ const FollowButton = ({ userId, thisUsersId }) => {
 const mapStateToProps = ({ auth, view }) => {
   const { userId } = auth;
   const { profileInfo } = view;
-  const { thisUsersId } = profileInfo;
+  const { userId: profileId } = profileInfo;
   return {
     userId,
-    thisUsersId,
+    profileId,
   };
 };
 
 const mapDispatchToProps = {
-
+  followUser: startFollowing,
 };
 
 
-
-export default connect(mapStateToProps, null)(FollowButton);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowButton);

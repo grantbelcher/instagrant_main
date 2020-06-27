@@ -54,6 +54,7 @@ export const register = (userInfo) => (dispatch) => {
     type: 'REGISTER_SUCCESS',
     payload: userInfo,
   });
+  // load followers as well
 };
 
 export const registerError = () => (dispatch) => {
