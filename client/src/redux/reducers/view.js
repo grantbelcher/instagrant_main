@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable no-undef */
 const initialState = {
   screen: null,
   viewInfo: null,
@@ -49,6 +51,29 @@ export default function (state = initialState, action) {
         profileInfo: null,
         screen: 'search',
       };
+    case 'UNFOLLOW_VIEW':
+      const { profileInfo: profile } = state;
+      const { followers: followersCopy } = profile;
+      const index = followersCopy.indexOf(payload);
+      const copyStart = followersCopy.slice(0, index);
+      const copyEnd = followersCopy.slice(index + 1, followersCopy.length);
+      return {
+        ...state,
+        profileInfo: {
+          ...profile,
+          followers: [...copyStart, ...copyEnd],
+        },
+      };
+    case 'FOLLOW_VIEW':
+      const { profileInfo } = state;
+      const { followers } = profileInfo;
+      return {
+        ...state,
+        profileInfo: {
+          ...profileInfo,
+          followers: [...followers, payload]
+        }
+      }
     default:
       return state;
   }

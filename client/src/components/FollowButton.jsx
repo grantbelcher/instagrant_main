@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { startFollowing, unfollow } from '../redux/actions/follow';
+import { updateFollowStats } from '../redux/actions/view';
 
 
 // The `withStyles()` higher-order component is injecting a `classes`
@@ -39,7 +40,7 @@ const AlternateButton = withStyles({
 
 
 const FollowButton = ({
-  userId, profileId, followUser, following, myFollowers, unFollowUser,
+  userId, profileId, followUser, following, myFollowers, unFollowUser, updateFollowData
 }) => {
   const alreadyFollowing = following.includes(profileId);
   const isFollowingMe = myFollowers.includes(profileId);
@@ -60,8 +61,10 @@ const FollowButton = ({
     }
     if (alreadyFollowing) {
       unFollowUser(userId, profileId);
+      updateFollowData(userId, true);
     } else {
       followUser(userId, profileId);
+      updateFollowData(userId, false);
     }
   };
 
@@ -100,6 +103,7 @@ const mapStateToProps = ({ auth, view, followStats }) => {
 const mapDispatchToProps = {
   followUser: startFollowing,
   unFollowUser: unfollow,
+  updateFollowData: updateFollowStats,
 };
 
 
