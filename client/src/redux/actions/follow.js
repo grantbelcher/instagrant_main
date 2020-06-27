@@ -21,9 +21,8 @@ export const loadFollowStats = (userId) => async (dispatch) => {
 };
 
 export const startFollowing = (followerId, followingId) => async (dispatch) => {
-  console.log(followerId, followingId);
   try {
-    const response = await axios.post(`followers/addFollower/${followerId}/${followingId}`);
+    const response = await axios.post(`/followers/addFollower/${followerId}/${followingId}`);
     const { data } = response;
     dispatch({
       type: 'ADD_TO_FOLLOWING',
@@ -31,5 +30,24 @@ export const startFollowing = (followerId, followingId) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const unfollow = (followerId, followingId) => async (dispatch) => {
+  try {
+    const config = {
+      data: {
+        followerId,
+        followingId,
+      },
+    };
+    const response = await axios.delete('/followers/unfollow', config);
+    console.log(response.data);
+    dispatch({
+      type: 'UNFOLLOW',
+      payload: followingId,
+    })
+  } catch (error) {
+    console.log(error, 'error in unfollow action');
   }
 };

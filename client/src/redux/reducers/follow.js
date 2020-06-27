@@ -15,6 +15,15 @@ export default function (state = initialState, action) {
         ...state,
         following: [...state.following, followingId],
       };
+    case 'UNFOLLOW':
+      const { following } = state;
+      const index = following.indexOf(payload);
+      const copyStart = following.slice(0, index);
+      const copyEnd = following.slice(index + 1, following.length);
+      return {
+        ...state,
+        following: [...copyStart, ...copyEnd],
+      };
     default:
       return state;
   }

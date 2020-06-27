@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { startFollowing } from '../redux/actions/follow';
+import { startFollowing, unfollow } from '../redux/actions/follow';
+
 
 // The `withStyles()` higher-order component is injecting a `classes`
 // prop that is used by the `Button` component.
@@ -38,7 +39,7 @@ const AlternateButton = withStyles({
 
 
 const FollowButton = ({
-  userId, profileId, followUser, following, myFollowers,
+  userId, profileId, followUser, following, myFollowers, unFollowUser,
 }) => {
   const alreadyFollowing = following.includes(profileId);
   const isFollowingMe = myFollowers.includes(profileId);
@@ -54,13 +55,20 @@ const FollowButton = ({
     buttonText = 'Follow';
   }
   const toggleFollow = () => {
-    followUser(userId, profileId);
+    if (myProfile) {
+      console.log('yo');
+    }
+    if (alreadyFollowing) {
+      unFollowUser(userId, profileId);
+    } else {
+      followUser(userId, profileId);
+    }
   };
 
-  if (alreadyFollowing || myProfile) {
+  if (alreadyFollowing) {
     return (
       <AlternateButton
-        onClick={alreadyFollowing ? null : toggleFollow}
+        onClick={toggleFollow}
       >
         {buttonText}
       </AlternateButton>
@@ -68,7 +76,7 @@ const FollowButton = ({
   }
   return (
     <StyledButton
-      onClick={alreadyFollowing ? null : toggleFollow}
+      onClick={toggleFollow}
     >
       {buttonText}
     </StyledButton>
@@ -91,6 +99,7 @@ const mapStateToProps = ({ auth, view, followStats }) => {
 
 const mapDispatchToProps = {
   followUser: startFollowing,
+  unFollowUser: unfollow,
 };
 
 

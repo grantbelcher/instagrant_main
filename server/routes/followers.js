@@ -49,4 +49,19 @@ router.post('/addFollower/:followerId/:followingId', (req, res) => {
     });
 });
 
+router.delete('/unfollow', (req, res) => {
+  let { followerId, followingId } = req.body;
+  // followerId = parseInt(followerId);
+  // followingId = parseInt(followingId);
+  db.queryAsync(`DELETE FROM relationships WHERE followerId = ${followerId} AND followingId = ${followingId}`)
+    .then((result) => {
+      console.log(result, 'result from delete');
+      res.send('success');
+    })
+    .catch((err) => {
+      console.log(err, 'err from delete');
+      res.status(500);
+    });
+});
+
 module.exports = router;
