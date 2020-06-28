@@ -20,7 +20,7 @@ const createUserQuery = ({
 const createPostQuery = ({
   authorId, username, profilePic, location, caption, picture,
 }) => {
-  const values = `"${authorId}", "${username}", ${profilePic}, ${location}, "${caption}", "${picture}"`;
+  const values = `"${authorId}", "${username}", "${profilePic}", "${location}", "${picture}", "${caption}"`;
   return `INSERT INTO posts (authorId, username, profilePic, location, picture, caption) VALUES (${values});`;
 };
 
@@ -273,6 +273,8 @@ const bios = [
   'My life is better than my daydreams.',
   'Sprinkling kindness everywhere I go.',
   'I love my followers more than life itself.',
+  'Live, laugh, love',
+  'its  5 oclock somewhere',
 ];
 
 let firstUsers = [];
@@ -284,6 +286,48 @@ usernames.forEach((name, i) => {
   newUser.password = 'secret123';
   newUser.photo = images[Math.floor(Math.random() * images.length)];
   firstUsers.push(newUser);
+});
+
+// authorId INT,
+// username VARCHAR(20) NOT NULL,
+// profilePic VARCHAR(100),
+// location VARCHAR(50),
+// caption VARCHAR(255),
+// picture VARCHAR(255),
+const captions = [
+  'Check this out!',
+  'Look at this',
+  'watch this',
+  'me and the boys',
+];
+
+const locations = [
+  'Antarctica',
+  'USA',
+  'Oakland, CA',
+  'San Diego',
+  'Ecuador',
+  'Mt. Everest',
+  'Denali',
+  'Seattle',
+  'Nashville',
+  'Washington',
+  'Colombia',
+  'Cartegena',
+];
+
+let firstPosts = [];
+firstUsers.forEach((user, i) => {
+  for (var x = 0; x < 15; x += 1) {
+    const newPost = {};
+    newPost.authorId = i;
+    newPost.username = user.username;
+    newPost.profilePic = user.photo;
+    newPost.location = locations[Math.floor(Math.random() * locations.length)];
+    newPost.caption = captions[Math.floor(Math.random() * captions.length)];
+    newPost.picture = images[Math.floor(Math.random() * images.length)];
+    firstPosts.push(newPost);
+  }
 });
 
 // Math.floor(Math.random() * bios.length)
@@ -314,14 +358,14 @@ const configureDb = () => {
         postId INT AUTO_INCREMENT,
         authorId INT,
         username VARCHAR(20) NOT NULL,
-        profilePic VARCHAR(100),
+        profilePic VARCHAR(255),
         location VARCHAR(50),
         caption VARCHAR(255),
         picture VARCHAR(255),
         date datetime DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (postId),
-        FOREIGN KEY (authorId) REFERENCES users(userId)
+        PRIMARY KEY (postId)
       );`);
+      // FOREIGN KEY (authorId) REFERENCES users(userId)
     })
     .then(() => {
       db.queryAsync(`CREATE TABLE relationships (
@@ -369,6 +413,14 @@ const configureDb = () => {
     .then(() => {
       firstUsers.forEach((user) => {
         const insertQuery = createUserQuery(user);
+        db.queryAsync(insertQuery);
+      });
+    })
+    .then(() => {
+      firstPosts.forEach((post) => {
+        const insertQuery = createPostQuery(post);
+        // console.log(insertQuery)
+        // console.log(post)
         db.queryAsync(insertQuery);
       });
     })
