@@ -5,10 +5,10 @@ import { addError } from './error';
 import { viewFeed } from './view';
 
 export const newPost = (picture, caption, location) => async (dispatch) => {
-  console.log('fuuck!!!!')
-  const { user, userId } = store.getState().auth;
+ // 'LOOK HERE FOR BUG' avatar from state may not exist
+  const { user, userId, avatar } = store.getState().auth;
   const data = {
-    username: user, authorId: userId, picture, caption, location,
+    username: user, authorId: userId, profilePic: avatar, picture, caption, location,
   };
   try {
     console.log('try catch')
