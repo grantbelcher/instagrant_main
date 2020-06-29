@@ -49,6 +49,13 @@ router.post('/new_avatar', (req, res) => {
 router.get('/myFeed/:userId', (req, res) => {
   const { userId } = req.params;
   console.log(req.body, userId);
+
+  // SELECT all following Ids where Follower = userId
+    // returns array of all accounts i am following
+    // join the ids together in a string that is compatible with MYSQL format for selecting Where value = x OR y OR z
+        // maybe do this on the initial loading???
+    // add string of ids into a query SELECT * FROM posts WHERE authorId = USE ABOVE QUERY START = 
+  // db.queryAsync()
   res.send('reviedcd');
 });
 
