@@ -20,6 +20,11 @@ export const addToFeed = () => async (dispatch) => {
     following,
     index,
   };
-  // get current index from state;
-  // axios post request to posts/myFeed
+  try {
+    // axios post request to posts/myFeed
+    const response = await axios.post('/posts/myFeed');
+    console.log(response.data, action)
+  } catch (error) {
+    console.log(error);
+  }
 };

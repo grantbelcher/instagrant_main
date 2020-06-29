@@ -4,7 +4,7 @@ const db = require('../../db/index');
 
 const router = express.Router();
 
-router.get('/:postId', (req, res) => {
+router.get('/singlePost/:postId', (req, res) => {
   const { postId } = req.params;
   console.log(postId)
   const queryString = `SELECT * FROM posts WHERE postId = ${postId}`;
@@ -47,15 +47,50 @@ router.post('/new_avatar', (req, res) => {
 });
 
 router.post('/myFeed', (req, res) => {
-  const { following, userId, page } = req.body;
-
-  // SELECT all following Ids where Follower = userId
-    // returns array of all accounts i am following
-    // join the ids together in a string that is compatible with MYSQL format for selecting Where value = x OR y OR z
-        // maybe do this on the initial loading???
-    // add string of ids into a query SELECT * FROM posts WHERE authorId = USE ABOVE QUERY START = 
-  // db.queryAsync()
-  res.send('reviedcd');
+  const { following, userId, index } = req.body;
+  console.log(req.body);
+  // reduce following to a string
+  let followingIds = following.reduce((accumulator, id) => {
+    return accumulator + 'authorId = ' + id + ' OR ';
+  }, '');
+  followingIds = followingIds.substr(0, followingIds.length - 3) + `OR authorId = ${userId}`;
+  const queryString = `SELECT * FROM posts WHERE ${followingIds} ORDER BY date DESC LIMIT ${index}, 5`;
+  const postData = [];
+  db.queryAsync(queryString)
+    .then((results) => {
+      // console.log(results);
+      // get an array of postIds from results
+      results.forEach((post, i) => {
+        const postCopy = post;
+        const { postId } = post;
+        const likeQuery = `SELECT COUNT(*) FROM likes WHERE postId = ${postId}`;
+        db.queryAsync(likeQuery)
+          .then((likeCount) => {
+            const count = likeCount[0]['COUNT(*)'];
+            postCopy.likes = count;
+            postData.push(postCopy);
+          })
+          .then(() => {
+            const commentQuery = `SELECT COUNT(*) FROM comments WHERE postId = ${postId}`;
+            db.queryAsync(commentQuery)
+              .then((commentCount) => {
+                postCopy.comments = commentCount[0]['COUNT(*)'];
+                if (i === results.length - 1) {
+                  res.send(postData);
+                }
+              })
+              .catch((err) => {
+                console.log(err, 'comments');
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    })
+    .catch((err) => {
+      res.status(500);
+    });
 });
 
 module.exports = router;
