@@ -1,6 +1,6 @@
 const initialState = {
-  index: 0,
-  myFeed: [],
+  index: 1,
+  feed: [],
 };
 
 export default function (state = initialState, action) {
@@ -10,6 +10,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         feed: [...state.feed, ...payload],
+        index: state.index + 5,
       };
     default:
       return state;

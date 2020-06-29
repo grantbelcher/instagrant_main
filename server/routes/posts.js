@@ -46,9 +46,8 @@ router.post('/new_avatar', (req, res) => {
     });
 });
 
-router.get('/myFeed/:userId', (req, res) => {
-  const { userId } = req.params;
-  console.log(req.body, userId);
+router.post('/myFeed', (req, res) => {
+  const { following, userId, page } = req.body;
 
   // SELECT all following Ids where Follower = userId
     // returns array of all accounts i am following

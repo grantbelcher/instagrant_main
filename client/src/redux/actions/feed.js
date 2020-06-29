@@ -8,3 +8,18 @@ export const loadFeed = () => async (dispatch) => {
   const results = await axios.get(`/posts/myFeed/${userId}`);
   console.log(results, 'results');
 };
+
+export const addToFeed = () => async (dispatch) => {
+  // get current userId and array of followers from store.getState().auth
+  const { auth, feed, followStats} = store.getState;
+  const { userId } = auth;
+  const { index } = feed;
+  const { following } = followStats;
+  const data = {
+    userId,
+    following,
+    index,
+  };
+  // get current index from state;
+  // axios post request to posts/myFeed
+};
