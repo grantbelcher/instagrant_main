@@ -60,7 +60,10 @@ router.post('/myFeed', (req, res) => {
     .then((results) => {
       // console.log(results);
       // get an array of postIds from results
-      console.log(results, 'RESULT FROM QUERY')
+      console.log(results, 'RESULT FROM QUERY');
+      if (results.length === 0) {
+        return res.send([]);
+      }
       results.forEach((post, i) => {
         const postCopy = post;
         const { postId } = post;

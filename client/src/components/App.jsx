@@ -43,7 +43,7 @@ import {
 // };
 
 const App = ({
-  isLoggedIn, userId, screen, loadFollowData, feed, topInView, getFeed, startScroll, viewTop, loadNext
+  isLoggedIn, userId, screen, loadFollowData, feed, topInView, getFeed, startScroll, viewTop, loadNext, endOfFeed,
 }) => {
   let currentView;
   if (!screen) {
@@ -88,12 +88,16 @@ const App = ({
     window.onscroll = null;
     if (screen === 'feed') {
       // window.addEventListener('scroll', scrollEvent, false);
-      window.onscroll = scrollEvent;
+      if (endOfFeed) {
+        window.onscroll = null;
+      } else {
+        window.onscroll = scrollEvent;
+      }
     } else {
       console.log('removing event');
       window.onscroll = null;
     }
-  }, [screen, feed]);
+  }, [screen, feed, endOfFeed]);
 
 
   if (screen === 'feed') {
@@ -129,13 +133,14 @@ const App = ({
 const mapStateToProps = (state) => {
   const { view, feedInfo } = state
   const { screen } = view;
-  const { feed, topInView } = feedInfo;
+  const { feed, topInView, endOfFeed } = feedInfo;
   const { isLoggedIn, userId } = state.auth;
   return {
     isLoggedIn,
     screen,
     feed,
     topInView,
+    endOfFeed,
   };
 };
 

@@ -48,7 +48,7 @@ const styles = {
 // bring feed into Dashboard from state
 
 const Dashboard = ({
-  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading,
+  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed,
 }) => {
   // const [loading, setLoading] = useState(false);
 //   // const [scroll, setScroll] = useState(0);
@@ -128,6 +128,7 @@ const Dashboard = ({
       {/* <div style={{marginTop: '10vh'}}>yo</div> */}
       {posts}
       {loading ? <CircularProgress /> : null}
+      {endOfFeed ? <div>End Of Feed!</div> : null}
       <div style={{ height: '10vh', marginTop: '3vh' }} />
       <Footer />
     </div>
@@ -136,12 +137,13 @@ const Dashboard = ({
 
 const mapStateToProps = ({ view, feedInfo }) => {
   const { screen } = view;
-  const { feed, topInView, loading } = feedInfo;
+  const { feed, topInView, loading, endOfFeed } = feedInfo;
   return {
     screen,
     feed,
     topInView,
     loading,
+    endOfFeed,
   };
 };
 

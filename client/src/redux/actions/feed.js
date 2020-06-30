@@ -77,7 +77,9 @@ export const loadNextPosts = () => async (dispatch) => {
   dispatch({
     type: 'LOAD_NEXT_POSTS',
   });
-  const { auth, feedInfo, followStats, view } = store.getState();
+  const {
+    auth, feedInfo, followStats, view,
+  } = store.getState();
   const { screen } = view;
   if (screen !== 'feed') {
     console.log('screen is not feed');
@@ -96,10 +98,16 @@ export const loadNextPosts = () => async (dispatch) => {
 
     const response = await axios.post('/posts/myFeed', data);
     console.log(response);
-    dispatch({
-      type: 'ADD_TO_FEED',
-      payload: response.data,
-    });
+    if (response.data.length === 0) {
+      dispatch({
+        type: 'END_OF_FEED',
+      });
+    } else {
+      dispatch({
+        type: 'ADD_TO_FEED',
+        payload: response.data,
+      });
+    }
   } catch (error) {
     dispatch({
       type: 'ERROR_LOADING_FEED',

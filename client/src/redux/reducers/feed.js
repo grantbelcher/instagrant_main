@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   scroll: 0,
   topInView: true,
+  endOfFeed: false,
   error: null,
 };
 
@@ -32,7 +33,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
-      }
+      };
+    case 'END_OF_FEED':
+      return {
+        ...state,
+        endOfFeed: true,
+        loading: false,
+      };
     case 'ERROR_LOADING_FEED':
       return {
         ...state,
