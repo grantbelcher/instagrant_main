@@ -99,7 +99,7 @@ const Login = ({ logIn, error, changeView }) => {
   const handleLogIn = () => {
     logIn(username, password);
   };
-
+  
   return (
     <div style={styles.container}>
       <div style={{ postion: 'fixed', top: 0 }}>

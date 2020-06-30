@@ -2,7 +2,7 @@
 import axios from 'axios';
 import store from '../index';
 import auth from '../reducers/auth';
-import { addToFeed } from './feed';
+import { addToFeed, initFeed } from './feed';
 
 export const loadFollowStats = (userId) => async (dispatch) => {
   const dataCopy = {};
@@ -13,14 +13,15 @@ export const loadFollowStats = (userId) => async (dispatch) => {
       dataCopy.myFollowers = followers.data.myFollowers.map((item) => item.followerId);
     })
     .then(() => {
-      console.log('YOOOOOO')
-      dispatch(addToFeed(userId, dataCopy.following));
-    })
-    .then(() => {
       dispatch({
         type: 'LOAD_FOLLOW_STATS',
         payload: dataCopy,
       });
+    })
+    .then(() => {
+      console.log('YOOOOOO');
+      // dispatch(addToFeed(userId, dataCopy.following));
+      dispatch(initFeed(dataCopy.following));
     })
     .catch((err) => {
       console.log(err, 'ERROR');

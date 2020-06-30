@@ -84,7 +84,7 @@ const App = ({
           loadNext();
         }
       }
-    }, 800);
+    }, 1200);
     window.onscroll = null;
     if (screen === 'feed') {
       // window.addEventListener('scroll', scrollEvent, false);

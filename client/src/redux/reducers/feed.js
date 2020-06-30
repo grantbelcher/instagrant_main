@@ -11,6 +11,17 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case 'LOAD_INITIAL_POSTS':
+      return {
+        ...state,
+        feed: [],
+      };
+    case 'INITIAL_FEED':
+      return {
+        ...state,
+        index: 5,
+        feed: [...payload],
+      };
     case 'ADD_TO_FEED':
       return {
         ...state,

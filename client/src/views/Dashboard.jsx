@@ -7,7 +7,7 @@ import store from '../redux/index';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
 import {
-  addToFeed, loadNextPosts, beginScroll, setTopInView,
+  addToFeed, loadNextPosts, beginScroll, setTopInView, initFeed,
 } from '../redux/actions/feed';
 
 const styles = {
@@ -20,7 +20,7 @@ const styles = {
     // backgroundColor: 'red',
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: '#d6d6d6',
     top: 0,
     position: 'fixed',
     height: '8vh',
@@ -48,8 +48,13 @@ const styles = {
 // bring feed into Dashboard from state
 
 const Dashboard = ({
-  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed,
+  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed, following, resetFeed,
 }) => {
+  useEffect(() => {
+    // get initial feed
+    console.log('ressetting')
+    resetFeed();
+  }, [following]);
   // const [loading, setLoading] = useState(false);
 //   // const [scroll, setScroll] = useState(0);
 //   const scrollEvent = debounce(() => {
@@ -119,7 +124,7 @@ const Dashboard = ({
         <i className="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
         <img
           style={styles.logo}
-          src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
+          src="https://res.cloudinary.com/instagrant/image/upload/v1593545227/Screen_Shot_2020-06-30_at_12.26.59_PM_jtacwi.png"
           alt="logo"
         />
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
@@ -135,15 +140,17 @@ const Dashboard = ({
   );
 };
 
-const mapStateToProps = ({ view, feedInfo }) => {
+const mapStateToProps = ({ view, feedInfo, followStats }) => {
   const { screen } = view;
   const { feed, topInView, loading, endOfFeed } = feedInfo;
+  const { following } = followStats;
   return {
     screen,
     feed,
     topInView,
     loading,
     endOfFeed,
+    following,
   };
 };
 
@@ -152,6 +159,7 @@ const mapDispatchToProps = {
   startScroll: beginScroll,
   viewTop: setTopInView,
   loadNext: loadNextPosts,
+  resetFeed: initFeed,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

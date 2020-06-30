@@ -9,6 +9,30 @@ export const loadFeed = () => async (dispatch) => {
   console.log(results, 'results');
 };
 
+export const initFeed = () => async (dispatch) => {
+  dispatch({
+    type: 'LOAD_INITIAL_POSTS',
+  });
+  const { auth, followStats } = store.getState();
+  const { userId } = auth;
+  const { following } = followStats;
+  const data = {
+    index: 0,
+    userId,
+    following,
+  };
+  console.log(data);
+  try {
+    const response = await axios.post('/posts/myFeed', data);
+    dispatch({
+      type: 'INITIAL_FEED',
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addToFeed = (user = null, followingArray = null) => async (dispatch) => {
   // get current userId and array of followers from store.getState().auth
   console.log('eyyyyy');
