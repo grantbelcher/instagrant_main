@@ -48,17 +48,19 @@ router.post('/new_avatar', (req, res) => {
 
 router.post('/myFeed', (req, res) => {
   const { following, userId, index } = req.body;
-  console.log(req.body);
+  console.log(following, 'LOOK HERE FOR FOLLOWING');
   let followingIds = following.reduce((accumulator, id) => {
     return accumulator + 'authorId = ' + id + ' OR ';
   }, '');
   followingIds = followingIds.substr(0, followingIds.length - 3) + `OR authorId = ${userId}`;
+  console.log(followingIds, 'query STRING');
   const queryString = `SELECT * FROM posts WHERE ${followingIds} ORDER BY date DESC LIMIT ${index}, 5`;
   const postData = [];
   db.queryAsync(queryString)
     .then((results) => {
       // console.log(results);
       // get an array of postIds from results
+      console.log(results, 'RESULT FROM QUERY')
       results.forEach((post, i) => {
         const postCopy = post;
         const { postId } = post;

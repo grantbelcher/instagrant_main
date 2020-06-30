@@ -72,9 +72,14 @@ export default function (state = initialState, action) {
         ...state,
         profileInfo: {
           ...profileInfo,
-          followers: [...followers, payload]
-        }
-      }
+          followers: [...followers, payload],
+        },
+      };
+    case 'LOG_IN':
+      return {
+        ...state,
+        screen: 'feed',
+      };
     default:
       return state;
   }

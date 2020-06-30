@@ -344,7 +344,7 @@ const firstPosts = [];
 firstUsers.forEach((user, i) => {
   for (let x = 0; x < 8; x += 1) {
     const newPost = {};
-    newPost.authorId = i;
+    newPost.authorId = i + 1;
     newPost.username = user.username;
     newPost.profilePic = user.photo;
     newPost.location = locations[Math.floor(Math.random() * locations.length)];
