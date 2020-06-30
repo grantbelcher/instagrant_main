@@ -11,11 +11,16 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    borderTop: 'solid',
+    borderTopWidth: 1,
+    // borderTopColor: 'red',
+    borderTopColor: '#bfbfbf',
   },
   avatar: {
     height: '8vw',
     width: '8vw',
     marginRight: '1vw',
+    zIndex: -1,
   },
   avatarGroup: {
     display: 'flex',
@@ -25,8 +30,8 @@ const styles = {
   },
 };
 
-const PostHeader = ({ currentPost, currentUser, currentUserId }) => {
-  const postIsMine = currentPost.authorId === currentUserId;
+const PostHeader = ({ post }) => {
+  // const postIsMine = currentPost.authorId === currentUserId;
 
   // const followButton = (
   //   <div style={{ marginLeft: '1vw', fontWeight: 700 }}>
@@ -45,21 +50,21 @@ const PostHeader = ({ currentPost, currentUser, currentUserId }) => {
   return (
     <div style={styles.container}>
       <div style={styles.avatarGroup}>
-        <Avatar style={styles.avatar} />
+        <Avatar style={styles.avatar} src={post.profilePic} alt={post.username} />
         <div style={{ paddingLeft: '2vw' }}>
           <a
             style={{
               fontWeight: 600,
             }}
           >
-            {currentPost.username}
+            {post.username}
           </a>
           <div style={{
             fontWeight: 300,
             marginTop: '1vw',
           }}
           >
-            {currentPost.location}
+            {post.location}
           </div>
         </div>
         {/* {postIsMine ? null : followButton} */}
@@ -77,13 +82,13 @@ const PostHeader = ({ currentPost, currentUser, currentUserId }) => {
   );
 };
 
-const mapStateToProps = ({ auth, currentPost }) => {
-  const { user, userId } = auth;
-  return {
-    currentPost,
-    currentUser: user,
-    currentUserId: userId,
-  };
-};
+// const mapStateToProps = ({ auth, currentPost }) => {
+//   const { user, userId } = auth;
+//   return {
+//     currentPost,
+//     currentUser: user,
+//     currentUserId: userId,
+//   };
+// };
 
-export default connect(mapStateToProps, null)(PostHeader);
+export default connect(null, null)(PostHeader);

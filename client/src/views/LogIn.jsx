@@ -55,16 +55,16 @@ const styles = {
     fontSize: 'small',
     width: '75vw',
     height: '7vh',
-    borderColor: '#fafafa',
-    backgroundColor: '#fafafa',
+    borderColor: 'white',
+    backgroundColor: 'white',
   },
   input2: {
     marginTop: '8vh',
     fontSize: 'small',
     width: '75vw',
     height: '7vh',
-    borderColor: '#fafafa',
-    backgroundColor: '#fafafa',
+    borderColor: 'white',
+    backgroundColor: 'white',
   },
 };
 
@@ -96,7 +96,7 @@ const Login = ({ logIn, error, changeView }) => {
     <div style={styles.container}>
       <img
         style={styles.header}
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+        src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
         alt="logo"
       />
       <div

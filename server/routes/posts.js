@@ -49,7 +49,6 @@ router.post('/new_avatar', (req, res) => {
 router.post('/myFeed', (req, res) => {
   const { following, userId, index } = req.body;
   console.log(req.body);
-  // reduce following to a string
   let followingIds = following.reduce((accumulator, id) => {
     return accumulator + 'authorId = ' + id + ' OR ';
   }, '');

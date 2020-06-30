@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux'
-import store from '../redux/index'
+import { connect } from 'react-redux';
+import store from '../redux/index';
 import Footer from '../components/Footer';
-import { loadFeed } from '../redux/actions/feed';
-
+import Post from '../components/Post';
+import { addToFeed } from '../redux/actions/feed';
 
 const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '100vh',
+    // height: '100vh',
     width: '100vw',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   header: {
     backgroundColor: '#eff0f1',
@@ -27,7 +27,7 @@ const styles = {
     paddingBottom: 5,
     borderBottom: 'solid',
     borderWidth: 'thin',
-    borderColor: '#b3b4b5',
+    borderColor: 'white',
   },
   footer: {
     bottom: '90vh',
@@ -40,43 +40,47 @@ const styles = {
   },
 };
 
-const Dashboard = ({ getFeed }) => {
+// bring feed into Dashboard from state
+
+const Dashboard = ({ feed, getFeed }) => {
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getFeed();
   }, []);
+  let posts;
+  // if (!feed) {
+  //   // return loading icon
+  // }
+  posts = feed.map((post) => {
+    return (
+      <Post
+        post={post}
+      />
+    );
+  });
   return (
   <div style={styles.container}>
     <div style={styles.header}>
       <i class="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
       <img
         style={styles.logo}
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+        src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
         alt="logo"
       />
       <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
       
     </div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh'}}>yo</div>
-    <div style={{marginTop: '10vh', marginBottom: '20vh'}}>yo</div>
+    {/* <div style={{marginTop: '10vh'}}>yo</div> */}
+    {posts}
     <Footer />
   </div>
   );
 };
 
-const mapStateToProps = ({ view, feed }) => {
+const mapStateToProps = ({ view, feedInfo }) => {
   const { screen } = view;
+  const { feed } = feedInfo;
   return {
     screen,
     feed,
@@ -84,7 +88,7 @@ const mapStateToProps = ({ view, feed }) => {
 };
 
 const mapDispatchToProps = {
-  getFeed: loadFeed,
+  getFeed: addToFeed,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

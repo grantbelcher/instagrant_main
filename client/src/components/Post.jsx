@@ -7,14 +7,16 @@ import PostText from './PostText';
 
 const styles = {
   container: {
-    height: '82vh',
+    height: '90vh',
+    maxHeight: '100vh',
+    marginBottom: '8vh',
   },
 };
 
 const Post = ({ post, currentUser, currentUserId }) => {
   return (
     <div style={styles.container}>
-      <PostHeader />
+      <PostHeader post={post} />
       <img
         src={post.picture}
         style={{
@@ -28,13 +30,13 @@ const Post = ({ post, currentUser, currentUserId }) => {
   );
 };
 
-const mapStateToProps = ({ auth, currentPost }) => {
-  const { user, userId } = auth;
-  return {
-    post: currentPost,
-    currentUser: user,
-    currentUserId: userId,
-  };
-};
+// const mapStateToProps = ({ auth }) => {
+//   const { user, userId } = auth;
+//   return {
+//     // post: currentPost,
+//     currentUser: user,
+//     currentUserId: userId,
+//   };
+// };
 
-export default connect(mapStateToProps, null)(Post);
+export default connect(null, null)(Post);

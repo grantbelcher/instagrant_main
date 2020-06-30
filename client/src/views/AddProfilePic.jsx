@@ -37,7 +37,7 @@ const AddProfilePic = ({ changeView }) => (
     <div style={styles.header}>
       <img
         style={styles.logo}
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+        src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
         alt="logo"
       />
     </div>

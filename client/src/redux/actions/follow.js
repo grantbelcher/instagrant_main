@@ -2,14 +2,21 @@
 import axios from 'axios';
 import store from '../index';
 import auth from '../reducers/auth';
+import { addToFeed } from './feed';
 
 export const loadFollowStats = (userId) => async (dispatch) => {
+  const dataCopy = {};
   axios.get(`/followers/myFollowers/${userId}`)
     .then((followers) => {
       console.log(followers.data);
-      const dataCopy = {};
       dataCopy.following = followers.data.following.map((item) => item.followingId);
       dataCopy.myFollowers = followers.data.myFollowers.map((item) => item.followerId);
+    })
+    .then(() => {
+      console.log('YOOOOOO')
+      dispatch(addToFeed(userId, dataCopy.following));
+    })
+    .then(() => {
       dispatch({
         type: 'LOAD_FOLLOW_STATS',
         payload: dataCopy,
@@ -46,7 +53,7 @@ export const unfollow = (followerId, followingId) => async (dispatch) => {
     dispatch({
       type: 'UNFOLLOW',
       payload: followingId,
-    })
+    });
   } catch (error) {
     console.log(error, 'error in unfollow action');
   }

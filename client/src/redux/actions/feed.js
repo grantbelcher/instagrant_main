@@ -9,21 +9,51 @@ export const loadFeed = () => async (dispatch) => {
   console.log(results, 'results');
 };
 
-export const addToFeed = () => async (dispatch) => {
+export const addToFeed = (user = null, followingArray = null) => async (dispatch) => {
   // get current userId and array of followers from store.getState().auth
-  const { auth, feed, followStats} = store.getState;
-  const { userId } = auth;
-  const { index } = feed;
-  const { following } = followStats;
+  console.log('eyyyyy');
+  const { auth, feedInfo, followStats } = store.getState;
+  let userId;
+  if (auth) {
+    userId = auth.userId;
+  }
+  let index;
+  if (feedInfo) {
+    index = feedInfo.index;
+  } else {
+    index = 0;
+  }
+  let following;
+  if (followStats) {
+    following = followStats.following;
+  }
   const data = {
-    userId,
-    following,
     index,
   };
+  if (!following || following.length === 0) {
+    if (followingArray === null) {
+      console.log('errrr');
+    } else {
+      data.following = followingArray;
+    }
+  } else {
+    data.following = following;
+  }
+  if (!userId) {
+    if (user === null) {
+      console.log('errrrrr');
+    } else {
+      data.userId = user;
+    }
+  } else {
+    data.userId = userId;
+  }
   try {
-    // axios post request to posts/myFeed
-    const response = await axios.post('/posts/myFeed');
-    console.log(response.data, action)
+    const response = await axios.post('/posts/myFeed', data);
+    dispatch({
+      type: 'ADD_TO_FEED',
+      payload: response.data,
+    });
   } catch (error) {
     console.log(error);
   }
