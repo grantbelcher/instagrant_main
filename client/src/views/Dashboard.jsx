@@ -6,7 +6,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
-import { addToFeed, loadNextPosts, beginScroll, setTopInView } from '../redux/actions/feed';
+import {
+  addToFeed, loadNextPosts, beginScroll, setTopInView,
+} from '../redux/actions/feed';
 
 const styles = {
   container: {
@@ -46,7 +48,7 @@ const styles = {
 // bring feed into Dashboard from state
 
 const Dashboard = ({
-  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading
+  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading,
 }) => {
   // const [loading, setLoading] = useState(false);
 //   // const [scroll, setScroll] = useState(0);
@@ -95,14 +97,24 @@ const Dashboard = ({
   // if (!feed) {
   //   // return loading icon
   // }
-  posts = feed.map((post) => (
-    <Post
-      post={post}
-    />
-  ));
+  posts = feed.map((post, i) => {
+    if (i === 0) {
+      return (
+        <Post
+          post={post}
+          first
+        />
+      );
+    }
+    return (
+      <Post
+        post={post}
+      />
+    );
+  });
 
   return (
-    <div style={styles.container} id="feed" >
+    <div style={styles.container} id="feed">
       <div style={styles.header}>
         <i className="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
         <img
@@ -116,7 +128,7 @@ const Dashboard = ({
       {/* <div style={{marginTop: '10vh'}}>yo</div> */}
       {posts}
       {loading ? <CircularProgress /> : null}
-      <div style={{ height: '10vh', marginTop: '3vh' }}/>
+      <div style={{ height: '10vh', marginTop: '3vh' }} />
       <Footer />
     </div>
   );

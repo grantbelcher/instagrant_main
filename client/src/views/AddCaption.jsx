@@ -98,7 +98,7 @@ const AddCaption = ({ file, upload, changeView, newProfile, addNewPost, inRegist
           multiline
           color="secondary"
           rows={3}
-          rowsMax={5}
+          rowsMax={3}
           onChange={(e) => setCaption(e.target.value)}
           value={caption}
           placeholder="Write a caption..."

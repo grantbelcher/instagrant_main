@@ -11,18 +11,27 @@ const styles = {
     minHeight: '90vh',
     marginBottom: '4vh',
   },
+  firstPost: {
+    maxHeight: '98vh',
+    minHeight: '90vh',
+    marginBottom: '4vh',
+    marginTop: '9vh',
+  },
 };
 
-const Post = ({ post, currentUser, currentUserId }) => {
+const Post = ({ post, currentUser, currentUserId, first }) => {
   return (
-    <div style={styles.container}>
+    <div style={first === true ? styles.firstPost : styles.container}>
       <PostHeader post={post} />
       <img
         src={post.picture}
         style={{
           width: '96vw',
           height: '58vh',
+          marginLeft: '2vw',
+          marginRight: '2vw',
         }}
+        alt="loading"
         />
         <PostIcons />
         <PostText post={post} />

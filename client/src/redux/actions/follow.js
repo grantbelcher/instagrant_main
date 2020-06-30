@@ -28,9 +28,11 @@ export const loadFollowStats = (userId) => async (dispatch) => {
 };
 
 export const startFollowing = (followerId, followingId) => async (dispatch) => {
+  console.log(followingId, 'look here');
   try {
     const response = await axios.post(`/followers/addFollower/${followerId}/${followingId}`);
     const { data } = response;
+    console.log(data, 'response');
     dispatch({
       type: 'ADD_TO_FOLLOWING',
       payload: data,

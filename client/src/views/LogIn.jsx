@@ -10,14 +10,16 @@ import { signIn } from '../redux/actions/auth';
 
 const styles = {
   container: {
+    // position: 'fixed',
+    // top: 0,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   header: {
     height: '30%',
-    width: '60%',
-    paddingTop: '20%',
+    width: '90%',
+    paddingTop: '3vh',
   },
   error: {
     color: 'red',
@@ -31,9 +33,10 @@ const styles = {
   },
   footer: {
     backgroundColor: '#eff0f1',
-    // bottom: 0,
-    // position: 'absolute',
-    marginTop: '10vh',
+    bottom: 0,
+    position: 'fixed',
+    marginTop: '8vh',
+    // marginBottom: '2vh',
     height: '10vh',
     width: '100%',
     display: 'flex',
@@ -70,14 +73,18 @@ const styles = {
 };
 
 const Login = ({ logIn, error, changeView }) => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('@');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
   const [visibility, setVisibility] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.id === 'username') {
-      setUsername(e.target.value);
+      if (username.length === 1) {
+        setUsername(username + e.target.value);
+      } else {
+        setUsername(e.target.value);
+      }
     }
     if (e.target.id === 'password') {
       setPassword(e.target.value);
@@ -95,53 +102,55 @@ const Login = ({ logIn, error, changeView }) => {
 
   return (
     <div style={styles.container}>
-      <img
-        style={styles.header}
-        src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
-        alt="logo"
-      />
-      <div
-        style={{
-          width: '75vw',
-          height: 1,
-          backgroundColor: 'rgb(225, 225, 225)',
-          marginTop: '5vh',
-          fontSize: 'smaller',
-        }}
-      />
-      <div style={error ? styles.error : styles.noError}>
-        {error || 'no error'}
-      </div>
-      <div style={styles.inputs}>
-        <Input id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} />
-        <Input
-          id="password"
-          variant="outlined"
-          style={styles.input2}
-          placeholder="Password"
-          onChange={handleChange}
-          type={visibility ? 'text' : 'password'}
-          endAdornment={(
-            <InputAdornment position="end">
-              <IconButton
-                onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
-              >
-                {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
-              </IconButton>
-            </InputAdornment>
-          )}
+      <div style={{ postion: 'fixed', top: 0 }}>
+        <img
+          style={styles.header}
+          src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
+          alt="logo"
         />
+        <div
+          style={{
+            width: '75vw',
+            height: 1,
+            backgroundColor: 'rgb(225, 225, 225)',
+            marginTop: '5vh',
+            fontSize: 'smaller',
+          }}
+        />
+        <div style={error ? styles.error : styles.noError}>
+          {error || 'no error'}
+        </div>
+        <div style={styles.inputs}>
+          <Input id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleChange} value={username.length === 1 ? '' : username} />
+          <Input
+            id="password"
+            variant="outlined"
+            style={styles.input2}
+            placeholder="Password"
+            onChange={handleChange}
+            type={visibility ? 'text' : 'password'}
+            endAdornment={(
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
+                >
+                  {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
+                </IconButton>
+              </InputAdornment>
+          )}
+          />
+        </div>
+        <div style={{
+          color: 'rgb(130, 130, 130)',
+          marginTop: '4vh',
+        }}
+        >
+          Don&#39;t have an account yet?
+          {' '}
+          <a style={{ color: '#4fa9f6' }} onClick={() => changeView('Sign Up')}>Sign up</a>
+        </div>
+        <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled} />
       </div>
-      <div style={{
-        color: 'rgb(130, 130, 130)',
-        marginTop: '4vh',
-      }}
-      >
-        Don&#39;t have an account yet?
-        {' '}
-        <a style={{ color: '#4fa9f6' }} onClick={() => changeView('Sign Up')}>Sign up</a>
-      </div>
-      <CustomButton title="Log In" onClick={handleLogIn} disabled={disabled} />
       <div style={styles.footer}>
         <div style={{
           color: '#8e8e8e',

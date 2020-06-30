@@ -32,10 +32,12 @@ router.post('/addFollower/:followerId/:followingId', (req, res) => {
   let { followerId, followingId } = req.params;
   followerId = parseInt(followerId);
   followingId = parseInt(followingId);
+  console.log(followingId, 'following Id before query')
   db.queryAsync(`INSERT INTO relationships (followerId, followingId) VALUES (${followerId}, ${followingId})`)
     .then((data) => {
       db.queryAsync(`SELECT followingId FROM relationships WHERE followerId = ${followerId} AND followingId = ${followingId}`)
         .then((result) => {
+          console.log(result[0], 'result from query');
           res.send(result[0]);
         })
         .catch((err) => {

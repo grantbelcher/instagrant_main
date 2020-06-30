@@ -51,10 +51,10 @@ const styles = {
     flexDirection: 'column',
     height: '20%',
     alignItems: 'center',
-    marginTop: '1vh',
+    marginTop: '0.5vh',
   },
   input: {
-    marginTop: '5vh',
+    marginTop: '2vh',
     fontSize: 'smaller',
     width: '75vw',
     height: '6vh',
@@ -75,9 +75,11 @@ const styles = {
   },
 };
 
-const Register = ({ changeView, registerUser, addError, error }) => {
+const Register = ({
+  changeView, registerUser, addError, error,
+}) => {
   const [fullName, setFullName] = useState('');
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('@');
   const [password, setPassword] = useState('');
   const [social, setSocial] = useState('');
   const [visibility, setVisibility] = useState(false);
@@ -88,15 +90,23 @@ const Register = ({ changeView, registerUser, addError, error }) => {
     if (social.length === 2 || social.length === 7) {
       setSocial(`${e.target.value} - `);
     } else if (social.length === 15) {
-      return;
+
     } else {
       setSocial(e.target.value);
     }
   };
 
+  const handleUsername = (e) => {
+    if (username.length === 1) {
+      setUsername(username + e.target.value);
+    } else {
+      setUsername(e.target.value);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/auth/SignUp', {username, fullName, password});
+      const response = await axios.post('/auth/SignUp', { username, fullName, password });
       registerUser(response.data);
       changeView('Profile Pic');
     } catch (err) {
@@ -115,47 +125,49 @@ const Register = ({ changeView, registerUser, addError, error }) => {
           Register
         </div>
       </div>
-      <div style={{
-        marginTop: '15vh',
-        fontWeight: 600,
-      }}
-      >
-        Enter name and password
-      </div>
-      <div style={{
-        marginTop: '3vh',
-        color: '#939393',
-      }}
-      >
-        Add your name so friends can find you.
-      </div>
-      <div style={error ? styles.error : styles.noError}>
-        {error || 'no error'}
-      </div>
-      <div style={styles.inputs}>
-        <Input id="fullName" variant="outlined" style={styles.input} placeholder="Full Name" onChange={(e) => setFullName(e.target.value)} value={fullName} />
-        <Input id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={(e) => setUsername(e.target.value)} value={username} />
-        <Input id="ssn" variant="outlined" style={styles.input} placeholder="Social Security #" onChange={(e) => handleSocial(e)} value={social} />
-        <Input
-          id="password"
-          variant="outlined"
-          style={styles.input}
-          placeholder="Password"
-          type={visibility ? 'text' : 'password'}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          endAdornment={(
-            <InputAdornment position="end">
-              <IconButton
-                onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
-              >
-                {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
-              </IconButton>
-            </InputAdornment>
+      <div style={{ position: 'fixed', top: '1vh' }}>
+        <div style={{
+          marginTop: '15vh',
+          fontWeight: 600,
+        }}
+        >
+          Enter name and password
+        </div>
+        <div style={{
+          marginTop: '3vh',
+          color: '#939393',
+        }}
+        >
+          Add your name so friends can find you.
+        </div>
+        <div style={error ? styles.error : styles.noError}>
+          {error || 'no error'}
+        </div>
+        <div style={styles.inputs}>
+          <Input id="fullName" variant="outlined" style={styles.input} placeholder="Full Name" onChange={(e) => setFullName(e.target.value)} value={fullName} />
+          <Input id="username" variant="outlined" style={styles.input} placeholder="Username" onChange={handleUsername} value={username.length === 1 ? '' : username} />
+          <Input id="ssn" variant="outlined" style={styles.input} placeholder="Social Security #" onChange={(e) => handleSocial(e)} value={social} />
+          <Input
+            id="password"
+            variant="outlined"
+            style={styles.input}
+            placeholder="Password"
+            type={visibility ? 'text' : 'password'}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            endAdornment={(
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={visibility ? () => setVisibility(false) : () => setVisibility(true)}
+                >
+                  {visibility ? <i className="fa fa-eye-slash" /> : <i className="fa fa-eye" />}
+                </IconButton>
+              </InputAdornment>
           )}
-        />
+          />
+        </div>
+        <CustomButton title="Next" onClick={handleSubmit} disabled={disabled} />
       </div>
-      <CustomButton title="Next" onClick={handleSubmit} disabled={disabled} />
       <div style={styles.footer}>
         <div style={{
           color: '#8e8e8e',
