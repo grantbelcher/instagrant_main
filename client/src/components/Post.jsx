@@ -20,8 +20,8 @@ const Post = ({ post, currentUser, currentUserId }) => {
       <img
         src={post.picture}
         style={{
-          width: '100vw',
-          height: '62vh',
+          width: '96vw',
+          height: '58vh',
         }}
         />
         <PostIcons />

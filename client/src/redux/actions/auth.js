@@ -3,6 +3,7 @@ import axios from 'axios';
 import setAuthToken from '../../../../utils/setAuthToken';
 import { addError } from './error';
 import { loadFollowStats } from './follow';
+import { addToFeed } from './feed';
 
 // export const loadUser = () => async (dispatch) => {
 //   // if (localStorage.token) {
@@ -27,11 +28,14 @@ export const signIn = (username, password) => async (dispatch) => {
     });
     // convert to promise
     console.log(username, password);
-    const response = await axios.post('http://localhost:1000/auth/signin', { username, password });
+    const response = await axios.post('/auth/signin', { username, password });
     // localStorage.setItem('token', response.data.token);
     const { userId } = response.data;
     // dispatch followers action
     dispatch(loadFollowStats(userId));
+    // setTimeout(() => {
+    //   dispatch(addToFeed());
+    // }, 2000);
     dispatch({
       type: 'AUTH_SUCCESS',
       payload: response.data,

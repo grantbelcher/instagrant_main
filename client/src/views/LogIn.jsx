@@ -31,8 +31,9 @@ const styles = {
   },
   footer: {
     backgroundColor: '#eff0f1',
-    bottom: 0,
-    position: 'fixed',
+    // bottom: 0,
+    // position: 'absolute',
+    marginTop: '10vh',
     height: '10vh',
     width: '100%',
     display: 'flex',

@@ -12,7 +12,7 @@ export const loadFeed = () => async (dispatch) => {
 export const addToFeed = (user = null, followingArray = null) => async (dispatch) => {
   // get current userId and array of followers from store.getState().auth
   console.log('eyyyyy');
-  const { auth, feedInfo, followStats } = store.getState;
+  const { auth, feedInfo, followStats } = store.getState();
   let userId;
   if (auth) {
     userId = auth.userId;
@@ -74,6 +74,9 @@ export const setTopInView = () => (dispatch) => {
 
 export const loadNextPosts = () => async (dispatch) => {
   console.log('before request');
+  dispatch({
+    type: 'LOAD_NEXT_POSTS',
+  });
   const { auth, feedInfo, followStats, view } = store.getState();
   const { screen } = view;
   if (screen !== 'feed') {

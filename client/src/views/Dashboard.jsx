@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import debounce from 'lodash.debounce';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
@@ -17,7 +18,7 @@ const styles = {
     // backgroundColor: 'red',
   },
   header: {
-    backgroundColor: '#eff0f1',
+    backgroundColor: 'white',
     top: 0,
     position: 'fixed',
     height: '8vh',
@@ -45,9 +46,9 @@ const styles = {
 // bring feed into Dashboard from state
 
 const Dashboard = ({
-  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext,
+  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading
 }) => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 //   // const [scroll, setScroll] = useState(0);
 //   const scrollEvent = debounce(() => {
 //     // Bails early if:
@@ -114,6 +115,8 @@ const Dashboard = ({
       </div>
       {/* <div style={{marginTop: '10vh'}}>yo</div> */}
       {posts}
+      {loading ? <CircularProgress /> : null}
+      <div style={{ height: '10vh', marginTop: '3vh' }}/>
       <Footer />
     </div>
   );
@@ -121,11 +124,12 @@ const Dashboard = ({
 
 const mapStateToProps = ({ view, feedInfo }) => {
   const { screen } = view;
-  const { feed, topInView } = feedInfo;
+  const { feed, topInView, loading } = feedInfo;
   return {
     screen,
     feed,
     topInView,
+    loading,
   };
 };
 

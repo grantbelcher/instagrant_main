@@ -55,6 +55,7 @@ const SearchUsers = () => {
 
 
   useEffect(() => {
+    console.log('getting suggestions');
     const getSuggestions = async () => {
       try {
         const response = await axios.get(`/users/suggestions`);

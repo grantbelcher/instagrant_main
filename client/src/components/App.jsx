@@ -58,16 +58,18 @@ const App = ({
       // * there's an error
       // * it's already loading
       // * there's nothing left to load
-      const bottomOfPage = feed.length * window.innerHeight;
+      const bottomOfPage = feed.length * window.innerHeight - 1800;
       console.log(bottomOfPage)
       if (screen === 'feed') {
         if (topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
           // set topInView to false
+          console.log('scrolling begins')
           startScroll(document.documentElement.scrollTop);
         }
-        if (!topInView && window.innerHeight + document.documentElement.scrollTop < 1800) {
+        if (!topInView && window.innerHeight + document.documentElement.scrollTop < 800) {
           // set topInView to false
           // console.log(screen, 'yoo')
+          console.log('top in view')
           viewTop();
         }
         // if (error || isLoading || !hasMore) return;
@@ -76,18 +78,22 @@ const App = ({
           window.innerHeight + document.documentElement.scrollTop
           >= bottomOfPage
         ) {
+          console.log('loading next')
           // console.log('yoooooo')
           // console.log(screen, 'yoo')
           loadNext();
         }
       }
-    }, 1500);
+    }, 800);
+    window.onscroll = null;
     if (screen === 'feed') {
-      window.addEventListener('scroll', scrollEvent, false);
+      // window.addEventListener('scroll', scrollEvent, false);
+      window.onscroll = scrollEvent;
     } else {
-      window.removeEventListener('scroll', scrollEvent, false);
+      console.log('removing event');
+      window.onscroll = null;
     }
-  }, [screen]);
+  }, [screen, feed]);
 
 
   if (screen === 'feed') {

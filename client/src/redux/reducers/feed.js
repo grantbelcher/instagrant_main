@@ -15,6 +15,7 @@ export default function (state = initialState, action) {
         ...state,
         feed: [...state.feed, ...payload],
         index: state.index + 5,
+        loading: false,
       };
     case 'BEGIN_SCROLL':
       return {
@@ -27,6 +28,11 @@ export default function (state = initialState, action) {
         ...state,
         topInView: true,
       };
+    case 'LOAD_NEXT_POSTS':
+      return {
+        ...state,
+        loading: true,
+      }
     case 'ERROR_LOADING_FEED':
       return {
         ...state,
