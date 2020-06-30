@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
+import debounce from 'lodash.debounce';
 import store from '../redux/index';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
-import { addToFeed } from '../redux/actions/feed';
+import { addToFeed, loadNextPosts, beginScroll, setTopInView } from '../redux/actions/feed';
 
 const styles = {
   container: {
@@ -42,53 +44,92 @@ const styles = {
 
 // bring feed into Dashboard from state
 
-const Dashboard = ({ feed, getFeed }) => {
+const Dashboard = ({
+  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext,
+}) => {
   const [loading, setLoading] = useState(false);
+  const [scroll, setScroll] = useState(0);
 
   useEffect(() => {
-    getFeed();
+    
   }, []);
   let posts;
   // if (!feed) {
   //   // return loading icon
   // }
-  posts = feed.map((post) => {
-    return (
-      <Post
-        post={post}
-      />
-    );
-  });
+  posts = feed.map((post) => (
+    <Post
+      post={post}
+    />
+  ));
+
+  const scrollEvent = debounce(() => {
+    // Bails early if:
+    // * there's an error
+    // * it's already loading
+    // * there's nothing left to load
+    if (screen === 'feed') {
+      if (topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
+        // set topInView to false
+        startScroll(document.documentElement.scrollTop);
+      }
+      if (!topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
+        // set topInView to false
+        setScroll(window.innerHeight + document.documentElement.scrollTop);
+      }
+      if (!topInView && window.innerHeight + document.documentElement.scrollTop < 1800) {
+        // set topInView to false
+        console.log(screen, 'yoo')
+        viewTop();
+
+      }
+      // if (error || isLoading || !hasMore) return;
+      // Checks that the page has scrolled to the bottom
+      if (
+        window.innerHeight + document.documentElement.scrollTop
+        >= document.documentElement.offsetHeight
+      ) {
+        console.log('yoooooo')
+        console.log(screen, 'yoo')
+        loadNext();
+      }
+    }
+  }, 750);
+
   return (
-  <div style={styles.container}>
-    <div style={styles.header}>
-      <i class="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
-      <img
-        style={styles.logo}
-        src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
-        alt="logo"
-      />
-      <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
-      
+    <div style={styles.container} id="feed" >
+      <div style={styles.header}>
+        <i className="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
+        <img
+          style={styles.logo}
+          src="https://res.cloudinary.com/instagrant/image/upload/v1593476991/Screen_Shot_2020-06-29_at_5.20.23_PM_emrmjz.png"
+          alt="logo"
+        />
+        <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
+
+      </div>
+      {/* <div style={{marginTop: '10vh'}}>yo</div> */}
+      {posts}
+      <Footer />
     </div>
-    {/* <div style={{marginTop: '10vh'}}>yo</div> */}
-    {posts}
-    <Footer />
-  </div>
   );
 };
 
 const mapStateToProps = ({ view, feedInfo }) => {
   const { screen } = view;
-  const { feed } = feedInfo;
+  const { feed, topInView } = feedInfo;
   return {
     screen,
     feed,
+    topInView,
   };
 };
 
 const mapDispatchToProps = {
   getFeed: addToFeed,
+  startScroll: beginScroll,
+  viewTop: setTopInView,
+  loadNext: loadNextPosts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

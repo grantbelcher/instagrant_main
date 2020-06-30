@@ -1,11 +1,4 @@
-// const initialState = {
-//   isLoggedIn: true,
-//   token: null,
-//   loading: false,
-//   user: 'instagrant420',
-//   userId: 7,
-//   avatar: "https://res.cloudinary.com/instagrant/image/upload/v1592934741/instagrant/b1v3t1vqgwlqmrn8r2ax.jpg",
-// };
+
 const initialState = {
   isLoggedIn: false,
   token: null,
@@ -13,6 +6,14 @@ const initialState = {
   user: null,
   avatar: null,
 };
+// const initialState = {
+//   isLoggedIn: true,
+//   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcxLCJpYXQiOjE1OTM0NzgyODUsImV4cCI6MTU5MzQ4MTg4NX0.qeCqSnmytb7NjIKEUBL0IInrUoA32fK3XrGDxchitAc',
+//   loading: true,
+//   user: '@ganjagreezy',
+//   avatar: 'https://res.cloudinary.com/instagrant/image/upload/v1593405608/instagrant/stho0z1nz5pae4l8ll5a.png',
+//   userId: 71
+// }
 
 export default function (state = initialState, action) {
   const { type, payload } = action;

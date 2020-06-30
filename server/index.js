@@ -18,6 +18,11 @@ app.use('/posts', postsRoute);
 app.use('/followers', followersRoute);
 app.use('/users', profilesRoute);
 
+app.get('/testing', (req, res) => {
+  console.log('bottom');
+  res.send('yup');
+});
+
 const PORT = 1000;
 
 app.listen(PORT, () => {

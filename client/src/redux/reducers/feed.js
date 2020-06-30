@@ -1,6 +1,10 @@
 const initialState = {
   index: 0,
   feed: [],
+  loading: false,
+  scroll: 0,
+  topInView: true,
+  error: null,
 };
 
 export default function (state = initialState, action) {
@@ -11,6 +15,27 @@ export default function (state = initialState, action) {
         ...state,
         feed: [...state.feed, ...payload],
         index: state.index + 5,
+      };
+    case 'BEGIN_SCROLL':
+      return {
+        ...state,
+        topInView: false,
+        scroll: payload,
+      };
+    case 'SET_TOP_IN_VIEW':
+      return {
+        ...state,
+        topInView: true,
+      };
+    case 'ERROR_LOADING_FEED':
+      return {
+        ...state,
+        error: 'error loading posts',
+      };
+    case 'REMOVE_ERROR_FROM_FEED':
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
