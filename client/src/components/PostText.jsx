@@ -16,12 +16,26 @@ const styles = {
   },
 };
 
+
 const PostText = ({ post }) => {
-  const postCaption = (
-    <div>
-      <strong>{post.username}</strong> {` ${post.caption}`}
-    </div>
-  );
+
+  const tooLong = post.caption.length > 100;
+
+  let postCaption;
+  if (tooLong) {
+    postCaption = (
+      <div>
+        <strong>{post.username}</strong> {` ${post.caption.substr(0, 100)}...`}
+      </div>
+    );
+  } else {
+    postCaption = (
+      <div>
+        <strong>{post.username}</strong> {` ${post.caption}`}
+      </div>
+    );
+  }
+
   const commentLink = (
     <a style={styles.link}>
       {`View all ${post.comments} comments`}

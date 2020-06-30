@@ -12,7 +12,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    // height: '100vh',
+    height: '100%',
     width: '100vw',
     // backgroundColor: 'red',
   },
@@ -48,11 +48,48 @@ const Dashboard = ({
   screen, feed, topInView, getFeed, startScroll, viewTop, loadNext,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [scroll, setScroll] = useState(0);
+//   // const [scroll, setScroll] = useState(0);
+//   const scrollEvent = debounce(() => {
+//     // Bails early if:
+//     // * there's an error
+//     // * it's already loading
+//     // * there's nothing left to load
+//     if (screen === 'feed') {
+//       if (topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
+//         // set topInView to false
+//         startScroll(document.documentElement.scrollTop);
+//       }
+//       if (!topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
+//         // set topInView to false
+//         setScroll(window.innerHeight + document.documentElement.scrollTop);
+//       }
+//       if (!topInView && window.innerHeight + document.documentElement.scrollTop < 1800) {
+//         // set topInView to false
+//         // console.log(screen, 'yoo')
+//         viewTop();
+//       }
+//       // if (error || isLoading || !hasMore) return;
+//       // Checks that the page has scrolled to the bottom
+//       if (
+//         window.innerHeight + document.documentElement.scrollTop
+//         >= document.documentElement.offsetHeight
+//       ) {
+//         // console.log('yoooooo')
+//         // console.log(screen, 'yoo')
+//         loadNext();
+//       }
+//     }
+//   }, 750);
+//   useEffect(() => {
+//     if (screen === 'feed') {
+//       window.addEventListener('scroll', scrollEvent, false);
+//     } else {
+//       console.log('CHANGED SCREEN')
+//       window.removeEventListener('scroll', scrollEvent, false);
+//     }
+//   }, [screen]);
 
-  useEffect(() => {
-    
-  }, []);
+
   let posts;
   // if (!feed) {
   //   // return loading icon
@@ -62,39 +99,6 @@ const Dashboard = ({
       post={post}
     />
   ));
-
-  const scrollEvent = debounce(() => {
-    // Bails early if:
-    // * there's an error
-    // * it's already loading
-    // * there's nothing left to load
-    if (screen === 'feed') {
-      if (topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
-        // set topInView to false
-        startScroll(document.documentElement.scrollTop);
-      }
-      if (!topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
-        // set topInView to false
-        setScroll(window.innerHeight + document.documentElement.scrollTop);
-      }
-      if (!topInView && window.innerHeight + document.documentElement.scrollTop < 1800) {
-        // set topInView to false
-        console.log(screen, 'yoo')
-        viewTop();
-
-      }
-      // if (error || isLoading || !hasMore) return;
-      // Checks that the page has scrolled to the bottom
-      if (
-        window.innerHeight + document.documentElement.scrollTop
-        >= document.documentElement.offsetHeight
-      ) {
-        console.log('yoooooo')
-        console.log(screen, 'yoo')
-        loadNext();
-      }
-    }
-  }, 750);
 
   return (
     <div style={styles.container} id="feed" >

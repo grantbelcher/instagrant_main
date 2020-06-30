@@ -56,9 +56,9 @@ const FollowButton = ({
     buttonText = 'Follow';
   }
   const toggleFollow = () => {
-    if (myProfile) {
-      console.log('yo');
-    }
+    // if (myProfile) {
+    //   console.log('yo');
+    // }
     if (alreadyFollowing) {
       unFollowUser(userId, profileId);
       updateFollowData(userId, true);

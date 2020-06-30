@@ -7,9 +7,9 @@ import PostText from './PostText';
 
 const styles = {
   container: {
-    height: '90vh',
-    maxHeight: '100vh',
-    marginBottom: '8vh',
+    maxHeight: '98vh',
+    minHeight: '90vh',
+    marginBottom: '4vh',
   },
 };
 

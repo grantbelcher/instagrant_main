@@ -15,7 +15,6 @@ const styles = {
 };
 
 const PostIcons = () => {
-  console.log('yp');
   return (
     <div style={styles.container}>
       <div>

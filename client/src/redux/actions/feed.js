@@ -73,9 +73,14 @@ export const setTopInView = () => (dispatch) => {
 };
 
 export const loadNextPosts = () => async (dispatch) => {
+  console.log('before request');
+  const { auth, feedInfo, followStats, view } = store.getState();
+  const { screen } = view;
+  if (screen !== 'feed') {
+    console.log('screen is not feed');
+    return;
+  }
   try {
-    console.log('before request');
-    const { auth, feedInfo, followStats } = store.getState();
     const { index } = feedInfo;
     const { userId } = auth;
     const { following } = followStats;
