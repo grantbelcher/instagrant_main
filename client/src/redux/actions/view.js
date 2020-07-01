@@ -19,6 +19,7 @@ export const viewProfile = (profileId) => async (dispatch) => {
         const dataCopy = {};
         profileInfo.following = res.data.following.map((item) => item.followingId);
         profileInfo.followers = res.data.myFollowers.map((item) => item.followerId);
+        profileInfo.posts = res.data.posts
         dispatch({
           type: 'VIEW_PROFILE',
           payload: profileInfo,

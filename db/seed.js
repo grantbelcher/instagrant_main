@@ -487,10 +487,10 @@ const configureDb = () => {
     .then(() => {
       db.queryAsync(`CREATE TABLE users (
       userId INT AUTO_INCREMENT,
-      username VARCHAR(20) NOT NULL,
-      fullname VARCHAR(20) NOT NULL,
-      password VARCHAR(12) NOT NULL,
-      title VARCHAR(40) NOT NULL,
+      username VARCHAR(40) NOT NULL,
+      fullname VARCHAR(40) NOT NULL,
+      password VARCHAR(20) NOT NULL,
+      title VARCHAR(40),
       bio VARCHAR(255),
       photo VARCHAR(255), 
       PRIMARY KEY(userId)

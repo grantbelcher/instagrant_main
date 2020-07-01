@@ -17,7 +17,16 @@ router.get('/myFollowers/:userId', (req, res) => {
       db.queryAsync(`SELECT followerId FROM relationships WHERE followingId = ${userId}`)
         .then((info) => {
           data.myFollowers = info;
-          res.send(data);
+          db.queryAsync(`SELECT COUNT(*) FROM posts WHERE authorId = ${userId}`)
+            .then((postCount) => {
+              const count = postCount[0]['COUNT(*)'];
+              data.posts = count;
+              return res.send(data);
+            })
+            .catch((err) => {
+              console.log(err, 'ERRRRRRRR GETTING NUMBER OF POSTS');
+              return res.status(500);
+            });
         })
         .catch((err) => {
           console.log(err, 'second query');

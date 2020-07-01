@@ -4,13 +4,16 @@ import Avatar from '@material-ui/core/Avatar';
 import Footer from '../components/Footer';
 import FollowButton from '../components/FollowButton';
 
-const Profile = ({ followers, following, photo }) => {
-
+const Profile = ({ profileInfo }) => {
+  const {
+    followers, following, photo, title, username, fullname, bio, posts,
+  } = profileInfo;
   return (
     <div>
       <Avatar src={photo} />
       <div>
-        {`${followers.length} followers, ${following.length} following`}
+        {`${fullname},  ${username}, ${title}, ${bio}`}
+        {`${posts} posts, ${followers.length} followers, ${following.length} following`}
       </div>
       <FollowButton />
       <Footer />
@@ -20,11 +23,8 @@ const Profile = ({ followers, following, photo }) => {
 
 const mapStateToProps = ({ view }) => {
   const { profileInfo } = view;
-  const { followers, following, photo } = profileInfo;
   return {
-    followers,
-    following,
-    photo,
+    profileInfo,
   };
 };
 

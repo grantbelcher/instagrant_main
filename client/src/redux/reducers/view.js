@@ -6,8 +6,6 @@ const initialState = {
   profileInfo: null,
 };
 
-
-
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
@@ -40,12 +38,6 @@ export default function (state = initialState, action) {
         profileInfo: null,
         screen: 'feed',
       };
-    // case 'VIEW_MY_PROFILE':
-    //   return {
-    //     ...state,
-
-    //     screen: 'my profile',
-    //   };
     case 'SEARCH_PROFILES':
       return {
         ...state,

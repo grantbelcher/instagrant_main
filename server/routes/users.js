@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/profile/:userId', (req, res) => {
   const { userId } = req.params;
-  const queryString = `SELECT userId, username, fullname, photo, bio FROM users where userId = ${userId}`;
+  const queryString = `SELECT userId, username, fullname, photo, title, bio FROM users where userId = ${userId}`;
   db.queryAsync(queryString)
     .then((data) => {
       return res.send(data);
