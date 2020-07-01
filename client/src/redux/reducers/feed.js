@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const initialState = {
   index: 0,
   feed: [],
@@ -31,8 +32,8 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case 'UPDATE_FEED':
-      const firstPosts = state.feed.slice(0, 4)
-      console.log([payload, ...firstPosts], 'IN REDUCER UPDATE FEED')
+      const firstPosts = state.feed.slice(0, 4);
+      console.log([payload, ...firstPosts], 'IN REDUCER UPDATE FEED');
       return {
         ...state,
         feed: [payload, ...firstPosts],
@@ -59,6 +60,41 @@ export default function (state = initialState, action) {
         endOfFeed: true,
         loading: false,
       };
+    case 'INCREMENT_LIKES':
+      const index = state.feed.findIndex(({ postId }) => payload === postId);
+
+      const feedCopyStart = state.feed.slice(0, index);
+      const feedCopyEnd = state.feed.slice(index + 1, state.feed.length - 1);
+
+      const postCopyString = JSON.stringify(state.feed[index]);
+      const postCopy = JSON.parse(postCopyString);
+      postCopy.likes += 1;
+
+      return {
+        ...state,
+        feed: [
+          ...feedCopyStart,
+          postCopy,
+          ...feedCopyEnd,
+        ],
+      };
+    case 'DECREMENT_LIKES':
+      const postIndex = state.feed.findIndex(({ postId }) => payload === postId);
+
+      const copyStart = state.feed.slice(0, postIndex);
+      const copyEnd = state.feed.slice(postIndex + 1, state.feed.length - 1);
+
+      const copyString = JSON.stringify(state.feed[postIndex]);
+      const copy = JSON.parse(copyString);
+      copy.likes -= 1;
+      return {
+        ...state,
+        feed: [
+          ...copyStart,
+          copy,
+          ...copyEnd,
+        ],
+      };
     case 'ERROR_LOADING_FEED':
       return {
         ...state,
@@ -70,7 +106,7 @@ export default function (state = initialState, action) {
         error: null,
       };
     case 'NEW_POSTS_IN_FEED':
-      const feedCopy = state.feed.slice(0, state.feed.length - 1)
+      const feedCopy = state.feed.slice(0, state.feed.length - 1);
       return {
         ...state,
         feed: [payload, ...feedCopy],

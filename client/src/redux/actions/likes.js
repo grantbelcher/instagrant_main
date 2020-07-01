@@ -27,6 +27,10 @@ export const likePost = (postId) => async (dispatch) => {
       type: 'ADD_TO_LIKES',
       payload: { postId },
     });
+    dispatch({
+      type: 'INCREMENT_LIKES',
+      payload: postId,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -46,6 +50,10 @@ export const unlikePost = (postId) => async (dispatch) => {
     dispatch({
       type: 'UNLIKE_POST',
       payload: { postId },
+    });
+    dispatch({
+      type: 'DECREMENT_LIKES',
+      payload: postId,
     });
   } catch (error) {
     console.log(error, 'error in unfollow action');
