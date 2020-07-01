@@ -14,6 +14,13 @@ const styles = {
   icon: {
     margin: '2vw',
   },
+  emptyHeart: {
+    margin: '2vw',
+  },
+  fullHeart: {
+    margin: '2vw',
+    color: '#ec4184',
+  },
 };
 
 const PostIcons = ({
@@ -23,8 +30,8 @@ const PostIcons = ({
   useEffect(() => {
     if (likedPosts && likedPosts.length > 0) {
       console.log(postId, likedPosts.findIndex(({ postId: id }) => id === postId));
-      let index = likedPosts.findIndex(({ postId: id }) => id === postId);
-      console.log(index, 'index')
+      const index = likedPosts.findIndex(({ postId: id }) => id === postId);
+      console.log(index, 'index');
       if (index > -1) {
         setAlreadyLiked(true);
       } else {
@@ -34,15 +41,29 @@ const PostIcons = ({
   }, [likedPosts]);
 
 
+  const emptyHeart = (
+    <i
+      className="fa fa-heart-o fa-lg"
+      aria-hidden="true"
+      style={styles.emptyHeart}
+      onClick={() => likeThisPost(postId)}
+    />
+  );
+
+  const fullHeart = (
+    <i
+      className="fa fa-heart fa-lg"
+      aria-hidden="true"
+      style={styles.fullHeart}
+      onClick={() => unlikeThisPost(postId)}
+    />
+  );
+
+
   return (
     <div style={styles.container}>
       <div>
-        <i
-          className={alreadyLiked ? 'fa fa-heart fa-lg' : 'fa fa-heart-o fa-lg'}
-          aria-hidden="true"
-          style={styles.icon}
-          onClick={alreadyLiked ? (() => unlikeThisPost(postId)) : (() => likeThisPost(postId))}
-        />
+        {alreadyLiked ? fullHeart : emptyHeart}
         <i className="fa fa-comment-o fa-lg" aria-hidden="true" style={styles.icon} />
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={styles.icon} />
       </div>
