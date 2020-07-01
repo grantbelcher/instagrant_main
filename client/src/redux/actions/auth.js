@@ -4,6 +4,7 @@ import setAuthToken from '../../../../utils/setAuthToken';
 import { addError } from './error';
 import { loadFollowStats } from './follow';
 import { addToFeed } from './feed';
+import { loadLikes } from './likes';
 
 // export const loadUser = () => async (dispatch) => {
 //   // if (localStorage.token) {
@@ -33,13 +34,12 @@ export const signIn = (username, password) => async (dispatch) => {
     const { userId } = response.data;
     // dispatch followers action
     dispatch(loadFollowStats(userId));
-    // setTimeout(() => {
-    //   dispatch(addToFeed());
-    // }, 2000);
+    dispatch(loadLikes(userId));
     dispatch({
       type: 'AUTH_SUCCESS',
       payload: response.data,
     });
+    
     dispatch({
       type: 'VIEW_FEED',
     });

@@ -33,7 +33,7 @@ const Post = ({ post, currentUser, currentUserId, first }) => {
         }}
         alt="loading"
         />
-        <PostIcons />
+        <PostIcons postId={post.postId}/>
         <PostText post={post} />
     </div>
   );

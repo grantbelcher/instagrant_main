@@ -6,7 +6,8 @@ import upload from './upload';
 import currentPost from './currentPost';
 import feedInfo from './feed';
 import followStats from './follow';
+import likes from './likes';
 
 export default combineReducers({
-  auth, error, view, upload, currentPost, feedInfo, followStats,
+  auth, error, view, upload, currentPost, feedInfo, followStats, likes,
 });

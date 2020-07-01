@@ -5,6 +5,7 @@ const cors = require('cors');
 const userRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
 const followersRoute = require('./routes/followers');
+const likesRoute = require('./routes/likes');
 const profilesRoute = require('./routes/users');
 const socketManager = require('./socketManager');
 // const fileUpload = require('express-fileupload');
@@ -19,6 +20,7 @@ app.use('/', express.static(path.join(__dirname, '../client/public')));
 app.use('/auth', userRoute);
 app.use('/posts', postsRoute);
 app.use('/followers', followersRoute);
+app.use('/likes', likesRoute);
 app.use('/users', profilesRoute);
 
 app.get('/testing', (req, res) => {
