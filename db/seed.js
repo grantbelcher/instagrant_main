@@ -3,10 +3,10 @@ const Promise = require('bluebird');
 const db = require('./index');
 
 const createUserQuery = ({
-  username, fullname, bio, photo, password,
+  username, fullname, bio, title, photo, password,
 }) => {
-  const values = `"${username}", "${fullname}", "${bio}", "${photo}", "${password}"`;
-  return `INSERT INTO users (username, fullname, bio, photo, password) VALUES (${values});`;
+  const values = `"${username}", "${fullname}", "${title}", "${bio}", "${photo}", "${password}"`;
+  return `INSERT INTO users (username, fullname, title, bio, photo, password) VALUES (${values});`;
 };
 
 const createPostQuery = ({
@@ -306,6 +306,19 @@ const bios = [
   'its  5 oclock somewhere',
 ];
 
+const titles = [
+  'Air Marshal',
+  'Assistant Professor',
+  'Duke of Earl',
+  'Party Captain',
+  'Commissioner of Partying',
+  'Dalai Lama',
+  'Grand Master Wizard',
+  'High Priest',
+  'President of Communications',
+  'VP of Marketing',
+];
+
 const firstUsers = [];
 usernames.forEach((name, i) => {
   const newUser = {};
@@ -313,6 +326,7 @@ usernames.forEach((name, i) => {
   newUser.fullname = fullnames[i];
   newUser.bio = bios[Math.floor(Math.random() * bios.length)];
   newUser.password = 'secret123';
+  newUser.title = titles[Math.floor(Math.random() * titles.length)];
   newUser.photo = images[Math.floor(Math.random() * images.length)];
   firstUsers.push(newUser);
 });
@@ -476,6 +490,7 @@ const configureDb = () => {
       username VARCHAR(20) NOT NULL,
       fullname VARCHAR(20) NOT NULL,
       password VARCHAR(12) NOT NULL,
+      title VARCHAR(40) NOT NULL,
       bio VARCHAR(255),
       photo VARCHAR(255), 
       PRIMARY KEY(userId)
