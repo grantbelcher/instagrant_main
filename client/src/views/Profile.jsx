@@ -26,7 +26,7 @@ const styles = {
     width: '35%',
   },
   banner: {
-    paddingLeft: '5vw',
+    paddingLeft: '3vw',
     paddingRight: '5vw',
     paddingTop: '13vh',
     display: 'flex',
@@ -61,8 +61,55 @@ const styles = {
     justifyContent: 'center',
     marginLeft: '4vw',
   },
+  userInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: '7vw',
+    marginTop: '4vh',
+    maxWidth: '64vw',
+  },
+  fullName: {
+    fontSize: 'large',
+    fontWeight: 560,
+    marginBottom: '1vw',
+  },
+  stats: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: '3vh',
+    height: '10vh',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderTop: 'solid',
+    borderBottom: 'solid',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: 'rgb(191, 191, 191)',
+    borderBottomColor: 'rgb(191, 191, 191)',
+  },
+  statBox: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  statsTop: {
+    textAlign: 'center',
+    fontSize: 'large',
+    fontWeight: 500,
+  },
+  statsBottom: {
+    fontWeight: 400,
+    fontSize: 'small',
+    color: 'gray',
+  },
 };
+// margin-top: 3vh;
+//     height: 10vh;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-around;
 
+
+// WORD LIMIT ON BIO => 100
 
 const Profile = ({ profileInfo }) => {
   const {
@@ -84,14 +131,40 @@ const Profile = ({ profileInfo }) => {
         <div style={styles.col2}>
           <div style={styles.row1}>
             <div style={{ fontSize: 'x-large', fontWeight: 400, marginRight: 4 }}>{username}</div>
-            <i class="fa fa-check-circle" aria-hidden="true" style={{ marginBottom: '2vh', color: '#4fa9f6' }} />
+            <i className="fa fa-check-circle" aria-hidden="true" style={{ marginBottom: '2vh', color: '#4fa9f6' }} />
             <div style={{ fontSize: 'x-large', paddingLeft: '3vw', fontWeight: 700 }}>‧‧‧</div>
           </div>
           <div style={styles.row2}>
             <FollowButton />
             <div style={styles.fakeButton}>
-              <i class="fa fa-chevron-down" aria-hidden="true" />
+              <i className="fa fa-chevron-down" aria-hidden="true" />
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={styles.userInfo}>
+        <div style={styles.fullName}>{fullname}</div>
+        <div style={{ fontWeight: 500, marginBottom: '1vw', fontSize: 'smaller' }}>{title}</div>
+        <div style={{ fontSize: 'smaller' }}>{bio}</div>
+      </div>
+      <div style={styles.stats}>
+        <div style={styles.statBox}>
+          <div style={styles.statsTop}>
+            {posts}
+            <div style={styles.statsBottom}>posts</div>
+          </div>
+        </div>
+        <div style={styles.statBox}>
+          <div style={styles.statsTop}>
+            {followers.length}
+            <div style={styles.statsBottom}>followers</div>
+          </div>
+        </div>
+        <div style={styles.statBox}>
+          <div style={styles.statsTop}>
+            {following.length}
+            <div style={styles.statsBottom}>following</div>
           </div>
         </div>
       </div>
