@@ -1,3 +1,4 @@
+
 const socketManager = (socket) => {
   socket.on('USER_CONNECTED', (userId) => {
     console.log(userId, 'yooooo');
@@ -14,9 +15,10 @@ const socketManager = (socket) => {
   // };
   socket.on('NEW_POST_ADDED', (postInfo) => {
     const {
-      userId: authorId, username, avatar: profilePic, location, upload: picture, caption,
+      userId: authorId, username, avatar: profilePic, location, upload: picture, caption, postId,
     } = postInfo;
     const post = {
+      postId,
       authorId,
       username,
       profilePic,

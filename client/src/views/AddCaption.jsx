@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -7,6 +8,7 @@ import LocationSearch from '../components/LocationSearch';
 import { newProfilePic, newPost } from '../redux/actions/posts';
 import store from '../redux/index';
 import SocketContext from '../context/index';
+
 
 const styles = {
   container: {
@@ -67,19 +69,32 @@ const AddCaption = ({
       }, 2000);
     } else {
       // emit this info to socket;
-      const postInfo = {
-        upload,
-        caption,
-        location,
-        userId,
-        username: user,
-        avatar,
-      };
-      connection.emit('NEW_POST_ADDED', postInfo);
-      addNewPost(upload, caption, location);
-      store.dispatch({
-        type: 'VIEW_FEED',
-      }, 2000);
+      let postInfo;
+      axios.get('/posts/lastPost')
+        .then((result) => {
+          const { data } = result;
+          console.log(data, 'postId before SOCKETS!!! ');
+          let { postId } = data;
+          postId = postId + 1
+          console.log(postId);
+          postInfo = {
+            upload,
+            caption,
+            location,
+            userId,
+            username: user,
+            avatar,
+            postId,
+          };
+          connection.emit('NEW_POST_ADDED', postInfo);
+          addNewPost(upload, caption, location);
+          store.dispatch({
+            type: 'VIEW_FEED',
+          }, 1000);
+        })
+        .catch((err) => {
+          console.log(err, 'ERR GETTING LAST POST');
+        });
     }
   };
 

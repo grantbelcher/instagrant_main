@@ -18,6 +18,18 @@ router.get('/singlePost/:postId', (req, res) => {
     });
 });
 
+router.get('/lastPost', (req, res) => {
+  db.queryAsync('SELECT postId FROM posts ORDER BY postId DESC LIMIT 1;')
+    .then((result) => {
+      console.log(result, 'result from last post query');
+      res.send(result[0]);
+    })
+    .catch((err) => {
+      console.log(err, 'ERRRRRRRR fetching last post');
+      return res.send(500);
+    });
+});
+
 router.post('/upload-image', (req, res) => {
   const queryString = createPostQuery(req.body);
   db.queryAsync(queryString)
