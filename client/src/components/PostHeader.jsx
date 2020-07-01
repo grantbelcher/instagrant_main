@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
+import { viewProfile } from '../redux/actions/view';
+
+
 
 // add author avatar to each post in database, or use a mysql query to pull it out simultaneously
 
@@ -30,28 +33,16 @@ const styles = {
   },
 };
 
-const PostHeader = ({ post }) => {
-  // const postIsMine = currentPost.authorId === currentUserId;
-
-  // const followButton = (
-  //   <div style={{ marginLeft: '1vw', fontWeight: 700 }}>
-  //     *
-  //     <a
-  //       style={{
-  //         color: '#4fa9f6',
-  //         marginLeft: '1vw',
-  //         }}
-  //     >
-  //       follow
-  //     </a>
-  //   </div>
-  // );
+const PostHeader = ({ post, goToProfile }) => {
 
   return (
     <div style={styles.container}>
       <div style={styles.avatarGroup}>
         <Avatar style={styles.avatar} src={post.profilePic} alt={post.username} />
-        <div style={{ paddingLeft: '2vw' }}>
+        <div
+          style={{ paddingLeft: '2vw' }}
+          onClick={() => goToProfile(post.authorId)}
+          >
           <a
             style={{
               fontWeight: 600,
@@ -82,13 +73,9 @@ const PostHeader = ({ post }) => {
   );
 };
 
-// const mapStateToProps = ({ auth, currentPost }) => {
-//   const { user, userId } = auth;
-//   return {
-//     currentPost,
-//     currentUser: user,
-//     currentUserId: userId,
-//   };
-// };
 
-export default connect(null, null)(PostHeader);
+const mapDispatchToProps = {
+  goToProfile: viewProfile,
+};
+
+export default connect(null, mapDispatchToProps)(PostHeader);
