@@ -41,11 +41,11 @@ export const unlikePost = (postId) => async (dispatch) => {
         userId,
       },
     };
-    const response = await axios.delete('/followers/unfollow', config);
+    const response = await axios.delete('/likes/unlike', config);
     console.log(response.data);
     dispatch({
       type: 'UNLIKE_POST',
-      payload: postId,
+      payload: { postId },
     });
   } catch (error) {
     console.log(error, 'error in unfollow action');

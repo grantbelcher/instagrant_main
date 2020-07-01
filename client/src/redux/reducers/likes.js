@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
         likedPosts: [...state.likedPosts, payload],
       };
     case 'UNLIKE_POST':
-      const index = state.likedPosts.indexOf(payload);
+      const index = state.likedPosts.findIndex(({ postId }) => postId === payload.postId);;
       const copyStart = state.likedPosts.slice(0, index);
       const copyEnd = state.likedPosts.slice(index + 1, state.length);
       return {

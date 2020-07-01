@@ -21,13 +21,14 @@ const PostIcons = ({
 }) => {
   const [alreadyLiked, setAlreadyLiked] = useState(false);
   useEffect(() => {
-    console.log((likedPosts && likedPosts.length > 0), 'likes updated');
     if (likedPosts && likedPosts.length > 0) {
       console.log(postId, likedPosts.findIndex(({ postId: id }) => id === postId));
       let index = likedPosts.findIndex(({ postId: id }) => id === postId);
       console.log(index, 'index')
       if (index > -1) {
         setAlreadyLiked(true);
+      } else {
+        setAlreadyLiked(false);
       }
     }
   }, [likedPosts]);

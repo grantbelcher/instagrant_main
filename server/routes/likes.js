@@ -30,7 +30,7 @@ router.post('/likePost/:postId/:userId', (req, res) => {
     });
 });
 
-router.delete('/unfollow', (req, res) => {
+router.delete('/unlike', (req, res) => {
   const { postId, userId } = req.body;
   // postId = parseInt(postId);
   // userId = parseInt(userId);
