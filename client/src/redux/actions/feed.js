@@ -153,27 +153,20 @@ export const checkNewMessages = (postInfo, followStats) => (dispatch) => {
   const newPostInFeed = following.includes(authorId);
   if (newPostInFeed) {
     if (topInView) {
-      // create a complete copy of feed in reducer, add post to the top
-      // scrollToTop
-      // dispatch alert that new posts are above, remove after 5 seconds
       dispatch({
         type: 'UPDATE_FEED',
         payload: postInfo,
       });
     } else {
-      //  dispatch alert that new posts are above, remove after 5 seconds
-      dispatch({
-        type: 'UPDATE_FEED',
+      store.dispatch({
+        type: 'NEW_POSTS_IN_FEED',
         payload: postInfo,
       });
-      // store.dispatch({
-      //   type: 'NEW_POSTS_IN_FEED',
-      // });
-      // setTimeout(() => {
-      //   store.dispatch({
-      //     type: 'REMOVE_FEED_ALERT',
-      //   });
-      // }, 6000);
+      setTimeout(() => {
+        store.dispatch({
+          type: 'REMOVE_FEED_ALERT',
+        });
+      }, 8000);
     }
   }
 };

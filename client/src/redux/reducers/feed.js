@@ -70,8 +70,10 @@ export default function (state = initialState, action) {
         error: null,
       };
     case 'NEW_POSTS_IN_FEED':
+      const feedCopy = state.feed.slice(0, state.feed.length - 1)
       return {
         ...state,
+        feed: [payload, ...feedCopy],
         newPosts: true,
       };
     case 'REMOVE_FEED_ALERT':

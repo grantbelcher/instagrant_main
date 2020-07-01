@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import debounce from 'lodash.debounce';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
@@ -49,6 +50,7 @@ const styles = {
     zIndex: 100,
     top: '12vh',
     right: '2vw',
+    backgroundColor: 'rgba(242, 101, 202, 0.95)',
   },
 };
 
@@ -83,30 +85,7 @@ const Dashboard = ({
     );
   });
 
-  if (following.length < 1) {
-    return (
-      <div style={styles.container} id="feed">
-        <div style={styles.header}>
-          <i className="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
-          <img
-            style={styles.logo}
-            src="https://res.cloudinary.com/instagrant/image/upload/v1593545227/Screen_Shot_2020-06-30_at_12.26.59_PM_jtacwi.png"
-            alt="logo"
-          />
-          <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
-
-        </div>
-        {/* <div style={{marginTop: '10vh'}}>yo</div> */}
-        {posts}
-        {loading ? <CircularProgress /> : null}
-        {endOfFeed ? <div>End Of Feed!</div> : null}
-        <div style={{ height: '10vh', marginTop: '3vh' }} />
-        <Footer />
-        {newPosts ? (<button style={styles.alertButton} onClick={() => resetFeed()}>new posts in feed</button>) : null}
-      </div>
-    );
-  }
-
+  let test = true;
 
   return (
     <div style={styles.container} id="feed">
@@ -118,15 +97,13 @@ const Dashboard = ({
           alt="logo"
         />
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
-
       </div>
-
       {posts}
       {loading ? <CircularProgress /> : null}
       {endOfFeed ? <div>End Of Feed!</div> : null}
       <div style={{ height: '10vh', marginTop: '3vh' }} />
       <Footer />
-      {newPosts ? (<button style={styles.alertButton} onClick={() => resetFeed()}>new posts in feed</button>) : null}
+      {newPosts ? (<Button style={styles.alertButton} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}>Check New Posts!</Button>) : null}
     </div>
   );
 };
