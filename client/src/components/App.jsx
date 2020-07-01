@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import io from 'socket.io-client';
 import debounce from 'lodash.debounce';
 import Dashboard from '../views/Dashboard';
 import { loadUser } from '../redux/actions/auth';
 import store from '../redux/index';
+import SocketContext from '../context/index';
 import Auth from '../views/Auth';
 import Profile from '../views/Profile';
 import Post from './Post';
@@ -13,43 +15,46 @@ import AddCaption from '../views/AddCaption';
 import Search from '../views/Search';
 import { loadFollowStats } from '../redux/actions/follow';
 import {
-  addToFeed, loadNextPosts, beginScroll, setTopInView,
+  addToFeed, loadNextPosts, beginScroll, setTopInView, checkNewMessages
 } from '../redux/actions/feed';
 // import setAuthToken from '../../../utils/setAuthToken';
+
 
 // if (localStorage.token) {
 //   setAuthToken(localStorage.token);
 // }
 
-// const mapStateToProps = (state) => {
-//   const { view, feedInfo } = state
-//   const { screen } = view;
-//   const { feed, topInView } = feedInfo;
-//   const { isLoggedIn, userId } = state.auth;
-//   return {
-//     isLoggedIn,
-//     screen,
-//     feed,
-//     topInView,
-//   };
-// };
+const socketUrl = '/';
 
-// const mapDispatchToProps = {
-//   loadFollowData: loadFollowStats,
-//   getFeed: addToFeed,
-//   startScroll: beginScroll,
-//   viewTop: setTopInView,
-//   loadNext: loadNextPosts,
-// };
+const socket = io(socketUrl);
+
 
 const App = ({
-  isLoggedIn, userId, screen, loadFollowData, feed, topInView, getFeed, startScroll, viewTop, loadNext, endOfFeed,
+  isLoggedIn, userId, screen, loadFollowData, feed, topInView, getFeed, startScroll, viewTop, loadNext, endOfFeed, following, checkNewMessage
 }) => {
   let currentView;
   if (!screen) {
     return <Auth />;
   }
+  // let string;
+  // if (screen === 'feed') {
+  //   if (following.length > 0) {
+  //     string = following.reduce((acc, id) => `${acc} ${id},`, '');
+  //   }
+  // }
 
+
+  useEffect(() => {
+    const initSocket = () => {
+      // let followingString;
+      console.log(store.getState().followStats, 'GET STATE');
+      socket.on('NEW_POST_RECIEVED', (post) => {
+        console.log(post, 'SOCKET EVENT');
+        checkNewMessage(post, store.getState().followStats);
+      });
+    };
+    initSocket();
+  }, []);
 
   useEffect(() => {
     const scrollEvent = debounce(() => {
@@ -59,17 +64,17 @@ const App = ({
       // * it's already loading
       // * there's nothing left to load
       const bottomOfPage = feed.length * window.innerHeight - 1800;
-      console.log(bottomOfPage)
+      console.log(bottomOfPage);
       if (screen === 'feed') {
         if (topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
           // set topInView to false
-          console.log('scrolling begins')
+          console.log('scrolling begins');
           startScroll(document.documentElement.scrollTop);
         }
         if (!topInView && window.innerHeight + document.documentElement.scrollTop < 800) {
           // set topInView to false
           // console.log(screen, 'yoo')
-          console.log('top in view')
+          console.log('top in view');
           viewTop();
         }
         // if (error || isLoading || !hasMore) return;
@@ -78,7 +83,7 @@ const App = ({
           window.innerHeight + document.documentElement.scrollTop
           >= bottomOfPage
         ) {
-          console.log('loading next')
+          console.log('loading next');
           // console.log('yoooooo')
           // console.log(screen, 'yoo')
           loadNext();
@@ -124,23 +129,28 @@ const App = ({
           {isLoggedIn ? <Redirect to="/dashboard" /> : <Auth />}
         </Route>
         <Route path="/dashboard">
+          <SocketContext.Provider value={socket}>
           {currentView}
+          </SocketContext.Provider>
         </Route>
       </Switch>
     </div>
   );
 };
 const mapStateToProps = (state) => {
-  const { view, feedInfo } = state
+  const { view, feedInfo } = state;
   const { screen } = view;
   const { feed, topInView, endOfFeed } = feedInfo;
   const { isLoggedIn, userId } = state.auth;
+  const { following } = state.followStats;
+
   return {
     isLoggedIn,
     screen,
     feed,
     topInView,
     endOfFeed,
+    following,
   };
 };
 
@@ -150,6 +160,7 @@ const mapDispatchToProps = {
   startScroll: beginScroll,
   viewTop: setTopInView,
   loadNext: loadNextPosts,
+  checkNewMessage: checkNewMessages,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

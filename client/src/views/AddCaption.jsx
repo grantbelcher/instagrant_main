@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -6,6 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import LocationSearch from '../components/LocationSearch';
 import { newProfilePic, newPost } from '../redux/actions/posts';
 import store from '../redux/index';
+import SocketContext from '../context/index';
 
 const styles = {
   container: {
@@ -47,9 +48,14 @@ const styles = {
   },
 };
 
-const AddCaption = ({ file, upload, changeView, newProfile, addNewPost, inRegistration }) => {
+
+const AddCaption = ({
+  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar,
+}) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
+
+  const connection = useContext(SocketContext);
 
   const handleShare = () => {
     if (inRegistration) {
@@ -60,6 +66,16 @@ const AddCaption = ({ file, upload, changeView, newProfile, addNewPost, inRegist
         });
       }, 2000);
     } else {
+      // emit this info to socket;
+      const postInfo = {
+        upload,
+        caption,
+        location,
+        userId,
+        username: user,
+        avatar,
+      };
+      connection.emit('NEW_POST_ADDED', postInfo);
       addNewPost(upload, caption, location);
       store.dispatch({
         type: 'VIEW_FEED',
@@ -126,17 +142,19 @@ const AddCaption = ({ file, upload, changeView, newProfile, addNewPost, inRegist
         width: '100%',
         height: 3,
         marginTop: '-2.5vw',
-      }} />
+      }}
+      />
       <LocationSearch location={location} setLocation={setLocation} />
     </div>
   );
 };
 
-const mapStateToProps = ({ upload }) => {
-  return {
-    upload,
-  };
-};
+const mapStateToProps = ({ upload, auth }) => ({
+  upload,
+  userId: auth.userId,
+  user: auth.user,
+  avatar: auth.avatar,
+});
 
 const mapDispatchToProps = {
   newProfile: newProfilePic,

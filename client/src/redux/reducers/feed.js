@@ -6,6 +6,7 @@ const initialState = {
   topInView: true,
   endOfFeed: false,
   error: null,
+  newPosts: false,
 };
 
 export default function (state = initialState, action) {
@@ -28,6 +29,13 @@ export default function (state = initialState, action) {
         feed: [...state.feed, ...payload],
         index: state.index + 5,
         loading: false,
+      };
+    case 'UPDATE_FEED':
+      const firstPosts = state.feed.slice(0, 4)
+      console.log([payload, ...firstPosts], 'IN REDUCER UPDATE FEED')
+      return {
+        ...state,
+        feed: [payload, ...firstPosts],
       };
     case 'BEGIN_SCROLL':
       return {
@@ -60,6 +68,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: null,
+      };
+    case 'NEW_POSTS_IN_FEED':
+      return {
+        ...state,
+        newPosts: true,
+      };
+    case 'REMOVE_FEED_ALERT':
+      return {
+        ...state,
+        newPosts: false,
       };
     default:
       return state;

@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import Footer from '../components/Footer';
 import Post from '../components/Post';
+
 import {
   addToFeed, loadNextPosts, beginScroll, setTopInView, initFeed,
 } from '../redux/actions/feed';
@@ -43,60 +44,24 @@ const styles = {
     height: '6vh',
     width: '35%',
   },
+  alertButton: {
+    position: 'fixed',
+    zIndex: 100,
+    top: '12vh',
+    right: '2vw',
+  },
 };
 
 // bring feed into Dashboard from state
 
 const Dashboard = ({
-  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed, following, resetFeed,
+  screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed, following, resetFeed, newPosts,
 }) => {
   useEffect(() => {
     // get initial feed
-    console.log('ressetting')
+    console.log('ressetting');
     resetFeed();
   }, [following]);
-  // const [loading, setLoading] = useState(false);
-//   // const [scroll, setScroll] = useState(0);
-//   const scrollEvent = debounce(() => {
-//     // Bails early if:
-//     // * there's an error
-//     // * it's already loading
-//     // * there's nothing left to load
-//     if (screen === 'feed') {
-//       if (topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
-//         // set topInView to false
-//         startScroll(document.documentElement.scrollTop);
-//       }
-//       if (!topInView && window.innerHeight + document.documentElement.scrollTop > 1800) {
-//         // set topInView to false
-//         setScroll(window.innerHeight + document.documentElement.scrollTop);
-//       }
-//       if (!topInView && window.innerHeight + document.documentElement.scrollTop < 1800) {
-//         // set topInView to false
-//         // console.log(screen, 'yoo')
-//         viewTop();
-//       }
-//       // if (error || isLoading || !hasMore) return;
-//       // Checks that the page has scrolled to the bottom
-//       if (
-//         window.innerHeight + document.documentElement.scrollTop
-//         >= document.documentElement.offsetHeight
-//       ) {
-//         // console.log('yoooooo')
-//         // console.log(screen, 'yoo')
-//         loadNext();
-//       }
-//     }
-//   }, 750);
-//   useEffect(() => {
-//     if (screen === 'feed') {
-//       window.addEventListener('scroll', scrollEvent, false);
-//     } else {
-//       console.log('CHANGED SCREEN')
-//       window.removeEventListener('scroll', scrollEvent, false);
-//     }
-//   }, [screen]);
-
 
   let posts;
   // if (!feed) {
@@ -118,6 +83,31 @@ const Dashboard = ({
     );
   });
 
+  if (following.length < 1) {
+    return (
+      <div style={styles.container} id="feed">
+        <div style={styles.header}>
+          <i className="fa fa-camera fa-lg" aria-hidden="true" style={{ marginLeft: '4vw' }} onClick={() => store.dispatch({ type: 'ADD_POST' })} />
+          <img
+            style={styles.logo}
+            src="https://res.cloudinary.com/instagrant/image/upload/v1593545227/Screen_Shot_2020-06-30_at_12.26.59_PM_jtacwi.png"
+            alt="logo"
+          />
+          <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
+
+        </div>
+        {/* <div style={{marginTop: '10vh'}}>yo</div> */}
+        {posts}
+        {loading ? <CircularProgress /> : null}
+        {endOfFeed ? <div>End Of Feed!</div> : null}
+        <div style={{ height: '10vh', marginTop: '3vh' }} />
+        <Footer />
+        {newPosts ? (<button style={styles.alertButton} onClick={() => resetFeed()}>new posts in feed</button>) : null}
+      </div>
+    );
+  }
+
+
   return (
     <div style={styles.container} id="feed">
       <div style={styles.header}>
@@ -130,19 +120,22 @@ const Dashboard = ({
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
 
       </div>
-      {/* <div style={{marginTop: '10vh'}}>yo</div> */}
+
       {posts}
       {loading ? <CircularProgress /> : null}
       {endOfFeed ? <div>End Of Feed!</div> : null}
       <div style={{ height: '10vh', marginTop: '3vh' }} />
       <Footer />
+      {newPosts ? (<button style={styles.alertButton} onClick={() => resetFeed()}>new posts in feed</button>) : null}
     </div>
   );
 };
 
 const mapStateToProps = ({ view, feedInfo, followStats }) => {
   const { screen } = view;
-  const { feed, topInView, loading, endOfFeed } = feedInfo;
+  const {
+    feed, topInView, loading, endOfFeed, newPosts,
+  } = feedInfo;
   const { following } = followStats;
   return {
     screen,
@@ -151,6 +144,7 @@ const mapStateToProps = ({ view, feedInfo, followStats }) => {
     loading,
     endOfFeed,
     following,
+    newPosts,
   };
 };
 

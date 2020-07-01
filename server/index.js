@@ -6,9 +6,12 @@ const userRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
 const followersRoute = require('./routes/followers');
 const profilesRoute = require('./routes/users');
+const socketManager = require('./socketManager');
 // const fileUpload = require('express-fileupload');
 
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
 app.use(cors());
 app.use(express.json());
@@ -23,8 +26,10 @@ app.get('/testing', (req, res) => {
   res.send('yup');
 });
 
-const PORT = 1000;
+io.on('connection', socketManager);
 
-app.listen(PORT, () => {
+const PORT = 80;
+
+server.listen(PORT, () => {
   console.log(`listening on port ${PORT}!!!`);
 });
