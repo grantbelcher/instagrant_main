@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { startFollowing, unfollow } from '../redux/actions/follow';
-import { updateFollowStats } from '../redux/actions/view';
+import { updateFollowStats, editProfile } from '../redux/actions/view';
 
 
 // The `withStyles()` higher-order component is injecting a `classes`
@@ -14,10 +14,10 @@ const StyledButton = withStyles({
     borderRadius: 3,
     border: 0,
     color: 'white',
-    maxWidth: '15vw',
-    width: '15vw',
-    paddingLeft: '20vw',
-    paddingRight: '22vw',
+    // maxWidth: '15vw',
+    // width: '15vw',
+    paddingLeft: '10vw',
+    paddingRight: '12vw',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   },
   label: {
@@ -44,8 +44,9 @@ const AlternateButton = withStyles({
 
 
 const FollowButton = ({
-  userId, profileId, followUser, following, myFollowers, unFollowUser, updateFollowData
+  userId, profileId, followUser, following, myFollowers, unFollowUser, updateFollowData, editUserInfo
 }) => {
+  console.log(userId, profileId, 'MOTHER FUCK LOOK HERE');
   const alreadyFollowing = following.includes(profileId);
   const isFollowingMe = myFollowers.includes(profileId);
   const myProfile = (userId === profileId)
@@ -55,15 +56,14 @@ const FollowButton = ({
   } else if (alreadyFollowing) {
     buttonText = 'Unfollow';
   } else if (myProfile) {
-    buttonText = 'Edit Profile';
+    buttonText = '  Edit  ';
   } else {
     buttonText = 'Follow';
   }
   const toggleFollow = () => {
-    // if (myProfile) {
-    //   console.log('yo');
-    // }
-    if (alreadyFollowing) {
+    if (myProfile) {
+      editUserInfo();
+    } else if (alreadyFollowing) {
       unFollowUser(userId, profileId);
       updateFollowData(userId, true);
     } else {
@@ -108,6 +108,7 @@ const mapDispatchToProps = {
   followUser: startFollowing,
   unFollowUser: unfollow,
   updateFollowData: updateFollowStats,
+  editUserInfo: editProfile,
 };
 
 

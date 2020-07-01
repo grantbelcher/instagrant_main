@@ -12,6 +12,7 @@ import Profile from '../views/Profile';
 import Post from './Post';
 import EditPost from './EditPost';
 import AddCaption from '../views/AddCaption';
+import EditProfile from '../views/EditProfile';
 import Search from '../views/Search';
 import { loadFollowStats } from '../redux/actions/follow';
 import {
@@ -121,7 +122,10 @@ const App = ({
     currentView = <Post />;
   } else if (screen === 'search') {
     currentView = <Search />;
+  } else if (screen === 'edit profile') {
+    currentView = <EditProfile />;
   }
+
   return (
     <div>
       <Switch>
@@ -130,7 +134,7 @@ const App = ({
         </Route>
         <Route path="/dashboard">
           <SocketContext.Provider value={socket}>
-          {currentView}
+            {currentView}
           </SocketContext.Provider>
         </Route>
       </Switch>

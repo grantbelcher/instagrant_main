@@ -12,14 +12,14 @@ export const viewProfile = (profileId) => async (dispatch) => {
     console.log(profileId);
     const response = await axios.get(`/users/profile/${profileId}`);
     const { data } = response;
-    let profileInfo = data[0];
+    const profileInfo = data[0];
     axios.get(`/followers/myFollowers/${profileId}`)
       .then((res) => {
         console.log(res.data);
         const dataCopy = {};
         profileInfo.following = res.data.following.map((item) => item.followingId);
         profileInfo.followers = res.data.myFollowers.map((item) => item.followerId);
-        profileInfo.posts = res.data.posts
+        profileInfo.posts = res.data.posts;
         dispatch({
           type: 'VIEW_PROFILE',
           payload: profileInfo,
@@ -32,6 +32,12 @@ export const viewProfile = (profileId) => async (dispatch) => {
     // dispatch something else
     console.log(error);
   }
+};
+
+export const editProfile = () => (dispatch) => {
+  dispatch({
+    type: 'EDIT_PROFILE',
+  });
 };
 
 export const updateFollowStats = (userId, alreadyFollowing) => (dispatch) => {

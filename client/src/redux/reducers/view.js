@@ -15,6 +15,16 @@ export default function (state = initialState, action) {
         profileInfo: payload,
         screen: 'profile',
       };
+    case 'BACK_TO_PROFILE':
+      return {
+        ...state,
+        screen: 'profile',
+      };
+    case 'EDIT_PROFILE':
+      return {
+        ...state,
+        screen: 'edit profile',
+      };
     case 'ADD_POST':
       return {
         ...state,
