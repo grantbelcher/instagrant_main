@@ -64,7 +64,7 @@ export default function (state = initialState, action) {
       const index = state.feed.findIndex(({ postId }) => payload === postId);
 
       const feedCopyStart = state.feed.slice(0, index);
-      const feedCopyEnd = state.feed.slice(index + 1, state.feed.length - 1);
+      const feedCopyEnd = state.feed.slice(index + 1, state.feed.length);
 
       const postCopyString = JSON.stringify(state.feed[index]);
       const postCopy = JSON.parse(postCopyString);
@@ -82,7 +82,7 @@ export default function (state = initialState, action) {
       const postIndex = state.feed.findIndex(({ postId }) => payload === postId);
 
       const copyStart = state.feed.slice(0, postIndex);
-      const copyEnd = state.feed.slice(postIndex + 1, state.feed.length - 1);
+      const copyEnd = state.feed.slice(postIndex + 1, state.feed.length);
 
       const copyString = JSON.stringify(state.feed[postIndex]);
       const copy = JSON.parse(copyString);
