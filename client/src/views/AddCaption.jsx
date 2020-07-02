@@ -172,8 +172,7 @@ const AddCaption = ({
             ),
           }}
         />
-        <img src={upload} style={styles.image} />
-        {/* <img src={file} style={styles.image} /> */}
+        {inRegistration ? <img src={file} style={styles.image} /> : <img src={upload} style={styles.image} />}
       </div>
       <div style={{
         backgroundColor: 'rgb(230, 230, 230)',

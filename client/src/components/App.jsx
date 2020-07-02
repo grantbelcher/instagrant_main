@@ -75,22 +75,19 @@ const App = ({
           startScroll(document.documentElement.scrollTop);
         }
         if (!topInView && window.innerHeight + document.documentElement.scrollTop < 800) {
-          // set topInView to false
-          // console.log(screen, 'yoo')
-          console.log('top in view');
           viewTop();
         }
         // if (error || isLoading || !hasMore) return;
         // Checks that the page has scrolled to the bottom
-        if (
-          window.innerHeight + document.documentElement.scrollTop
-          >= bottomOfPage
-        ) {
-          console.log('loading next');
-          // console.log('yoooooo')
-          // console.log(screen, 'yoo')
-          loadNext();
-        }
+        // if (
+        //   window.innerHeight + document.documentElement.scrollTop
+        //   >= bottomOfPage
+        // ) {
+        //   console.log('loading next');
+        //   // console.log('yoooooo')
+        //   // console.log(screen, 'yoo')
+        //   loadNext();
+        // }
       }
     }, 1200);
     window.onscroll = null;

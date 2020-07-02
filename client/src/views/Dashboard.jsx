@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import debounce from 'lodash.debounce';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import Footer from '../components/Footer';
@@ -60,6 +58,12 @@ const styles = {
     paddingLeft: '15vw',
     marginTop: '12vw',
   },
+  loadButton: {
+    paddingRight: '15vw',
+    paddingLeft: '15vw',
+    backgroundColor: '#4fa9f6',
+    color: 'white',
+  },
 };
 
 // bring feed into Dashboard from state
@@ -98,7 +102,7 @@ const Dashboard = ({
       <Button style={styles.startFollowing} onClick={() => store.dispatch({ type: 'SEARCH_PROFILES' })}>Start Following Users</Button>
     </div>
   );
-
+  const loadButton = <Button style={styles.loadButton} onClick={() => loadNext()}>Load More Posts</Button>;
   return (
     <div style={styles.container} id="feed">
       <div style={styles.header}>
@@ -112,7 +116,7 @@ const Dashboard = ({
       </div>
       {(posts.length === 0) ? emptyFeedButton : posts}
       {loading ? <CircularProgress /> : null}
-      {endOfFeed ? <div>End Of Feed!</div> : null}
+      {endOfFeed ? <div>End Of Feed!</div> : loadButton}
       <div style={{ height: '10vh', marginTop: '3vh' }} />
       <Footer />
       {newPosts ? (<Button style={styles.alertButton} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}>Check New Posts!</Button>) : null}
