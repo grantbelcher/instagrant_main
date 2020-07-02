@@ -112,6 +112,8 @@ export default function (state = initialState, action) {
         feed: [payload, ...feedCopy],
         newPosts: true,
       };
+    case 'LOG_OUT_FEED':
+      return initialState;
     case 'REMOVE_FEED_ALERT':
       return {
         ...state,

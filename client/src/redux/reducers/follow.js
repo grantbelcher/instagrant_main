@@ -26,6 +26,8 @@ export default function (state = initialState, action) {
         ...state,
         following: [...copyStart, ...copyEnd],
       };
+    case 'LOG_OUT_FOLLOW':
+      return initialState;
     default:
       return state;
   }

@@ -52,7 +52,7 @@ const styles = {
 
 
 const AddCaption = ({
-  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar, newAvatar, updateAvatar
+  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar, newAvatar, updateAvatar,
 }) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
@@ -61,7 +61,7 @@ const AddCaption = ({
 
   useEffect(() => {
     console.log(newAvatar, 'NEW AVATAR FUCK ME');
-  }, [])
+  }, []);
 
   const handleShare = () => {
     if (inRegistration) {
@@ -70,13 +70,12 @@ const AddCaption = ({
         store.dispatch({
           type: 'VIEW_FEED',
         });
-      }, 2000);
+      }, 1000);
     } else if (newAvatar) {
-      console.log('yoooo')
-      /// call action to update avatar
-      updateAvatar(upload, caption, location)
-    }
-      else {
+      console.log('yoooo');
+      // / call action to update avatar
+      updateAvatar(upload, caption, location);
+    } else {
       // emit this info to socket;
       let postInfo;
       axios.get('/posts/lastPost')
@@ -84,19 +83,26 @@ const AddCaption = ({
           const { data } = result;
           console.log(data, 'postId before SOCKETS!!! ');
           let { postId } = data;
-          postId = postId + 1
+          postId += 1;
           console.log(postId);
           postInfo = {
-            upload,
             caption,
             location,
             userId,
             username: user,
-            avatar,
             postId,
           };
-          connection.emit('NEW_POST_ADDED', postInfo);
-          addNewPost(upload, caption, location);
+          if (inRegistration) {
+            postInfo.upload = file;
+            postInfo.avatar = file;
+            connection.emit('NEW_POST_ADDED', postInfo);
+            addNewPost(upload, caption, location);
+          } else {
+            postInfo.upload = upload;
+            postInfo.avatar = avatar;
+            connection.emit('NEW_POST_ADDED', postInfo);
+            addNewPost(upload, caption, location);
+          }
           store.dispatch({
             type: 'VIEW_FEED',
           }, 1000);

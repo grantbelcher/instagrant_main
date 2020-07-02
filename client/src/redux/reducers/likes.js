@@ -20,6 +20,8 @@ export default function (state = initialState, action) {
       return {
         likedPosts: [...copyStart, ...copyEnd],
       };
+    case 'LOG_OUT_LIKES':
+      return initialState;
     default:
       return state;
   }

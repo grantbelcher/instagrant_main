@@ -103,6 +103,15 @@ export const signOut = () => async (dispatch) => {
       type: 'LOG_OUT',
     });
     dispatch({
+      type: 'LOG_OUT_FEED',
+    });
+    dispatch({
+      type: 'LOG_OUT_FOLLOW',
+    });
+    dispatch({
+      type: 'LOG_OUT_LIKES',
+    });
+    dispatch({
       type: 'BACK_TO_AUTH',
     });
   } catch (err) {

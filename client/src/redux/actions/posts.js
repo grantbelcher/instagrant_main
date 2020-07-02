@@ -6,17 +6,19 @@ import { viewFeed } from './view';
 
 export const newPost = (picture, caption, location) => async (dispatch) => {
   // 'LOOK HERE FOR BUG' avatar from state may not exist
+  console.log(' ADDING NEW POST IN ACTION!!!!!!!!!!!');
   const { user, userId, avatar } = store.getState().auth;
   const data = {
     username: user, authorId: userId, profilePic: avatar, picture, caption, location,
   };
   try {
-    console.log('try catch');
+    console.log(data, 'try catch OF NEWPOST action');
     axios.post('/posts/upload-image', data);
 
     // ADD NEW POST WITH RESPONSE
   } catch (error) {
     addError('Failed to post image');
+    console.log(error, 'ERROR OSTING NEWPOST ACTION')
   }
   // console.log(response.data, 'response from server')
 };
