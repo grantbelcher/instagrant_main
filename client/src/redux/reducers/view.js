@@ -57,6 +57,25 @@ export default function (state = initialState, action) {
           ]
         }
       }
+    case 'DECREMENT_LIKES_PROFILE':
+      const feedIndex = state.profileInfo.userFeed.findIndex(({ postId }) => payload === postId);
+      const feedStart = state.profileInfo.userFeed.slice(0, feedIndex);
+      const feedEnd = state.profileInfo.userFeed.slice(feedIndex + 1, state.profileInfo.userFeed.length);
+
+      const postString = JSON.stringify(state.profileInfo.userFeed[feedIndex]);
+      const copy = JSON.parse(postString);
+      copy.likes -= 1;
+      return {
+        ...state,
+        profileInfo: {
+          ...state.profileInfo,
+          userFeed: [
+            ...feedStart,
+            copy,
+            ...feedEnd,
+          ],
+        },
+      };
     case 'END_OF_PROFILE_FEED':
       return {
         ...state,

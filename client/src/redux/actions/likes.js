@@ -45,6 +45,7 @@ export const likePost = (postId) => async (dispatch) => {
 
 export const unlikePost = (postId) => async (dispatch) => {
   const { userId } = store.getState().auth;
+  const { screen } = store.getState().view;
   try {
     const config = {
       data: {
@@ -62,10 +63,12 @@ export const unlikePost = (postId) => async (dispatch) => {
       type: 'DECREMENT_LIKES',
       payload: postId,
     });
-    dispatch({
-      type: 'DECREMENT_LIKES_PROFILE',
-      payload: postId,
-    });
+    if (screen === 'profile') {
+      dispatch({
+        type: 'DECREMENT_LIKES_PROFILE',
+        payload: postId,
+      });
+    }
   } catch (error) {
     console.log(error, 'error in unfollow action');
   }
