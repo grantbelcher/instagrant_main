@@ -58,6 +58,11 @@ router.post('/new_avatar', (req, res) => {
     });
 });
 
+router.post('/updateAvatar', (req, res) => {
+  console.log(req.body);
+  res.send('yo');
+});
+
 router.post('/myFeed', (req, res) => {
   const { following, userId, index } = req.body;
   let followingIds = following.reduce((accumulator, id) => {

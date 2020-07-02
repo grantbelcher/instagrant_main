@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
 import LocationSearch from '../components/LocationSearch';
-import { newProfilePic, newPost } from '../redux/actions/posts';
+import { newProfilePic, newPost, updateProfilePic } from '../redux/actions/posts';
 import store from '../redux/index';
 import SocketContext from '../context/index';
 
@@ -52,7 +52,7 @@ const styles = {
 
 
 const AddCaption = ({
-  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar, newAvatar
+  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar, newAvatar, updateAvatar
 }) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
@@ -73,7 +73,8 @@ const AddCaption = ({
       }, 2000);
     } else if (newAvatar) {
       console.log('yoooo')
-      /// 
+      /// call action to update avatar
+      updateAvatar(upload, caption, location)
     }
       else {
       // emit this info to socket;
@@ -196,6 +197,7 @@ const mapStateToProps = ({ upload, auth }) => ({
 const mapDispatchToProps = {
   newProfile: newProfilePic,
   addNewPost: newPost,
+  updateAvatar: updateProfilePic,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCaption);

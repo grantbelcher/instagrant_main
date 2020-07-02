@@ -52,6 +52,15 @@ export default function (state = initialState, action) {
         ...state,
         screen: 'new profile pic',
       };
+    case 'UPDATE_AVATAR_PROFILE_INFO':
+      return {
+        ...state,
+        profileInfo: {
+          ...state.profileInfo,
+          photo: payload,
+        },
+        screen: 'profile',
+      };
     case 'NEW_AVATAR':
       return {
         ...state,
