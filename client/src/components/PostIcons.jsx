@@ -14,6 +14,10 @@ const styles = {
   icon: {
     margin: '2vw',
   },
+  fullIcon: {
+    color: 'black',
+    margin: '2vw',
+  },
   emptyHeart: {
     margin: '2vw',
   },
@@ -27,6 +31,8 @@ const PostIcons = ({
   postId, likedPosts, likeThisPost, unlikeThisPost,
 }) => {
   const [alreadyLiked, setAlreadyLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
+
   useEffect(() => {
     if (likedPosts && likedPosts.length > 0) {
       const index = likedPosts.findIndex(({ postId: id }) => id === postId);
@@ -57,6 +63,24 @@ const PostIcons = ({
     />
   );
 
+  const emptyIcon = (
+    <i
+      className="fa fa-bookmark-o fa-lg"
+      aria-hidden="true"
+      style={styles.icon}
+      onClick={() => setSaved(true)}
+    />
+  );
+
+  const fullIcon = (
+    <i
+      className="fa fa-bookmark fa-lg"
+      aria-hidden="true"
+      style={styles.fullIcon}
+      onClick={() => setSaved(false)}
+    />
+  );
+
 
   return (
     <div style={styles.container}>
@@ -66,7 +90,7 @@ const PostIcons = ({
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={styles.icon} />
       </div>
       <div>
-        <i className="fa fa-bookmark-o fa-lg" aria-hidden="true" style={styles.icon} />
+        {saved ? fullIcon : emptyIcon}
       </div>
     </div>
   );

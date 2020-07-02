@@ -8,12 +8,13 @@ import { viewProfile } from '../redux/actions/view';
 const styles = {
   footer: {
     backgroundColor: '#eff0f1',
-    top: '90vh',
+    top: '0',
     position: 'fixed',
     width: '100vw',
-    height: '10vh',
     display: 'flex',
     flexDirection: 'column',
+    height: '6vh',
+    paddingBottom: '2.5vh',
     // alignItems: 'center',
     // justifyContent: 'space-around',
     // paddingTop: 5,
@@ -22,7 +23,7 @@ const styles = {
     borderColor: '#b3b4b5',
   },
   icons: {
-    marginTop: '3vh',
+    // marginTop: '3vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',

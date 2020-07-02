@@ -23,7 +23,7 @@ const styles = {
   },
   header: {
     backgroundColor: '#d6d6d6',
-    top: 0,
+    top: '92vh',
     position: 'fixed',
     height: '8vh',
     width: '100%',
@@ -31,7 +31,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 5,
+    paddingBottom: '2vh',
     borderBottom: 'solid',
     borderWidth: 'thin',
     borderColor: 'white',
@@ -52,6 +52,14 @@ const styles = {
     right: '2vw',
     backgroundColor: 'rgba(242, 101, 202, 0.95)',
   },
+  startFollowing: {
+    color: 'white',
+    backgroundColor: '#4fa9f6',
+    marginLeft: '12vw',
+    paddingRight: '15vw',
+    paddingLeft: '15vw',
+    marginTop: '12vw',
+  },
 };
 
 // bring feed into Dashboard from state
@@ -59,6 +67,8 @@ const styles = {
 const Dashboard = ({
   screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed, following, resetFeed, newPosts,
 }) => {
+
+
   useEffect(() => {
     // get initial feed
     console.log('ressetting');
@@ -66,9 +76,6 @@ const Dashboard = ({
   }, [following]);
 
   let posts;
-  // if (!feed) {
-  //   // return loading icon
-  // }
   posts = feed.map((post, i) => {
     if (i === 0) {
       return (
@@ -85,7 +92,12 @@ const Dashboard = ({
     );
   });
 
-  let test = true;
+  const emptyFeedButton = (
+    <div style={{ marginTop: '30vh' }}>
+      <div style={{ textAlign: 'center' }}>Your Feed is Empty</div>
+      <Button style={styles.startFollowing} onClick={() => store.dispatch({ type: 'SEARCH_PROFILES' })}>Start Following Users</Button>
+    </div>
+  );
 
   return (
     <div style={styles.container} id="feed">
@@ -98,7 +110,7 @@ const Dashboard = ({
         />
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
       </div>
-      {posts}
+      {(posts.length === 0) ? emptyFeedButton : posts}
       {loading ? <CircularProgress /> : null}
       {endOfFeed ? <div>End Of Feed!</div> : null}
       <div style={{ height: '10vh', marginTop: '3vh' }} />
