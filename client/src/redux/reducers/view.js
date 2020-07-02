@@ -14,6 +14,29 @@ export default function (state = initialState, action) {
         ...state,
         profileInfo: payload,
         screen: 'profile',
+        endOfFeed: false,
+      };
+    case 'UPDATE_PROFILE_FEED':
+      console.log(payload);
+      console.log(...state.profileInfo.userFeed);
+      return {
+        ...state,
+        profileInfo: {
+          ...state.profileInfo,
+          userFeed: [
+            ...state.profileInfo.userFeed,
+            ...payload,
+          ],
+          index: state.profileInfo.userFeed.index + 5,
+        },
+      };
+    case 'END_OF_PROFILE_FEED':
+      return {
+        ...state,
+        profileInfo: {
+          ...state.profileInfo,
+          endOfFeed: true,
+        },
       };
     case 'BACK_TO_PROFILE':
       return {

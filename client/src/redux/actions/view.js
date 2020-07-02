@@ -10,7 +10,6 @@ export const viewFeed = () => (dispatch) => {
 
 export const viewProfile = (profileId) => async (dispatch) => {
   try {
-    console.log(profileId);
     const response = await axios.get(`/users/profile/${profileId}`);
     const { data } = response;
     const profileInfo = data[0];
@@ -21,10 +20,20 @@ export const viewProfile = (profileId) => async (dispatch) => {
         profileInfo.following = res.data.following.map((item) => item.followingId);
         profileInfo.followers = res.data.myFollowers.map((item) => item.followerId);
         profileInfo.posts = res.data.posts;
-        dispatch({
-          type: 'VIEW_PROFILE',
-          payload: profileInfo,
-        });
+      })
+      .then(() => {
+        axios.post('/posts/userFeed', { authorId: profileId, index: 0 })
+          .then((info) => {
+            profileInfo.userFeed = info.data;
+            profileInfo.index = 5;
+            dispatch({
+              type: 'VIEW_PROFILE',
+              payload: profileInfo,
+            });
+          })
+          .catch((err) => {
+            console.log(err, 'ERROR LOADING USERS FEED');
+          });
       })
       .catch((err) => {
         console.log(err, 'ERROR');
@@ -32,6 +41,19 @@ export const viewProfile = (profileId) => async (dispatch) => {
   } catch (error) {
     // dispatch something else
     console.log(error);
+  }
+};
+
+export const updateProfileFeed = () => async (dispatch) => {
+  try {
+    const { index, userId } = store.getState().view.profileInfo;
+    const newPosts = await axios.post('/posts/userFeed', { authorId: userId, index });
+    dispatch({
+      type: 'UPDATE_PROFILE_FEED',
+      payload: newPosts.data,
+    });
+  } catch (error) {
+    console.log(error, 'ERROR UPDATING POSTS');
   }
 };
 

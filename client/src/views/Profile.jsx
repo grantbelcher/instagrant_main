@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import store from '../redux/index';
 import Footer from '../components/Footer';
 import FollowButton from '../components/FollowButton';
+import Post from '../components/Post';
+import { updateProfileFeed } from '../redux/actions/view';
 
 const styles = {
   header: {
@@ -101,6 +104,14 @@ const styles = {
     fontSize: 'small',
     color: 'gray',
   },
+  loadButton: {
+    marginBottom: '14vh',
+    marginLeft: '12vw',
+    paddingRight: '15vw',
+    paddingLeft: '15vw',
+    backgroundColor: '#4fa9f6',
+    color: 'white',
+  },
 };
 // margin-top: 3vh;
 //     height: 10vh;
@@ -111,10 +122,23 @@ const styles = {
 
 // WORD LIMIT ON BIO => 100
 
-const Profile = ({ profileInfo }) => {
+const Profile = ({ profileInfo, updateFeed }) => {
   const {
-    followers, following, photo, title, username, fullname, bio, posts,
+    followers, following, photo, title, username, fullname, bio, posts, userFeed, endOfFeed
   } = profileInfo;
+
+  useEffect(() => {
+    window.scroll(0, 0);
+    console.log(endOfFeed, "FUCK MEEEEEEEE")
+  }, []);
+
+  const feed = userFeed.map((post) => {
+    return <Post post={post} />;
+  })
+  let noMorePosts;
+  if (userFeed.length % 5 !== 0 || userFeed.length === 0) {
+    noMorePosts = true
+  }
   return (
     <div>
       <div style={styles.header}>
@@ -168,17 +192,13 @@ const Profile = ({ profileInfo }) => {
           </div>
         </div>
       </div>
+      {feed}
+      <Button style={styles.loadButton} onClick={ noMorePosts ? null : () => updateFeed()}>{noMorePosts ? 'End Of Feed' : 'load more posts'}</Button>
       <Footer />
     </div>
   );
 };
 
-// { /* <Avatar src={photo} />
-// <div>
-//   {`${fullname},  ${username}, ${title}, ${bio}`}
-//   {`${posts} posts, ${followers.length} followers, ${following.length} following`}
-// </div>
-// */ }
 
 
 const mapStateToProps = ({ view }) => {
@@ -188,4 +208,8 @@ const mapStateToProps = ({ view }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Profile);
+const mapDispatchToProps = {
+  updateFeed: updateProfileFeed,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

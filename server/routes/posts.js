@@ -70,7 +70,7 @@ router.post('/updateAvatar', (req, res) => {
           db.queryAsync(queryPosts)
             .then((output) => {
               console.log(output, 'AFTER UPDATING ALL POSTS');
-              res.status(200).send('success')
+              res.status(200).send('success');
             })
             .catch((err) => {
               console.log(err, 'ERROR UPDATING ALL POSTS');
@@ -131,6 +131,49 @@ router.post('/myFeed', (req, res) => {
     })
     .catch((err) => {
       res.status(500);
+    });
+});
+
+router.post('/userFeed', (req, res) => {
+  const { authorId, index } = req.body;
+  console.log(authorId, index);
+  const queryString = `SELECT * FROM posts WHERE authorId = ${authorId} ORDER BY date DESC LIMIT ${index}, 5`;
+  const postData = [];
+  db.queryAsync(queryString)
+    .then((data) => {
+      if (data.length === 0) {
+        return res.send([]);
+      }
+      data.forEach((post, i) => {
+        const postCopy = post;
+        const { postId } = post;
+        const likeQuery = `SELECT COUNT(*) FROM likes WHERE postId = ${postId}`;
+        db.queryAsync(likeQuery)
+          .then((likeCount) => {
+            const count = likeCount[0]['COUNT(*)'];
+            postCopy.likes = count;
+            postData.push(postCopy);
+          })
+          .then(() => {
+            const commentQuery = `SELECT COUNT(*) FROM comments WHERE postId = ${postId}`;
+            db.queryAsync(commentQuery)
+              .then((commentCount) => {
+                postCopy.comments = commentCount[0]['COUNT(*)'];
+                if (i === data.length - 1) {
+                  return res.send(postData);
+                }
+              })
+              .catch((err) => {
+                console.log(err, 'comments');
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    })
+    .catch((err) => {
+      console.log(err, 'ERROR GETTING PROFILE POSTS');
     });
 });
 
