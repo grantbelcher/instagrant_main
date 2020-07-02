@@ -16,7 +16,7 @@ import EditProfile from '../views/EditProfile';
 import Search from '../views/Search';
 import { loadFollowStats } from '../redux/actions/follow';
 import {
-  addToFeed, loadNextPosts, beginScroll, setTopInView, checkNewMessages
+  addToFeed, loadNextPosts, beginScroll, setTopInView, checkNewMessages,
 } from '../redux/actions/feed';
 // import setAuthToken from '../../../utils/setAuthToken';
 
@@ -31,20 +31,14 @@ const socket = io(socketUrl);
 
 
 const App = ({
-  isLoggedIn, userId, screen, loadFollowData, feed, topInView, getFeed, startScroll, viewTop, loadNext, endOfFeed, following, checkNewMessage
+  isLoggedIn, userId, screen, loadFollowData, feed, topInView, getFeed, startScroll, viewTop, loadNext, endOfFeed, following, checkNewMessage,
 }) => {
   let currentView;
+
+
   if (!screen) {
     return <Auth />;
   }
-  // let string;
-  // if (screen === 'feed') {
-  //   if (following.length > 0) {
-  //     string = following.reduce((acc, id) => `${acc} ${id},`, '');
-  //   }
-  // }
-
-
   useEffect(() => {
     const initSocket = () => {
       // let followingString;
@@ -56,6 +50,14 @@ const App = ({
     };
     initSocket();
   }, []);
+  // let string;
+  // if (screen === 'feed') {
+  //   if (following.length > 0) {
+  //     string = following.reduce((acc, id) => `${acc} ${id},`, '');
+  //   }
+  // }
+
+
 
   useEffect(() => {
     const scrollEvent = debounce(() => {
@@ -104,7 +106,6 @@ const App = ({
       window.onscroll = null;
     }
   }, [screen, feed, endOfFeed]);
-
 
   if (screen === 'feed') {
     currentView = <Dashboard />;

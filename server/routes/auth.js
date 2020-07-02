@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const { createUserQuery } = require('../../db/queries/users');
 const db = require('../../db/index');
+const { route } = require('./posts');
 
 Promise.promisifyAll(db);
 const router = express.Router();
@@ -71,6 +72,14 @@ router.post(
       });
   },
 );
+
+router.post('/token', (req, res) => {
+  const { token } = req.body;
+  const payload = jwt.decode(token, 'secret');
+  const { id } = payload;
+  if (!id) return res.status(401).json({ message: 'token required' });
+  console.log(token, id, 'FUCK MEEEEEEEEEE');
+});
 
 router.post(
   '/signin',

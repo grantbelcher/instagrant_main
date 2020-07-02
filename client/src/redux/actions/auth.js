@@ -39,7 +39,34 @@ export const signIn = (username, password) => async (dispatch) => {
       type: 'AUTH_SUCCESS',
       payload: response.data,
     });
-    
+    dispatch({
+      type: 'VIEW_FEED',
+    });
+  } catch (err) {
+    console.error(err, 'loooook here');
+    addError('invalid credentials*');
+    dispatch({
+      type: 'AUTH_ERROR',
+    });
+  }
+};
+
+export const signInToken = (token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: 'LOADING',
+    });
+    // convert to promise
+    const response = await axios.post('/auth/token', { token });
+    // localStorage.setItem('token', response.data.token);
+    const { userId } = response.data;
+    // dispatch followers action
+    dispatch(loadFollowStats(userId));
+    dispatch(loadLikes(userId));
+    dispatch({
+      type: 'AUTH_SUCCESS',
+      payload: response.data,
+    });
     dispatch({
       type: 'VIEW_FEED',
     });
@@ -71,9 +98,12 @@ export const registerError = () => (dispatch) => {
 
 export const signOut = () => async (dispatch) => {
   try {
-    await localStorage.removeItem('token');
+    // await localStorage.removeItem('token');
     dispatch({
       type: 'LOG_OUT',
+    });
+    dispatch({
+      type: 'BACK_TO_AUTH',
     });
   } catch (err) {
     console.error(err.message);

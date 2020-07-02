@@ -22,7 +22,7 @@ const styles = {
     borderColor: '#fafafa',
     marginRight: '2vw',
     marginLeft: '2vw',
-    marginTop: '1vh',
+    // marginTop: '1vh',
     paddingLeft: '2vw',
     borderRadius: '5px',
     backgroundColor: 'rgb(240, 240, 240)',

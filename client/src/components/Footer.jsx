@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import store from '../redux/index';
 import { viewProfile } from '../redux/actions/view';
+import { signOut } from '../redux/actions/auth';
 
 const styles = {
   footer: {
@@ -35,14 +36,14 @@ const styles = {
   }
 };
 
-const Footer = ({ avatar, user, userId, goToProfile }) => {
+const Footer = ({ avatar, user, userId, goToProfile, logOut }) => {
   return (
     <div style={styles.footer}>
       <div style={styles.icons}>
-        <i class="fa fa-home fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'VIEW_FEED' })} />
+        <i class="fa fa-door-open fa-lg" aria-hidden="true" onClick={() => logOut()} />
         <i class="fa fa-search fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'SEARCH_PROFILES' })} />
+        <i class="fa fa-home fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'VIEW_FEED' })} />
         <i class="fa fa-plus-square fa-lg" aria-hidden="true" onClick={() => store.dispatch({ type: 'ADD_POST' })} />
-        <i class="fa fa-heart-o fa-lg" aria-hidden="true" />
         <IconButton onClick={() => goToProfile(userId)}>
           <Avatar src={avatar} alt={user} style={styles.avatarIcon} />
         </IconButton>
@@ -62,6 +63,7 @@ const mapStateToProps = ({ auth }) => {
 
 const mapDispatchToProps = {
   goToProfile: viewProfile,
+  logOut: signOut,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

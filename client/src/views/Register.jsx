@@ -97,9 +97,10 @@ const Register = ({
   };
 
   const handleUsername = (e) => {
+    console.log(username.length)
     if (username.length === 1) {
       setUsername(username + e.target.value);
-    } else {
+    } else if (username.length < 16) {
       setUsername(e.target.value);
     }
   };

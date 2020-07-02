@@ -135,6 +135,11 @@ export default function (state = initialState, action) {
         ...state,
         screen: 'feed',
       };
+    case 'BACK_TO_AUTH':
+      return {
+        ...state,
+        screen: null,
+      };
     default:
       return state;
   }

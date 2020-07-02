@@ -68,7 +68,7 @@ const Dashboard = ({
   screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed, following, resetFeed, newPosts,
 }) => {
 
-
+  console.log(loading, 'LOADING!!!!')
   useEffect(() => {
     // get initial feed
     console.log('ressetting');

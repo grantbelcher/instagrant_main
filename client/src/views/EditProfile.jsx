@@ -73,6 +73,23 @@ const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
     }
   }, []);
 
+  const editName = (e) => {
+    if (name.length < 15) {
+      setName(e.target.value);
+    }
+  };
+  const editTitle = (e) => {
+    if (myTitle.length < 25) {
+      setTitle(e.target.value);
+    }
+  };
+  const editAboutMe = (e) => {
+    if (aboutMe.length < 100) {
+      setAboutMe(e.target.value);
+    }
+  };
+
+
   const handleSubmit = () => {
     const data = {
       name, myTitle, aboutMe,
@@ -110,7 +127,7 @@ const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
             variant="outlined"
             style={styles.input}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => editName(e)}
           />
         </div>
         <div style={styles.inputContainer}>
@@ -122,7 +139,7 @@ const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
             style={styles.input}
             placeholder="Edit Title"
             value={myTitle}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => editTitle(e)}
           />
         </div>
         <div style={styles.inputContainer}>
@@ -137,7 +154,7 @@ const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
             rowsMax={3}
             placeholder="Edit Bio"
             value={aboutMe}
-            onChange={(e) => setAboutMe(e.target.value)}
+            onChange={(e) => editAboutMe(e)}
           />
         </div>
         <CustomButton
