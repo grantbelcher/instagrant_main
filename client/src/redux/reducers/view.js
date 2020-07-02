@@ -30,6 +30,33 @@ export default function (state = initialState, action) {
           index: state.profileInfo.userFeed.index + 5,
         },
       };
+      // const index = state.feed.findIndex(({ postId }) => payload === postId);
+
+      // const feedCopyStart = state.feed.slice(0, index);
+      // const feedCopyEnd = state.feed.slice(index + 1, state.feed.length);
+
+      // const postCopyString = JSON.stringify(state.feed[index]);
+      // const postCopy = JSON.parse(postCopyString);
+      // postCopy.likes += 1;
+    case 'INCREMENT_LIKES_PROFILE':
+      const indexInFeed = state.profileInfo.userFeed.findIndex(({ postId }) => payload === postId)
+      const feedCopyStart = state.profileInfo.userFeed.slice(0, indexInFeed);
+      const feedCopyEnd = state.profileInfo.userFeed.slice(indexInFeed + 1, state.profileInfo.userFeed.length);
+
+      const postCopyString = JSON.stringify(state.profileInfo.userFeed[indexInFeed]);
+      const postCopy = JSON.parse(postCopyString);
+      postCopy.likes += 1;
+      return {
+        ...state,
+        profileInfo: {
+          ...state.profileInfo,
+          userFeed: [
+            ...feedCopyStart,
+            postCopy,
+            ...feedCopyEnd,
+          ]
+        }
+      }
     case 'END_OF_PROFILE_FEED':
       return {
         ...state,

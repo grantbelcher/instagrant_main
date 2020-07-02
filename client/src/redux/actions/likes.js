@@ -20,6 +20,7 @@ export const loadLikes = (userId) => async (dispatch) => {
 export const likePost = (postId) => async (dispatch) => {
   console.log(postId, 'LIKE POST ACTION, ');
   const { userId } = store.getState().auth;
+  const { screen } = store.getState().view;
   console.log(userId, 'from getState');
   try {
     const response = await axios.post(`/likes/likePost/${postId}/${userId}`);
@@ -31,6 +32,12 @@ export const likePost = (postId) => async (dispatch) => {
       type: 'INCREMENT_LIKES',
       payload: postId,
     });
+    if (screen === 'profile') {
+      dispatch({
+        type: 'INCREMENT_LIKES_PROFILE',
+        payload: postId,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -53,6 +60,10 @@ export const unlikePost = (postId) => async (dispatch) => {
     });
     dispatch({
       type: 'DECREMENT_LIKES',
+      payload: postId,
+    });
+    dispatch({
+      type: 'DECREMENT_LIKES_PROFILE',
       payload: postId,
     });
   } catch (error) {
