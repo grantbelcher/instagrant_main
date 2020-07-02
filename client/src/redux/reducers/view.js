@@ -25,6 +25,17 @@ export default function (state = initialState, action) {
         ...state,
         screen: 'edit profile',
       };
+    case 'UPDATE_PROFILE':
+      const { fullname, title, bio } = payload;
+      return {
+        ...state,
+        profileInfo: {
+          ...state.profileInfo,
+          fullname,
+          title,
+          bio,
+        },
+      };
     case 'ADD_POST':
       return {
         ...state,

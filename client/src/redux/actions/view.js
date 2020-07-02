@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '../index';
 
 export const viewFeed = () => (dispatch) => {
   console.log('IN VIEW FEED ACTION');
@@ -52,4 +53,38 @@ export const updateFollowStats = (userId, alreadyFollowing) => (dispatch) => {
       payload: userId,
     });
   }
+};
+
+export const updateProfile = ({ name: fullname, myTitle: title, aboutMe: bio }) => (dispatch) => {
+  dispatch({
+    type: 'UPDATE_PROFILE',
+    payload: {
+      fullname,
+      title,
+      bio,
+    },
+  });
+
+  const { userId } = store.getState().auth;
+  console.log(userId);
+  const data = {
+    userId,
+    fullname,
+    bio,
+    title,
+  };
+  axios.patch('/users/updateProfile', data)
+    .then((response) => {
+      console.log(response.data, 'RESPONSE FROM PATCH');
+    })
+    .then(() => {
+      setTimeout(() => {
+        dispatch({
+          type: 'BACK_TO_PROFILE',
+        });
+      }, 600);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

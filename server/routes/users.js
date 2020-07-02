@@ -42,17 +42,20 @@ router.get('/search/:query', (req, res) => {
       res.send(results);
     }
   });
+});
 
-  // router.get()
-  // db.queryAsync(queryString)
-  //   .then((results) => {
-  //     console.log(results);
-  //     res.send(results);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     res.send('error');
-  //   });
+router.patch('/updateProfile', (req, res) => {
+  const { userId, fullname, title, bio } = req.body;
+  const queryString = `UPDATE users SET fullname = "${fullname}", title = "${title}", bio = "${bio}" WHERE userId = ${userId};`;
+  db.queryAsync(queryString)
+    .then((result) => {
+      console.log(result);
+      return res.send('success');
+    })
+    .catch((err) => {
+      console.log(err, 'ERRROR UPDATING USER INFO');
+      return res.status(500);
+    });
 });
 
 

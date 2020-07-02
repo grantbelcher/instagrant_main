@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import store from '../redux/index';
+import { updateProfile } from '../redux/actions/view';
 
 const styles = {
   header: {
@@ -35,7 +36,6 @@ const styles = {
     width: '75vw',
   },
   container: {
-    backgroundColor: 'aliceblue',
     marginTop: '10vh',
     minHeight: '60vh',
     display: 'flex',
@@ -57,16 +57,27 @@ const styles = {
   },
 };
 
-const EditProfile = ({ fullname, title, bio }) => {
+const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
   const [name, setName] = useState('');
   const [myTitle, setTitle] = useState('');
   const [aboutMe, setAboutMe] = useState('');
-  console.log(fullname, title, 'look here');
+
   useEffect(() => {
     setName(fullname);
-    setTitle(title);
-    setAboutMe(bio);
+    if (title !== null) {
+      setTitle(title);
+    }
+    if (bio !== null) {
+      setAboutMe(bio);
+    }
   }, []);
+
+  const handleSubmit = () => {
+    const data = {
+      name, myTitle, aboutMe,
+    };
+    updateUserInfo(data);
+  };
   return (
     <div>
       <div style={styles.header}>
@@ -84,6 +95,7 @@ const EditProfile = ({ fullname, title, bio }) => {
         </div>
         <a
           style={styles.nextButton}
+          onClick={() => handleSubmit()}
         >
           Save
         </a>
@@ -97,6 +109,7 @@ const EditProfile = ({ fullname, title, bio }) => {
             variant="outlined"
             style={styles.input}
             value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div style={styles.inputContainer}>
@@ -108,6 +121,7 @@ const EditProfile = ({ fullname, title, bio }) => {
             style={styles.input}
             placeholder="Edit Title"
             value={myTitle}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div style={styles.inputContainer}>
@@ -122,6 +136,7 @@ const EditProfile = ({ fullname, title, bio }) => {
             rowsMax={3}
             placeholder="Edit Bio"
             value={aboutMe}
+            onChange={(e) => setAboutMe(e.target.value)}
           />
         </div>
       </div>
@@ -139,4 +154,8 @@ const mapStateToProps = ({ view }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(EditProfile);
+const mapDispatchToProps = {
+  updateUserInfo: updateProfile,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
