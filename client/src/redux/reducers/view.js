@@ -47,6 +47,16 @@ export default function (state = initialState, action) {
         ...state,
         screen: 'add profile pic',
       };
+    case 'NEW_PROFILE_PIC':
+      return {
+        ...state,
+        screen: 'new profile pic',
+      };
+    case 'NEW_AVATAR':
+      return {
+        ...state,
+        screen: 'new avatar',
+      };
     case 'ADD_CAPTION':
       return {
         ...state,

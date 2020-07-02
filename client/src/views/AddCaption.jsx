@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
@@ -52,12 +52,16 @@ const styles = {
 
 
 const AddCaption = ({
-  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar,
+  file, upload, changeView, newProfile, addNewPost, inRegistration, userId, user, avatar, newAvatar
 }) => {
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState(null);
 
   const connection = useContext(SocketContext);
+
+  useEffect(() => {
+    console.log(newAvatar, 'NEW AVATAR FUCK ME');
+  }, [])
 
   const handleShare = () => {
     if (inRegistration) {
@@ -67,7 +71,11 @@ const AddCaption = ({
           type: 'VIEW_FEED',
         });
       }, 2000);
-    } else {
+    } else if (newAvatar) {
+      console.log('yoooo')
+      /// 
+    }
+      else {
       // emit this info to socket;
       let postInfo;
       axios.get('/posts/lastPost')
@@ -98,10 +106,24 @@ const AddCaption = ({
     }
   };
 
+  const handleBack = () => {
+    if (inRegistration) {
+      changeView('Edit Pic');
+    } else if (newAvatar) {
+      store.dispatch({
+        type: 'BACK_TO_PROFILE',
+      });
+    } else {
+      store.dispatch({
+        type: 'VIEW_FEED',
+      });
+    }
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => changeView('Edit Pic')} />
+        <i className="fa fa-chevron-left fa-2x" aria-hidden="true" style={styles.backIcon} onClick={() => handleBack()} />
         <div style={{
           fontSize: 'large',
         }}

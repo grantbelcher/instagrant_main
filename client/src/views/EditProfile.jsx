@@ -4,6 +4,7 @@ import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import store from '../redux/index';
 import { updateProfile } from '../redux/actions/view';
+import CustomButton from '../components/CustomButton';
 
 const styles = {
   header: {
@@ -37,7 +38,7 @@ const styles = {
   },
   container: {
     marginTop: '10vh',
-    minHeight: '60vh',
+    minHeight: '70vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -139,6 +140,11 @@ const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
             onChange={(e) => setAboutMe(e.target.value)}
           />
         </div>
+        <CustomButton
+          title="Update Avatar"
+          style={{ width: '75vw', maxWidth: '75vw', marginRight: '15vw', marginLeft: '15vw' }}
+          onClick={store.dispatch({ type: 'NEW_PROFILE_PIC' })}
+        />
       </div>
     </div>
   );

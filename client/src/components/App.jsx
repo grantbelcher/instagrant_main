@@ -124,6 +124,10 @@ const App = ({
     currentView = <Search />;
   } else if (screen === 'edit profile') {
     currentView = <EditProfile />;
+  } else if (screen === 'new profile pic') {
+    currentView = <EditPost newProfilePic={true} inRegistration={false} />;
+  } else if (screen === 'new avatar') {
+    currentView = <AddCaption inRegistration={false} newAvatar={true} />;
   }
 
   return (

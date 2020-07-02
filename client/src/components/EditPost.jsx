@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
 import EmptyButton from './EmptyButton';
-import { selectPhoto } from '../redux/actions/upload';
+import { selectPhoto, addNewAvatar } from '../redux/actions/upload';
 import Footer from './Footer';
-
 
 const styles = {
   container: {
@@ -111,6 +110,10 @@ class EditPost extends React.Component {
     // this.getCroppedImg = this.getCroppedImg.bind(this);
   }
 
+  componentDidMount() {
+    console.log(this.props.newProfilePic, 'COMPONENT DID MOUNT')
+  }
+
   onSelectFile(e) {
     if (e.target.files && e.target.files.length > 0) {
       const { files } = e.target;
@@ -142,14 +145,21 @@ class EditPost extends React.Component {
   navigateForward() {
     if (this.props.inRegistration) {
       this.props.addFile(this.state.image);
+    } else if (this.props.newProfilePic) {
+      console.log(this.props.addNewAvatar)
+      this.props.addNewAvatar(this.state.image);
     } else {
       this.props.selectPhoto(this.state.image);
     }
   }
 
   navigateBack() {
+    console.log(this.props.inRegistration, this.props.newProfilePic, 'NAVIGATING BACK')
     if (this.props.inRegistration) {
       store.dispatch({ type: 'LOG_IN' });
+    } else if (this.props.newProfilePic) {
+      console.log(' CONDITION MET')
+      store.dispatch({ type: 'BACK_TO_PROFILE' });
     } else {
       store.dispatch({ type: 'VIEW_FEED' });
     }
@@ -220,6 +230,7 @@ class EditPost extends React.Component {
 
 const mapDispatchToProps = {
   selectPhoto,
+  addNewAvatar,
 };
 
 export default connect(null, mapDispatchToProps)(EditPost);
