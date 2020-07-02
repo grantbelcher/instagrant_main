@@ -1,5 +1,5 @@
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import store from '../redux/index';
@@ -222,7 +222,7 @@ class EditPost extends React.Component {
             </div>
           )}
         </div>
-        {this.props.inRegistration ? null : <Footer />}
+        {/* {this.props.inRegistration ? null : <Footer />} */}
       </div>
     );
   }

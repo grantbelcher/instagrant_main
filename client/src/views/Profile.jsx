@@ -11,7 +11,7 @@ import { updateProfileFeed } from '../redux/actions/view';
 const styles = {
   header: {
     backgroundColor: '#d6d6d6',
-    top: 0,
+    top: '92vh',
     position: 'fixed',
     height: '8vh',
     width: '100%',
@@ -19,7 +19,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 5,
+    paddingBottom: '2vh',
     borderBottom: 'solid',
     borderWidth: 'thin',
     borderColor: 'white',
