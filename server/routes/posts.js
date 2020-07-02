@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/singlePost/:postId', (req, res) => {
   const { postId } = req.params;
-  console.log(postId)
+  console.log(postId);
   const queryString = `SELECT * FROM posts WHERE postId = ${postId}`;
   db.queryAsync(queryString)
     .then((result) => {
@@ -39,36 +39,59 @@ router.post('/upload-image', (req, res) => {
     .catch((err) => {
       console.log(err, 'error');
     });
-
 });
 router.post('/new_avatar', (req, res) => {
   const queryString = createPostQuery(req.body);
   db.queryAsync(queryString)
     .then((result) => {
       db.queryAsync(`UPDATE users SET photo = "${req.body.picture}" WHERE userId = ${req.body.authorId}`)
-        .then((data) => {
-          return res.status(200).json({ avatar: req.body.picture });
-        })
-        .catch((err) => {
-          return res.status(401);
-        });
+        .then((data) => res.status(200).json({ avatar: req.body.picture }))
+        .catch((err) => res.status(401));
     })
-    .catch((err) => {
-      return res.status(500);
-    });
+    .catch((err) => res.status(500));
 });
 
 router.post('/updateAvatar', (req, res) => {
   console.log(req.body);
-  res.send('yo');
+  const {
+    username, authorId, picture, caption, location,
+  } = req.body;
+  // define queryString to update picture in user;
+  const newPostQuery = createPostQuery({
+    username, authorId, profilePic: picture, picture, caption, location,
+  });
+  const queryUsers = `UPDATE users SET photo = "${picture}" WHERE userId = ${authorId};`;
+  const queryPosts = `UPDATE posts SET profilePic = "${picture}" WHERE authorId = ${authorId};`;
+  db.queryAsync(newPostQuery)
+    .then((result) => {
+      db.queryAsync(queryUsers)
+        .then((data) => {
+          console.log(data, 'AFTER CHANING USER');
+          db.queryAsync(queryPosts)
+            .then((output) => {
+              console.log(output, 'AFTER UPDATING ALL POSTS');
+              res.status(200).send('success')
+            })
+            .catch((err) => {
+              console.log(err, 'ERROR UPDATING ALL POSTS');
+              return res.status(500);
+            });
+        })
+        .catch((err) => {
+          console.log(err, 'ERROR UPDATING USER ON NEW POST');
+          return res.status(500);
+        });
+    })
+    .catch((err) => {
+      console.log(err, 'ERROR INSERTING NEW POST');
+      return res.status(500);
+    });
 });
 
 router.post('/myFeed', (req, res) => {
   const { following, userId, index } = req.body;
-  let followingIds = following.reduce((accumulator, id) => {
-    return accumulator + 'authorId = ' + id + ' OR ';
-  }, '');
-  followingIds = followingIds.substr(0, followingIds.length - 3) + `OR authorId = ${userId}`;
+  let followingIds = following.reduce((accumulator, id) => `${accumulator}authorId = ${id} OR `, '');
+  followingIds = `${followingIds.substr(0, followingIds.length - 3)}OR authorId = ${userId}`;
   const queryString = `SELECT * FROM posts WHERE ${followingIds} ORDER BY date DESC LIMIT ${index}, 5`;
   const postData = [];
   db.queryAsync(queryString)

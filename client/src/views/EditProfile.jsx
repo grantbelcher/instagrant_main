@@ -143,7 +143,7 @@ const EditProfile = ({ fullname, title, bio, updateUserInfo }) => {
         <CustomButton
           title="Update Avatar"
           style={{ width: '75vw', maxWidth: '75vw', marginRight: '15vw', marginLeft: '15vw' }}
-          onClick={store.dispatch({ type: 'NEW_PROFILE_PIC' })}
+          onClick={() => store.dispatch({ type: 'NEW_PROFILE_PIC' })}
         />
       </div>
     </div>

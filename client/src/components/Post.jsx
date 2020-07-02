@@ -20,6 +20,7 @@ const styles = {
 };
 
 const Post = ({ post, currentUser, currentUserId, first }) => {
+  console.log(post.authorId === currentUserId, 'POST IS MINE' );
   return (
     <div style={first === true ? styles.firstPost : styles.container}>
       <PostHeader post={post} />
