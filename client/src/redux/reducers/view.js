@@ -42,7 +42,7 @@ export default function (state = initialState, action) {
       const indexInFeed = state.profileInfo.userFeed.findIndex(({ postId }) => payload === postId)
       const feedCopyStart = state.profileInfo.userFeed.slice(0, indexInFeed);
       const feedCopyEnd = state.profileInfo.userFeed.slice(indexInFeed + 1, state.profileInfo.userFeed.length);
-
+      console.log(state.profileInfo.userFeed[indexInFeed], "LOOOOOOK HEEEEERE")
       const postCopyString = JSON.stringify(state.profileInfo.userFeed[indexInFeed]);
       const postCopy = JSON.parse(postCopyString);
       postCopy.likes += 1;

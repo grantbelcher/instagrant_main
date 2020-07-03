@@ -10,6 +10,7 @@ export default function (state = initialState, action) {
         likedPosts: payload,
       };
     case 'ADD_TO_LIKES':
+      console.log('MADE IT TO REDUCER!!!!!!!!!!')
       return {
         likedPosts: [...state.likedPosts, payload],
       };

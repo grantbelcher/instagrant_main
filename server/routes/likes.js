@@ -19,13 +19,14 @@ router.post('/likePost/:postId/:userId', (req, res) => {
   let { postId, userId } = req.params;
   postId = parseInt(postId);
   userId = parseInt(userId);
-  console.log(userId, 'following Id before query');
+  // console.log(userId, 'following Id before query');
   db.queryAsync(`INSERT INTO likes (postId, userId) VALUES (${postId}, ${userId})`)
     .then((data) => {
-      res.send(data);
+      console.log(data, "DATA FROM QUERY")
+      return res.send(data);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err, "ERRR");
       return res.status(500).send('err');
     });
 });

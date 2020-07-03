@@ -24,6 +24,7 @@ export const likePost = (postId) => async (dispatch) => {
   console.log(userId, 'from getState');
   try {
     const response = await axios.post(`/likes/likePost/${postId}/${userId}`);
+    console.log(response, "HERE!!!!!!")
     dispatch({
       type: 'ADD_TO_LIKES',
       payload: { postId },
@@ -33,6 +34,7 @@ export const likePost = (postId) => async (dispatch) => {
       payload: postId,
     });
     if (screen === 'profile') {
+      console.log("AFTER FIRST DISPATCH, INSIDE IF BLOCK")
       dispatch({
         type: 'INCREMENT_LIKES_PROFILE',
         payload: postId,

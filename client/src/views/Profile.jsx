@@ -106,7 +106,7 @@ const styles = {
   },
   loadButton: {
     marginBottom: '14vh',
-    marginLeft: '12vw',
+    marginLeft: '20vw',
     paddingRight: '15vw',
     paddingLeft: '15vw',
     backgroundColor: '#4fa9f6',

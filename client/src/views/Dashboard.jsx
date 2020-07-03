@@ -53,7 +53,6 @@ const styles = {
   startFollowing: {
     color: 'white',
     backgroundColor: '#4fa9f6',
-    marginLeft: '12vw',
     paddingRight: '15vw',
     paddingLeft: '15vw',
     marginTop: '12vw',
@@ -65,14 +64,13 @@ const styles = {
     color: 'white',
   },
 };
-
 // bring feed into Dashboard from state
 
 const Dashboard = ({
   screen, feed, topInView, getFeed, startScroll, viewTop, loadNext, loading, endOfFeed, following, resetFeed, newPosts,
 }) => {
 
-  console.log(loading, 'LOADING!!!!')
+  
   useEffect(() => {
     // get initial feed
     console.log('ressetting');
@@ -95,7 +93,6 @@ const Dashboard = ({
       />
     );
   });
-
   const emptyFeedButton = (
     <div style={{ marginTop: '30vh' }}>
       <div style={{ textAlign: 'center' }}>Your Feed is Empty</div>
@@ -103,6 +100,19 @@ const Dashboard = ({
     </div>
   );
   const loadButton = <Button style={styles.loadButton} onClick={() => loadNext()}>Load More Posts</Button>;
+
+  let dashboardBody
+  if (posts.length === 0) {
+    dashboardBody = emptyFeedButton
+  } else {
+    dashboardBody = (
+      <>
+        {posts}
+        {loadButton}
+      </>
+    )
+  }
+
   return (
     <div style={styles.container} id="feed">
       <div style={styles.header}>
@@ -114,9 +124,9 @@ const Dashboard = ({
         />
         <i className="fa fa-paper-plane-o fa-lg" aria-hidden="true" style={{ marginRight: '4vw' }} />
       </div>
-      {(posts.length === 0) ? emptyFeedButton : posts}
+      {/* {(posts.length === 0) || (following.length === 0) ? emptyFeedButton : posts} */}
       {loading ? <CircularProgress /> : null}
-      {endOfFeed ? <div>End Of Feed!</div> : loadButton}
+      {dashboardBody}
       <div style={{ height: '10vh', marginTop: '3vh' }} />
       <Footer />
       {newPosts ? (<Button style={styles.alertButton} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}>Check New Posts!</Button>) : null}

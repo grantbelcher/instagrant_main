@@ -192,7 +192,7 @@ class EditPost extends React.Component {
         <div style={styles.hiddenInput}>
           <input type="file" name="file" accept="image/*" onChange={this.onSelectFile} />
         </div>
-        <EmptyButton styles={styles.buttonStyle} onClick={changeView} />
+        {/* <EmptyButton styles={styles.buttonStyle} onClick={changeView} /> */}
         <div style={image ? styles.imgContainer : styles.imgTemp}>
           {image ? (
             <img
