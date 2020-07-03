@@ -109,6 +109,7 @@ const styles = {
     marginLeft: '20vw',
     paddingRight: '15vw',
     paddingLeft: '15vw',
+    marginTop: '10vh',
     backgroundColor: '#4fa9f6',
     color: 'white',
   },
@@ -198,7 +199,6 @@ const Profile = ({ profileInfo, updateFeed }) => {
     </div>
   );
 };
-
 
 
 const mapStateToProps = ({ view }) => {
